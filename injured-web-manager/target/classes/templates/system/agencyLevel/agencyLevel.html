@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('任务管理')" />
+	<th:block th:include="include :: ztree-css" />
+
+	<style>
+		.org-menu-list{
+			margin-left: 20px;
+		}
+
+		.org-menu-list li{
+			margin: 5px 0;
+		}
+
+		.org-menu-list li input{
+			width: 70%
+		}
+
+		.org-panel{
+			height: 350px;
+			max-height: 350px;
+			overflow-y: auto;
+		}
+		
+		
+		
+		.pull-left.pagination-detail{
+			display: none;
+		}
+		.pull-right.pagination{
+			display: none;
+		}
+		table tbody{
+  			display: block; 
+			max-height:190px;
+			overflow-y: scroll;
+		}
+		table thead, tbody tr {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+            text-align: left;
+        }
+		table td:first-child,table th:first-child{
+			width: 7%;
+		}
+		table td:nth-child(2),table th:nth-child(2){
+			width: 20%;
+		}
+		table td:nth-child(3),table th:nth-child(3){
+			width: 20%;
+		}
+		table td:nth-child(4),table th:nth-child(4){
+			width: 20%;
+		}
+
+	</style>
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="menu">
+				<div class="row">
+					<div class="col-sm-6">
+						<div style="position: relative">
+							<h4 class="form-header h4">损失审核节点设置<span id="org-title-name"></span></h4>
+						</div>
+						<div class="org-panel">
+							<div id="menuTrees" class="ztree"></div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div style="position: relative">
+							<h4 class="form-header h4">非损失审核节点设置<span id="org-title-name"></span></h4>
+						</div>
+						<div class="org-panel">
+<!-- 							<div id="menuTrees" class="ztree"></div> -->
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 10px">
+					<div class="col-sm-8">
+						<div class="form-group">
+							<label class="col-sm-2 control-label"><span style="color: red; ">*</span>修改说明</label>
+							<div class="col-sm-6">
+								<textarea name="remark" id="remark" style="width: 120%" maxlength="60" class="form-control" rows="3" required></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- 				<h4 class="form-header h4" style="margin-bottom: 2px">操作日志</h4> -->
+				<div class="col-sm-12 select-table table-striped">
+					<table id="bootstrap-table-menu" data-mobile-responsive="true"></table>
+				</div>
+				 <div class="row">
+			        <div class="col-sm-offset-5 col-sm-10" style="margin-top: 10px">
+			            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+			            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+			        </div>
+    			</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: ztree-js" />
+	<script type="text/javascript">
+		const userRoleList = {
+			zuoYe: [],
+			shenPi: []
+		}
+
+		let treeDataMap = []
+
+		
+	     $(function() {
+	    	 getData()
+		});
+		
+		function getData(){
+			var url = ctx + "system/agencyLevel/treeData";
+		    $.ajax({
+				  url: url,
+				  async:false,
+				  success: function(data){
+					  console.log(data);
+					   treeDataMap = list2Node(data);
+					   console.log(treeDataMap);
+				  }
+			   })
+			$.fn.zTree.init($("#menuTrees"), {
+				view: {
+					addDiyDom: addDiyDom
+				}
+			}, treeDataMap);
+		    //树全部展开
+		    var treeObj = $.fn.zTree.getZTreeObj("menuTrees"); 
+		    treeObj.expandAll(true); 
+		    
+		    showLogs("bootstrap-table-menu",19);
+		    $("div.fixed-table-toolbar").hide();
+		}
+		//拼树形数据
+		function list2Node(list){
+			var treeData = []
+			if (list && list.length > 0) {
+				var treeDataCache = {};
+				var treeData = [];
+
+				for (var i = 0; i < list.length; i++) {
+					
+					var item = list[i];
+					var key = item["id"];
+					var pkey = item["pId"];
+
+					var currentItem = {
+						id: item.id,
+						name: item.name,
+						menuId: item.menuId,
+						underLevel: item.underLevel,
+						_data_: item,
+						children: []
+					};
+					if (treeDataCache[key]) {
+						currentItem.children = treeDataCache[key].children
+					}
+					treeDataCache[key] = currentItem;
+
+					if (pkey && pkey !== null) {
+						var cacheParentItem = null;
+
+						if (treeDataCache[pkey]) {
+							cacheParentItem = treeDataCache[pkey]
+						} else {
+							cacheParentItem = {
+								id: pkey,
+								name: null,
+								menuId: null,
+								underLevel: null,
+								_data_: null,
+								children: []
+							};
+							treeDataCache[pkey] = cacheParentItem
+						}
+
+						cacheParentItem.children.push(currentItem)
+					} else {
+						treeData.push(currentItem)
+					}
+				}
+				return treeData
+			}
+			return null
+		}
+		
+		function addDiyDom(treeId, treeNode){
+			var level = treeNode.level
+			var aObj = $("#" + treeNode.tId + "_a");
+			var  editStr ="";
+			//全选功能 未实现
+			 if (level == 1 ) {
+				editStr = "&nbsp;&nbsp;<input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' value='all_one_"+treeNode.menuId+"_"+treeNode.id+"' onclick='allCheck(this)'/>&nbsp;全选&nbsp;&nbsp;<input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' value='all_two_"+treeNode.menuId+"_"+treeNode.id+"' onclick='allCheck(this)'/>&nbsp;全选"
+			} 
+			if(level == 2 ){
+				if(treeNode.underLevel !=null && treeNode.underLevel == 2){
+					editStr += "&nbsp;&nbsp;<label onclick='dicChecked('"+treeNode.menuId+"_"+treeNode.id+"_1')'><input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' id='one_"+treeNode.menuId+"_"+treeNode.id+"' value='1'></input> 一审制 </label>&nbsp; &nbsp;<label onclick='dicChecked('"+treeNode.menuId+"_"+treeNode.id+"_2')'><input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' id='two_"+treeNode.menuId+"_"+treeNode.id+"' value='2'  checked='cehcked'></input>两审制</label>"
+				}else{
+					editStr += "&nbsp;&nbsp;<label onclick='dicChecked('"+treeNode.menuId+"_"+treeNode.id+"_1')'><input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' id='one_"+treeNode.menuId+"_"+treeNode.id+"' value='1' checked='cehcked'></input> 一审制 </label>&nbsp; &nbsp;<label onclick='dicChecked('"+treeNode.menuId+"_"+treeNode.id+"_2')'><input type='radio' name='"+treeNode.menuId+"_"+treeNode.id+"' id='two_"+treeNode.menuId+"_"+treeNode.id+"' value='2'></input>两审制</label>"
+				}
+			}
+			aObj.append(editStr);
+		}
+		function dicChecked(flag){
+			var value = flag.split('_');
+			$("input[type=radio][name="+value[0]+"_"+value[1]+"][value="+value[2]+"]").prop("checked",true);
+		}
+		function allCheck(event){
+			var value = event.value.split('_');
+			console.log(value[2]);
+			for(var i=0;i<treeDataMap.length;i++){
+				if(treeDataMap[i].id == value[2]){
+					var childerList = (treeDataMap[i].children)[0].children
+					for(var j=0;j<childerList.length;j++){
+						var valuea = value[1]+"_"+value[2]+"_"+childerList[j].id;
+						if("one" == value[1]){
+							$("input[type=radio][name="+value[2]+"_"+childerList[j].id+"][value=1]").prop("checked",true);
+						}else{
+							$("input[type=radio][name="+value[2]+"_"+childerList[j].id+"][value=2]").prop("checked",true);
+						}
+						
+					}
+					break;
+				}
+			}
+		}
+		
+		
+		function submitHandler() {
+			var remark = $("#remark").val();//菜单权限修改说明
+			if(remark == null || (remark!=null && $.common.trim(remark)=="")){
+				$.modal.msgWarning("修改说明不能为空！");
+				return;
+			}
+			var levelList = [];
+			for(var i=0;i<treeDataMap.length;i++){
+				var childerList = (treeDataMap[i].children)[0].children
+				for(var j=0;j<childerList.length;j++){
+					var node = {
+						agencyId : childerList[j].id,
+						menuId : childerList[j].menuId,
+						underLevel : $("input[name='"+childerList[j].menuId+"_"+childerList[j].id+"']:checked").val()
+					};
+					levelList.push(node);
+				}
+			}
+
+			$.ajax({
+				cache : true,
+				type : "POST",
+				url : ctx + "system/agencyLevel/edit",
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data : JSON.stringify({
+					"remark": remark,
+					"underList": levelList
+				}),
+				async : false,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					if(data.code == 0){
+						$.modal.msgSuccess("保存成功!");
+						window.location.reload();
+// 						getData();
+					}
+					
+				}
+			});
+ 	    }
+
+		function showLogs(id,type){
+			var options = {
+				id: id,
+		        url: "/monitor/operlog/viewList/0/"+type,
+		        modalName: "操作历史",
+		        showSearch: false,
+		        showRefresh: false,
+				showColumns: false,
+				showToggle: false,
+		        columns: [{
+		            field: '',
+		            title: '序号',
+		            formatter: function (value, row, index) {
+                        return index + 1;
+	                }
+		        },
+		        {
+		            field: 'submitOpinion',
+		            title: '操作类型'
+		        },
+		        {
+		            field: 'submitName',
+		            title: '提交人'
+		        },
+		        {
+		            field: 'submitTime',
+		            title: '提交时间'
+		        },
+		        {
+		            field: 'opinionDesc',
+		            title: '操作说明'
+		        }]
+		    };
+		    $.table.init(options);
+		}
+
+	</script>
+</body>
+</html>

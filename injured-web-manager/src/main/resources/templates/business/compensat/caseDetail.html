@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('详情页面')" />
+    <th:block th:include="include :: ztree-css" />
+    <th:block th:include="include :: footer" />
+    <style>
+        .title{
+            position: relative;
+            background: gray;
+            color: white;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+        .title a{
+            color: white;
+        }
+
+        .title > div > * {
+            margin: 0 20px;
+        }
+
+        .panel{
+            margin: 10px 0;
+        }
+
+        .panel .panel-body{
+            padding: 10px 20px;
+        }
+
+        .panel-body .col2 .form-group{
+            width: 50%;
+            display: inline-block;
+        }
+
+        .col3 .form-group{
+            width: 33%;
+            display: inline-block;
+        }
+
+        .panel-body .col4 .form-group{
+            width: 25%;
+            display: inline-block;
+        }
+
+        .ce-table tr td,
+        .ce-table tr th{
+            padding: 8px 10px;
+        }
+
+        .ce-show{
+            display: inline-block;
+        }
+
+        .ce-hide{
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 5px;
+        }
+        @media (min-width: 768px){
+            .form-group{
+                font-size: 8px;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+
+        function closeForm(){
+            window.parent.$.modal.closeAll();
+        }
+
+
+    </script>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content" th:object="${caseDetail}">
+    <div class="row title">
+        <div style="float:left">
+            <span>案件信息</span>
+            <span>报案号： <span th:text="*{claimNotificationNo}"></span></span>
+        </div>
+    </div>
+
+    <div id="anjian-xinxi" style="display: inline-block">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    事故基本信息
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal col4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">案件类型：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null &&caseDetail.caseType!=null}">
+                                <input class="form-control" type="text" disabled="disabled"
+                                       th:value='${@ce_dict.getDictNameByTypeAndCode("caseType",caseDetail.getCaseType())}'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">报案时间：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.notificationTime != null}">
+                                <input class="form-control" type="text" th:value="${#dates.format(caseDetail.getNotificationTime(),'yyyy-MM-dd HH:mm:ss')}" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">报案人：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.reporter != null}">
+                                <input class="form-control" type="text" th:value='*{reporter}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">报案电话：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.informantMobilTel != null}">
+                                <input class="form-control" type="text" th:value='*{informantMobilTel}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">出险原因：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.dangerCause != null}">
+                                <input class="form-control" type="text" disabled="disabled"
+                                       th:value='${@ce_dict.getDictNameByTypeAndCode("lossCauseCode",caseDetail.getDangerCause())}'>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">出险时间：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.dangerTime != null}">
+                                <input class="form-control" type="text"  th:value="${#dates.format(caseDetail.getDangerTime(),'yyyy-MM-dd HH:mm:ss')}" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">事故原因：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.eventReasonType != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("lossCauseCode",caseDetail.getEventReasonType())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">事故类型：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.eventType != null}">
+                                <input class="form-control" type="text" disabled="disabled"
+                                       th:value='${@ce_dict.getDictNameByTypeAndCode("accidentType",caseDetail.getEventType())}'>
+                            </div>
+                        </div>
+                        <div class="form-group" style="width: 48.4%">
+                            <label class="col-sm-4 control-label" style="width: 16.5%">出险地点：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.dangerAddress != null}">
+                                <input class="form-control" style="width: 154%;" type="text" th:value='*{dangerAddress}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否异地：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isOutofLocalClaim != null}">
+                                <input type="radio" name="isOutofLocalClaim" disabled="disabled" value="0" th:field="*{isOutofLocalClaim}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isOutofLocalClaim" disabled="disabled" value="1" th:field="*{isOutofLocalClaim}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">现场报案：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.reportType != null}">
+                                <input type="radio" name="reportType" disabled="disabled" value="0" th:field="*{reportType}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="reportType" disabled="disabled" value="1" th:field="*{reportType}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group" style="width: 100%">
+                            <label class="col-sm-4 control-label" style="width: 7.9%">出险经过：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.dangerDesc != null}">
+                                <textarea style="width: 170%;" class="form-control" type="text" th:value='*{dangerDesc}' disabled="disabled"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    出险车辆信息
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal col4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否与保单相符：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isCarInsurance != null}">
+                                <input type="radio" name="isCarInsurance" disabled="disabled" value="0" th:field="*{isCarInsurance}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isCarInsurance" disabled="disabled" value="1" th:field="*{isCarInsurance}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">车牌号码：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.licensePlateNo != null}">
+                                <input class="form-control" type="text" th:value='*{licensePlateNo}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">号牌底色：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.plateColor != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("plateColor",caseDetail.getPlateColor())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">厂牌型号：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.brandModel != null}">
+                                <input class="form-control" type="text" th:value='*{brandModel}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">车架号/VIN码：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.vin != null}">
+                                <input class="form-control" type="text" th:value='*{vin}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">发动机号：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.engineNo != null}">
+                                <input class="form-control" type="text" th:value='*{engineNo}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">使用性质：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.usingProperties != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("usingProperties",caseDetail.getUsingProperties())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否年检期内：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isCarAnnual != null}">
+                                <input type="radio" name="isCarInsurance" disabled="disabled" value="0" th:field="*{isCarAnnual}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isCarInsurance" disabled="disabled" value="1" th:field="*{isCarAnnual}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">出险驾驶员：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.driverName != null}">
+                                <input class="form-control" type="text" th:value='*{driverName}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">驾驶员性别：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.driverSex != null}">
+                                <input type="radio" name="driverSex" disabled="disabled" value ="1" th:field="*{driverSex}">&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="driverSex" disabled="disabled" value ="2" th:field="*{driverSex}">&nbsp;女
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">驾驶员年龄：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.driverAge != null}">
+                                <input class="form-control" type="text" th:value='*{driverAge}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">驾驶员电话：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.driverPhone != null}">
+                                <input class="form-control" type="text" th:value='*{driverPhone}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">准驾车型：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.drivingIdentifyType != null}">
+                                <input class="form-control" type="text" th:value='*{drivingIdentifyType}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">证件类型：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.identifyType != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("identifyType",caseDetail.getIdentifyType())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">身份证号：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.identifyNumber != null}">
+                                <input class="form-control" type="text" th:value='*{identifyNumber}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">出险险种：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null}">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" disabled="disabled" th:checked="${caseDetail.getJiaoQiangIsExist() != null}">交强险</label>
+                                    <label><input type="checkbox" disabled="disabled" th:checked="${caseDetail.getShangYeIsExist() != null}">商业险</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    事故查勘信息
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal col4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">出险地点类型：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.dangerAddressType != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("damageAddressType",caseDetail.getDangerAddressType())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">已报交警：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isPolice != null}">
+                                <input type="radio" name="isPolice" disabled="disabled" value="0" th:field="*{isPolice}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isPolice" disabled="disabled" value="1" th:field="*{isPolice}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">伤者人数：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.hurtNum != null}">
+                                <div>
+                                   <input class="form-control" type="text" th:value="${caseDetail.hurtNum} +'人'" disabled="disabled">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">事故处理方式：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.eventProcessMode != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("optionType",caseDetail.getEventProcessMode())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">事故责任划分：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.eventAccidentLiability != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("accidentLiability",caseDetail.getEventAccidentLiability())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">事故责任比例：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.eventDutyRatio != null}">
+                                 <div>
+                                   <input class="form-control" type="text" th:value="${caseDetail.eventDutyRatio} +'%'"  disabled="disabled">
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">证件审核：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.driverReview != null}">
+                                <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("driverReview",caseDetail.getDriverReview())}' disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否酒后驾车：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isDrinkingDriving != null}">
+                                <input type="radio" name="isDrinkingDriving" disabled="disabled" value="0" th:field="*{isDrinkingDriving}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isDrinkingDriving" disabled="disabled" value="1" th:field="*{isDrinkingDriving}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否约定驾驶员：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isAppointDriver != null}">
+                                <input type="radio" name="isAppointDriver" disabled="disabled" value="0"  th:field="*{isAppointDriver}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isAppointDriver" disabled="disabled" value="1"  th:field="*{isAppointDriver}">&nbsp;是
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">是否现场查勘：</label>
+                            <div class="col-sm-6" th:if="${caseDetail !=null && caseDetail.isFirstScene != null}">
+                                <input type="radio" name="isFirstScene" disabled="disabled" value="0" th:field="*{isFirstScene}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="isFirstScene" disabled="disabled" value="1" th:field="*{isFirstScene}">&nbsp;是
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    伤亡人员信息
+                </div>
+                <div class="panel-body">
+                    <table style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">序号</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">伤者姓名</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">伤者属性</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">查勘员</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">处理状态</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">查勘时间</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">定损人</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">定损金额</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">定损时间</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">核损人</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">核损金额</th>
+                            <th style="border: 1px solid #999999;text-align: center;background-color: #F0F0F0;">核损时间</th>
+                        </tr>
+                        </thead>
+                        <tbody th:if="${caseDetail !=null}">
+                        <tr th:each="huManInfo,huManInfoStat: *{huManInfos}" style="border: 1px solid #999999;text-align: center;">
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${huManInfoStat.count}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${huManInfo.humanName}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text='${@ce_dict.getDictNameByTypeAndCode("humanType",__${huManInfo.humanType}__)}'></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${huManInfo.checkerName}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text='${@ce_dict.getDictNameByTypeAndCode("taskStatus",__${huManInfo.taskStatus}__)}'></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text='${#dates.format(huManInfo.getCheckEndTime(),"yyyy-MM-dd HH:mm:ss")}'></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${huManInfo.damageName}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${#numbers.formatDecimal(huManInfo.fixedLossAmount,1,2)}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text='${#dates.format(huManInfo.getFixedLossReceivTime(),"yyyy-MM-dd HH:mm:ss")}'></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${huManInfo.reviewerName}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text="${#numbers.formatDecimal(huManInfo.damageAmount,1,2)}"></td>
+                            <td style="border: 1px solid #999999;text-align: center;" th:text='${#dates.format(huManInfo.getReviewerSubmitTime(),"yyyy-MM-dd HH:mm:ss")}'></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: ztree-js" />
+
+</body>
+</html>

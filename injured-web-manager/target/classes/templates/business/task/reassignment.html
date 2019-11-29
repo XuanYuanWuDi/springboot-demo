@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('任务改派')" />
+	<th:block th:include="include :: ztree-css" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-role-edit">
+			<input type="text" name="ids" id="ids" th:value="${ids}" style="display: none"/>
+			<div class="dropdown" style="margin-left:auto;margin-top:20%">
+				请输入接收任务人的工号:
+				<input type="text" class="form-control" id="userNoAndName" userNo="" data-toggle="dropdown" style="width:360px" autocomplete="off">
+				<input type="hidden" class="form-control" id="userNo" data-toggle="dropdown" style="width:360px" autocomplete="off">
+				 <ul id="search" class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"></ul>
+			</div>
+
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: ztree-js" />
+	<script type="text/javascript">
+		$(document).ready(function () {
+
+			//当文本框有键盘输入的时候执行的函数
+			$("#userNoAndName").blur(function () {
+				if($("#userNoAndName").val() == ""){
+					//先清空所有的 li ，即候选框
+					$("li").remove();
+					//隐藏 ul ，只是为了美观
+					$("ul").hide();
+					//如果文本框没有值
+					return;
+				}
+				//定义一个url 也就是请求
+				var url = "/system/user/searchUserByNo";
+				$.modal.loading("正在查询，请稍后...");
+				var userNo = $("#userNoAndName").val();
+				if(userNo.indexOf("_") >= 0){
+					userNo = userNo.substring(0,userNo.indexOf("_"));
+				}
+				$.get(url,
+						{
+							userNo:userNo,
+							fastInfoId:$("#ids").val()
+						},
+						function(data){
+							//先清空所有的 li ，即候选框
+							$("li").remove();
+							if( data.length == 0){
+								$("#search").append("<li role='presentation'><a role='menuitem' tabindex='-1' href='javascript:void(0)' >无此工号用户</a></li>");
+							}else{
+								//显示 ul 节点
+								//遍历从后台取到的JSON数据
+								for(var i=0;i<data.length;i++){
+									//循环添加li节点
+									$("#search").append("<li role='presentation'><a role='menuitem' tabindex="+i+"  'href='javascript:void(0)' userName="+data[i].userName+"  userno="+data[i].userNo+">工号:"+data[i].userNo+",姓名:"+data[i].userName+"</a></li>");
+									//实现点击候选框的值，文本框的值被关联的效果
+									$("ul li a").mousedown(function () {
+										$("#userNoAndName").val($(this).attr("userno") + "_" + $(this).attr("userName"));
+									});
+								}
+							}
+							setTimeout(function () {
+								$.modal.closeLoading();
+								$("ul").show();
+							},1*1000);
+						},
+						"json");
+			})
+		});
+	</script>
+</body>
+</html>

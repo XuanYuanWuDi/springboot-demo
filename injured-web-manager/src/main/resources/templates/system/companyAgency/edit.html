@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改用户')" />
+	<th:block th:include="include :: select2-css" />
+	
+	<style>
+		.pull-left.pagination-detail{
+			display: none;
+		}
+		.pull-right.pagination{
+			display: none;
+		}
+		table tbody{
+  			display: block; 
+			max-height:290px;
+			overflow-y: scroll;
+		}
+		table thead, tbody tr {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+            text-align: left;
+        }
+		table td:first-child,table th:first-child{
+			width: 7%;
+		}
+		table td:nth-child(2),table th:nth-child(2){
+			width: 20%;
+		}
+		table td:nth-child(3),table th:nth-child(3){
+			width: 20%;
+		}
+		table td:nth-child(4),table th:nth-child(4){
+			width: 20%;
+		}
+
+	</style>
+</head>
+<body>
+    <div class="form-content">
+        <form class="form-horizontal" id="form-agency-edit" th:object="${companyAgency}">
+            <input name="id" id="id"  type="hidden"  th:field="*{id}" />
+            <input name="companyId"   type="hidden"  th:field="*{companyId}" />
+            <input name="havingChildNode"   type="hidden"  th:field="*{havingChildNode}" />
+            <h4 class="form-header h4">基本信息</h4>
+            <div class="row">
+            	<div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">机构代码：</label>
+                        <div class="col-sm-8">
+                            <input name="agencyCode"  class="form-control" style="width: 60%" type="text"  th:field="*{agencyCode}" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">机构名称：</label>
+                        <div class="col-sm-10">
+                               <input name="agencyName"  class="form-control" style="width: 72%"  type="text"  th:field="*{agencyName}" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">机构层级：</label>
+                        <div class="col-sm-8">
+                            <input th:if="${companyAgency.agencyLevel eq 1}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="一级" disabled="disabled">
+                            <input th:if="${companyAgency.agencyLevel eq 2}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="二级" disabled="disabled">
+                            <input th:if="${companyAgency.agencyLevel eq 3}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="三级" disabled="disabled">
+                            <input th:if="${companyAgency.agencyLevel eq 4}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="四级" disabled="disabled">
+                            <input th:if="${companyAgency.agencyLevel eq 5}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="五级" disabled="disabled">
+                            <input th:if="${companyAgency.agencyLevel eq 6}" name="agencyLevel" class="form-control"style="width: 60%" type="text"  value="六级" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">上级机构：</label>
+                        <div class="col-sm-10">
+                            <input name="agencyCodeUp" class="form-control" style="width: 72%" type="text"  th:field="*{agencyNameUp}" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>是否是理赔机构：</label>
+                        <div class="col-sm-8">
+								<div class="radio-box">
+									<input type="radio" name="isClaim" value="1" th:field="*{isClaim}" checked="checked">是
+								</div>
+								<div class="radio-box">
+									<input type="radio" name="isClaim" value="0" th:field="*{isClaim}">否
+								</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>修改说明：</label>
+                        <div class="col-sm-8">
+                            <textarea name="remark" id="remark" style="width: 120%" maxlength="60" class="form-control" rows="3" onclick="changeError()"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--             <h4 class="form-header h4" style="margin-bottom: 2px">操作记录</h4> -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="select-table table-striped"  style="margin-left: 10%;width: 78%">
+                            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-10"  style="margin-top: 15px">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script type="text/javascript">
+        var prefix = ctx + "system/agency";
+        var id = '[[${companyAgency.id}]]'
+        $(function() {
+		    var options = {
+		        url: "/monitor/operlog/viewList/"+id+"/14",
+		        showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        showPageGo: true,
+		        modalName: "机构历史",
+		        columns: [{
+		            field: '',
+		            title: '序号',
+   		            formatter: function (value, row, index) {
+                           return index + 1;
+   	                }
+		        },
+		        {
+		            field: 'submitOpinion',
+		            title: '操作类型'
+		        },
+		        {
+		            field: 'submitName',
+		            title: '提交人'
+		        },
+		        {
+		            field: 'submitTime',
+		            title: '提交时间'
+		        },
+		        {
+		            field: 'opinionDesc',
+		            title: '操作说明'
+		        }]
+		    };
+		    $.table.init(options);
+		    $("div.fixed-table-toolbar").hide();
+		});
+        
+      //修改说明 校验
+	    jQuery.validator.addMethod("remarkValida", function(value, element) {
+	    	if($.common.trim(value)){
+	    			$("#remark").css("background-color","#ffffff");
+		    		$("#remark").css("border-color","#e5e6e7");
+		    		$("#remark").css("color","#676a6c");
+	    			return true;
+	    		}else{
+	    			$("#remark").css("background-color","#fbe2e2");
+		    		$("#remark").css("border-color","#c66161");
+		    		$("#remark").css("color","#c00");
+	    			return false;
+	    		}
+	    }, "请输入修改说明");
+		function changeError(){
+			$("#remark").css("background-color","#ffffff");
+    		$("#remark").css("border-color","#e5e6e7");
+    		$("#remark").css("color","#676a6c");
+    		$("#remark-error").text("");
+		}
+        
+        $("#form-agency-edit").validate({
+        	onkeyup: false,
+        	rules:{
+        		remark:{
+        			remarkValida: true
+        		}
+        	}
+        });
+        
+        function submitHandler() {
+        	if ($.validate.form()) {
+         		$.operate.saveTab(prefix + "/save", $('#form-agency-edit').serialize());
+        	}
+ 	    }
+    </script>
+</body>
+</html>

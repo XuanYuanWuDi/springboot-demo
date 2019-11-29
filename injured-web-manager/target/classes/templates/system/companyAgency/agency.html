@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('机构列表')" />
+</head>
+<body class="gray-bg">
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="dept-form">
+					<input id="search_status" type="hidden" value="-1" name="status">
+					<div class="select-list">
+						<ul class="row">
+	 						<li class="col-md-4">
+								机构名称：<input type="text" name="agencyName" onmouseover="selbox($(this))" maxlength="40" style="width: 180px" />
+									<input name="fuzzy" type="checkbox" value="1" style="height: 15px;width: 20px;" >模糊
+							</li>
+							<li class="col-md-4">
+								是否为理赔机构：<select name="isClaim" >
+									<option value="2">全部</option>
+									<option value="1">是</option>
+									<option value="0">否</option>
+								</select>
+							</li>
+							<li>
+								是否包含下级机构：
+								<input type="radio" name="havingChildNode" value="1" checked="checked" style="width: 15px;height: 15px;margin-right: 2px">是
+								<input type="radio" name="havingChildNode" value="0" style="width: 15px;height: 15px;margin-right: 2px">否
+							</li>
+						</ul>
+						<ul class="row">
+							<li class="col-md-3"></li>
+							<li class="col-md-3"></li>
+							<li style="margin-left: 100px;">
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="onSearchClick()"><i class="fa fa-search"></i>&nbsp;查询</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="dicEntity()" style="margin-left: 100px;"><i class="fa fa-refresh"></i>&nbsp;清空</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <span class="group-title">查询结果</span>
+	        </div>
+       		 <div class="col-sm-12 select-table table-striped">
+	            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+	        </div>
+	    </div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('system:dept:edit')}]];
+		var prefix = ctx + "system/agency"
+
+		function onSearchClick(){
+			document.getElementById("search_status").value = 1;
+			$.table.search()
+		}
+		
+		function selbox(a){
+			var val = a.val();
+			a.attr("title",val);
+		}
+
+		$(function() {
+
+		    var options = {
+		        url: prefix + "/list",
+		        updateUrl: prefix + "/edit/{id}",
+		        modalName: "机构",
+		        onClickRow: onClickRow,
+		        showPageGo: true,
+		        columns: [
+                 {
+                	field: 'agencyCode',
+ 		            title: '机构编码'
+		            
+		        },
+		        {
+		        	field: 'agencyName',
+		            title: '机构名称',
+		            align: "left"
+		        },
+		        {
+                	field: 'agencyLevel',
+ 		            title: '机构层级',
+ 		           formatter: function(value, item, index) {
+		            	if(item.agencyLevel == 1){
+		            		return "一级";
+		            	}else if(item.agencyLevel == 2){
+		            		return "二级";
+		            	}else if(item.agencyLevel == 3){
+		            		return "三级";
+		            	}else if(item.agencyLevel == 4){
+		            		return "四级";
+		            	}else if(item.agencyLevel == 5){
+		            		return "五级";
+		            	}else if(item.agencyLevel == 6){
+		            		return "六级";
+		            	}
+		            }
+		            
+		        },
+		        {
+		            field: 'isClaim',
+		            title: '是否为理赔机构',
+		            formatter: function(value, item, index) {
+		            	if(item.isClaim == 1){
+		            		return "是";
+		            	}
+		            	return "否";
+		            }
+		        },
+		        {
+		        	field: '',
+		            title: '上级机构',
+		            formatter: function(value, item, index) {
+		            	if(item.agencyCodeUp!=null){
+		            		return "("+item.agencyCodeUp+")"+item.agencyNameUp;
+		            	}
+		            	return "";
+		            }
+		            
+		        }]
+		    };
+		    $.table.init(options);
+		});
+		
+		function onClickRow(row, $element){
+			$.operate.editTab(row.id)
+        }
+		
+		function dicEntity(){
+			$("input[type=radio][name=havingChildNode][value=1]").prop("checked",true);
+			$.form.reset()
+		}
+	</script>
+</body>
+</html>

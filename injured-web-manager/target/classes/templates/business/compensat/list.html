@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('快赔审核')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="dept-form">
+                <input id="search_status" type="hidden" value="-1" name="status">
+                <div class="select-list">
+                    <ul class="row">
+                        <li class="col-md-3">
+                            报&nbsp;&nbsp;案&nbsp;&nbsp;号：<input type="text" name="claimNotificationNo" style="width:214px"/>
+                            <input type="text" name="reviewStatusInit" value="2,4" style="display: none"/>
+                            <input type="text" name="taskTypeFirst" value="A01" style="display: none"/>
+                        </li>
+                        <li class="col-md-3">
+                            被保险人：<input type="text" name="theInsuredName"/>
+                        </li>
+                        <li>
+                            理赔机构：
+                            <select id="companyAgencyIdFirst" name="companyAgencyIdFirst"
+                                    th:with="type=${@ce_agency.findAgencyByLevel(1)}"
+                                    onchange="changeCompanyAgencyId()">
+                                <option value="-1">--请选择--</option>
+                                <option th:each="dict : ${type}" th:text="${dict.agencyName}" th:value="${dict.id}"></option>
+                            </select>
+                            <select id="companyAgencyId" name="companyAgencyId">
+                                <option value="-1">--请选择--</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="row">
+                        <li class="col-md-3">
+                            金额区间：
+                            <input type="text" name="fixedLossAmountBegin" style="width: 100px"> - <input type="text" name="fixedLossAmountEnd" style="width: 100px"/>
+                        </li>
+                        <li class="col-md-3">
+                            任务状态：
+                            <select name="reviewStatus">
+                                <option value="">--请选择--</option>
+                                <option value="2">初核中</option>
+                                <option value="4">终核中</option>
+                            </select>
+                        </li>
+                        <li style="margin-left: 100px;">
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="onSearchClick()"><i class="fa fa-search"></i>&nbsp;查询</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="reset()" style="margin-left: 100px;"><i class="fa fa-refresh"></i>&nbsp;清空</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <span class="group-title">查询结果</span>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('injured:compensat:edit')}]];
+		var prefix = ctx + "compensat"
+
+        var datasTaskStatus = [[${@ce_dict.getType('taskStatus')}]];
+        var datasHumanType = [[${@ce_dict.getType('humanType')}]];
+
+		function onSearchClick(){
+			document.getElementById("search_status").value = 1;
+			$.table.search()
+		}
+
+        function reset(){
+            $("#dept-form")[0].reset();
+            $('#companyAgencyId').html('');
+            $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+        }
+
+        function changeCompanyAgencyId() {
+            var parentId = $('#companyAgencyIdFirst').val();
+            if(parentId == '' || parentId == null){
+                return;
+            }
+            if(parentId == -1){
+                $('#companyAgencyId').html('');
+                $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+                return;
+            }
+            // 获取子机构
+            $.ajax({
+                type : "GET",
+                url : "/system/agency/findAgencyByPid",
+                dataType : "JSON",
+                data : {"pid":parentId},
+                success : function(datas)
+                {
+                    $('#companyAgencyId').html('');
+                    $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+                    for (var i = 0; i < datas.length; i++) {
+                        $('#companyAgencyId').append("<option value = "+datas[i].id+">"+datas[i].agencyName+"</option>");
+                    }
+
+                },error:function(){
+                    $.modal.alertError("获取数据失败");
+                }
+            });
+        }
+
+
+		$(function() {
+
+		    var options = {
+		        url: prefix + "/list",
+                detailUrl: prefix + "/detail/{id}/{htmlName}",
+		        modalName: "快赔审核",
+                sortName: "create_time desc",
+                escape: true,
+                showPageGo: true,
+                rememberSelected: true,
+		        columns: [
+                 {
+                	field: 'claimNotificationNo',
+ 		            title: '报案号'
+
+		        },
+		        {
+		        	field: 'theInsuredName',
+		            title: '被保险人',
+		            align: "left"
+		        },
+                {
+                    field: 'reportDate',
+                    title: '报案时间',
+                    align: "left"
+                },
+                {
+                    field: 'humanName',
+                    title: '伤者姓名',
+                    align: "left"
+                },
+                {
+                    field: 'humanType',
+                    title: '伤者属性',
+                    align: "left",
+                    formatter: function(value, item, index) {
+                        return $.table.selectCeDictLabel(datasHumanType,value);
+                    }
+                },
+                {
+                    field: 'updtaeTime',
+                    title: '接收时间',
+                    align: "left"
+                },
+                {
+                    field: 'companyAgencyName',
+                    title: '理赔机构',
+                    align: "left"
+                },
+                {
+                    field: 'damageName',
+                    title: '定损人',
+                    align: "left"
+                },
+                {
+                    field: 'fixedLossAmount',
+                    title: '定损金额',
+                    align: "left"
+                },
+                {
+                    field: 'reviewStatus',
+                    title: '任务状态',
+                    align: "left",
+                    formatter: function(value, row, index) {
+                        if(row.taskStatus != null && row.taskStatus != '' && row.taskStatus != 8){
+                            return $.table.selectCeDictLabel(datasTaskStatus,row.taskStatus);
+                        }
+                        return $.table.selectCeDictLabel(datasTaskStatus,value);
+                    }
+                },
+                {
+                        field: 'remark',
+                        title: '等待时长',
+                        align: "left"
+                },
+                {
+                        field: 'timeOut',
+                        title: '超时时长',
+                        align: "left",
+                        visible:false
+                 },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        url = $.table._option.detailUrl;
+                        url = url.replace("{id}", row.id);
+                        url = url.replace("{htmlName}",'detail');
+                        actions.push('<a class="btn btn-warning btn-xs" href="javascript:void(0)" onclick="$.operate.openTab(\'审批信息\', \'' +url+'\', \'/compensat\')"><i class="fa fa-search"></i>详细</a>');
+                        return actions.join('');
+                    }
+                }
+		        ],
+                rowStyle:function(row, index) {  //加载成功时执行
+                    var style = {};
+                   if(row.timeOut != 0){
+                       style={css:{'color':'#ff0000'}};
+                       return style;
+                   }
+                   return style;
+                }
+		    };
+		    $.table.init(options);
+		});
+	</script>
+</body>
+</html>

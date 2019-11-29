@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeRegistMessageMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeRegistMessage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="task_no" jdbcType="VARCHAR" property="taskNo" />
+    <result column="regist_status" jdbcType="VARCHAR" property="registStatus" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="versions" jdbcType="VARCHAR" property="versions" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.injured.server.api.entity.CeRegistMessage">
+    <result column="insurance_message" jdbcType="LONGVARCHAR" property="insuranceMessage" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, claim_notification_no, task_no, regist_status, company_id, company_code, 
+    versions, remark, is_delete, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    insurance_message
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.injured.server.api.entity.CeRegistMessageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ce_regist_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeRegistMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_regist_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ce_regist_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_regist_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeRegistMessageExample">
+    delete from ce_regist_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeRegistMessage" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_regist_message (id, regist_id, claim_notification_no, 
+      task_no, regist_status, company_id, 
+      company_code, versions, remark, 
+      is_delete, create_time, insurance_message
+      )
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, 
+      #{taskNo,jdbcType=VARCHAR}, #{registStatus,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, 
+      #{companyCode,jdbcType=VARCHAR}, #{versions,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{insuranceMessage,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeRegistMessage" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_regist_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="taskNo != null">
+        task_no,
+      </if>
+      <if test="registStatus != null">
+        regist_status,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="versions != null">
+        versions,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="insuranceMessage != null">
+        insurance_message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNo != null">
+        #{taskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registStatus != null">
+        #{registStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="versions != null">
+        #{versions,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceMessage != null">
+        #{insuranceMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeRegistMessageExample" resultType="java.lang.Long">
+    select count(*) from ce_regist_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_regist_message
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskNo != null">
+        task_no = #{record.taskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registStatus != null">
+        regist_status = #{record.registStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versions != null">
+        versions = #{record.versions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.insuranceMessage != null">
+        insurance_message = #{record.insuranceMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ce_regist_message
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      task_no = #{record.taskNo,jdbcType=VARCHAR},
+      regist_status = #{record.registStatus,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      versions = #{record.versions,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      insurance_message = #{record.insuranceMessage,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_regist_message
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      task_no = #{record.taskNo,jdbcType=VARCHAR},
+      regist_status = #{record.registStatus,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      versions = #{record.versions,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeRegistMessage">
+    update ce_regist_message
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNo != null">
+        task_no = #{taskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registStatus != null">
+        regist_status = #{registStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="versions != null">
+        versions = #{versions,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="insuranceMessage != null">
+        insurance_message = #{insuranceMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.injured.server.api.entity.CeRegistMessage">
+    update ce_regist_message
+    set regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      task_no = #{taskNo,jdbcType=VARCHAR},
+      regist_status = #{registStatus,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      versions = #{versions,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      insurance_message = #{insuranceMessage,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeRegistMessage">
+    update ce_regist_message
+    set regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      task_no = #{taskNo,jdbcType=VARCHAR},
+      regist_status = #{registStatus,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=INTEGER},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      versions = #{versions,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

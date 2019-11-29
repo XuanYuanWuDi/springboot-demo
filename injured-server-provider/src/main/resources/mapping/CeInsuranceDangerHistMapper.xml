@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeInsuranceDangerHistMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeInsuranceDangerHist">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="insurance_id" jdbcType="BIGINT" property="insuranceId" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="policy_no" jdbcType="VARCHAR" property="policyNo" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="insurance_category" jdbcType="VARCHAR" property="insuranceCategory" />
+    <result column="paid_times" jdbcType="INTEGER" property="paidTimes" />
+    <result column="pay_claim_number" jdbcType="VARCHAR" property="payClaimNumber" />
+    <result column="claim_end_date" jdbcType="TIMESTAMP" property="claimEndDate" />
+    <result column="claim_result" jdbcType="TINYINT" property="claimResult" />
+    <result column="driver_name" jdbcType="VARCHAR" property="driverName" />
+    <result column="estimate_amount" jdbcType="DECIMAL" property="estimateAmount" />
+    <result column="claim_date" jdbcType="TIMESTAMP" property="claimDate" />
+    <result column="event_address" jdbcType="VARCHAR" property="eventAddress" />
+    <result column="license_plate_no" jdbcType="VARCHAR" property="licensePlateNo" />
+    <result column="report_date" jdbcType="TIMESTAMP" property="reportDate" />
+    <result column="reporter_tel" jdbcType="VARCHAR" property="reporterTel" />
+    <result column="reporter" jdbcType="VARCHAR" property="reporter" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="paid_amount" jdbcType="DECIMAL" property="paidAmount" />
+    <result column="danger_desc" jdbcType="VARCHAR" property="dangerDesc" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, insurance_id, company_id, company_code, policy_no, status, insurance_category, 
+    paid_times, pay_claim_number, claim_end_date, claim_result, driver_name, estimate_amount, 
+    claim_date, event_address, license_plate_no, report_date, reporter_tel, reporter, 
+    claim_notification_no, paid_amount, danger_desc, update_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeInsuranceDangerHistExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_insurance_danger_hist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_insurance_danger_hist
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_insurance_danger_hist
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeInsuranceDangerHistExample">
+    delete from ce_insurance_danger_hist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeInsuranceDangerHist">
+    insert into ce_insurance_danger_hist (id, regist_id, insurance_id, 
+      company_id, company_code, policy_no, 
+      status, insurance_category, paid_times, 
+      pay_claim_number, claim_end_date, claim_result, 
+      driver_name, estimate_amount, claim_date, 
+      event_address, license_plate_no, report_date, 
+      reporter_tel, reporter, claim_notification_no, 
+      paid_amount, danger_desc, update_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{insuranceId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=INTEGER}, #{companyCode,jdbcType=VARCHAR}, #{policyNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{insuranceCategory,jdbcType=VARCHAR}, #{paidTimes,jdbcType=INTEGER}, 
+      #{payClaimNumber,jdbcType=VARCHAR}, #{claimEndDate,jdbcType=TIMESTAMP}, #{claimResult,jdbcType=TINYINT}, 
+      #{driverName,jdbcType=VARCHAR}, #{estimateAmount,jdbcType=DECIMAL}, #{claimDate,jdbcType=TIMESTAMP}, 
+      #{eventAddress,jdbcType=VARCHAR}, #{licensePlateNo,jdbcType=VARCHAR}, #{reportDate,jdbcType=TIMESTAMP}, 
+      #{reporterTel,jdbcType=VARCHAR}, #{reporter,jdbcType=VARCHAR}, #{claimNotificationNo,jdbcType=VARCHAR}, 
+      #{paidAmount,jdbcType=DECIMAL}, #{dangerDesc,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeInsuranceDangerHist">
+    insert into ce_insurance_danger_hist
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="insuranceId != null">
+        insurance_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="policyNo != null">
+        policy_no,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="insuranceCategory != null">
+        insurance_category,
+      </if>
+      <if test="paidTimes != null">
+        paid_times,
+      </if>
+      <if test="payClaimNumber != null">
+        pay_claim_number,
+      </if>
+      <if test="claimEndDate != null">
+        claim_end_date,
+      </if>
+      <if test="claimResult != null">
+        claim_result,
+      </if>
+      <if test="driverName != null">
+        driver_name,
+      </if>
+      <if test="estimateAmount != null">
+        estimate_amount,
+      </if>
+      <if test="claimDate != null">
+        claim_date,
+      </if>
+      <if test="eventAddress != null">
+        event_address,
+      </if>
+      <if test="licensePlateNo != null">
+        license_plate_no,
+      </if>
+      <if test="reportDate != null">
+        report_date,
+      </if>
+      <if test="reporterTel != null">
+        reporter_tel,
+      </if>
+      <if test="reporter != null">
+        reporter,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="paidAmount != null">
+        paid_amount,
+      </if>
+      <if test="dangerDesc != null">
+        danger_desc,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceId != null">
+        #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="policyNo != null">
+        #{policyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCategory != null">
+        #{insuranceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="paidTimes != null">
+        #{paidTimes,jdbcType=INTEGER},
+      </if>
+      <if test="payClaimNumber != null">
+        #{payClaimNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="claimEndDate != null">
+        #{claimEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="claimResult != null">
+        #{claimResult,jdbcType=TINYINT},
+      </if>
+      <if test="driverName != null">
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="estimateAmount != null">
+        #{estimateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="claimDate != null">
+        #{claimDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventAddress != null">
+        #{eventAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateNo != null">
+        #{licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDate != null">
+        #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reporterTel != null">
+        #{reporterTel,jdbcType=VARCHAR},
+      </if>
+      <if test="reporter != null">
+        #{reporter,jdbcType=VARCHAR},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paidAmount != null">
+        #{paidAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="dangerDesc != null">
+        #{dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeInsuranceDangerHistExample" resultType="java.lang.Long">
+    select count(*) from ce_insurance_danger_hist
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_insurance_danger_hist
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.insuranceId != null">
+        insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyNo != null">
+        policy_no = #{record.policyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceCategory != null">
+        insurance_category = #{record.insuranceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paidTimes != null">
+        paid_times = #{record.paidTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.payClaimNumber != null">
+        pay_claim_number = #{record.payClaimNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claimEndDate != null">
+        claim_end_date = #{record.claimEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.claimResult != null">
+        claim_result = #{record.claimResult,jdbcType=TINYINT},
+      </if>
+      <if test="record.driverName != null">
+        driver_name = #{record.driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.estimateAmount != null">
+        estimate_amount = #{record.estimateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.claimDate != null">
+        claim_date = #{record.claimDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.eventAddress != null">
+        event_address = #{record.eventAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licensePlateNo != null">
+        license_plate_no = #{record.licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportDate != null">
+        report_date = #{record.reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reporterTel != null">
+        reporter_tel = #{record.reporterTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reporter != null">
+        reporter = #{record.reporter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paidAmount != null">
+        paid_amount = #{record.paidAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dangerDesc != null">
+        danger_desc = #{record.dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_insurance_danger_hist
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      policy_no = #{record.policyNo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      insurance_category = #{record.insuranceCategory,jdbcType=VARCHAR},
+      paid_times = #{record.paidTimes,jdbcType=INTEGER},
+      pay_claim_number = #{record.payClaimNumber,jdbcType=VARCHAR},
+      claim_end_date = #{record.claimEndDate,jdbcType=TIMESTAMP},
+      claim_result = #{record.claimResult,jdbcType=TINYINT},
+      driver_name = #{record.driverName,jdbcType=VARCHAR},
+      estimate_amount = #{record.estimateAmount,jdbcType=DECIMAL},
+      claim_date = #{record.claimDate,jdbcType=TIMESTAMP},
+      event_address = #{record.eventAddress,jdbcType=VARCHAR},
+      license_plate_no = #{record.licensePlateNo,jdbcType=VARCHAR},
+      report_date = #{record.reportDate,jdbcType=TIMESTAMP},
+      reporter_tel = #{record.reporterTel,jdbcType=VARCHAR},
+      reporter = #{record.reporter,jdbcType=VARCHAR},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      paid_amount = #{record.paidAmount,jdbcType=DECIMAL},
+      danger_desc = #{record.dangerDesc,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeInsuranceDangerHist">
+    update ce_insurance_danger_hist
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceId != null">
+        insurance_id = #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="policyNo != null">
+        policy_no = #{policyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceCategory != null">
+        insurance_category = #{insuranceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="paidTimes != null">
+        paid_times = #{paidTimes,jdbcType=INTEGER},
+      </if>
+      <if test="payClaimNumber != null">
+        pay_claim_number = #{payClaimNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="claimEndDate != null">
+        claim_end_date = #{claimEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="claimResult != null">
+        claim_result = #{claimResult,jdbcType=TINYINT},
+      </if>
+      <if test="driverName != null">
+        driver_name = #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="estimateAmount != null">
+        estimate_amount = #{estimateAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="claimDate != null">
+        claim_date = #{claimDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventAddress != null">
+        event_address = #{eventAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateNo != null">
+        license_plate_no = #{licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDate != null">
+        report_date = #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reporterTel != null">
+        reporter_tel = #{reporterTel,jdbcType=VARCHAR},
+      </if>
+      <if test="reporter != null">
+        reporter = #{reporter,jdbcType=VARCHAR},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paidAmount != null">
+        paid_amount = #{paidAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="dangerDesc != null">
+        danger_desc = #{dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeInsuranceDangerHist">
+    update ce_insurance_danger_hist
+    set regist_id = #{registId,jdbcType=BIGINT},
+      insurance_id = #{insuranceId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=INTEGER},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      policy_no = #{policyNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      insurance_category = #{insuranceCategory,jdbcType=VARCHAR},
+      paid_times = #{paidTimes,jdbcType=INTEGER},
+      pay_claim_number = #{payClaimNumber,jdbcType=VARCHAR},
+      claim_end_date = #{claimEndDate,jdbcType=TIMESTAMP},
+      claim_result = #{claimResult,jdbcType=TINYINT},
+      driver_name = #{driverName,jdbcType=VARCHAR},
+      estimate_amount = #{estimateAmount,jdbcType=DECIMAL},
+      claim_date = #{claimDate,jdbcType=TIMESTAMP},
+      event_address = #{eventAddress,jdbcType=VARCHAR},
+      license_plate_no = #{licensePlateNo,jdbcType=VARCHAR},
+      report_date = #{reportDate,jdbcType=TIMESTAMP},
+      reporter_tel = #{reporterTel,jdbcType=VARCHAR},
+      reporter = #{reporter,jdbcType=VARCHAR},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      paid_amount = #{paidAmount,jdbcType=DECIMAL},
+      danger_desc = #{dangerDesc,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

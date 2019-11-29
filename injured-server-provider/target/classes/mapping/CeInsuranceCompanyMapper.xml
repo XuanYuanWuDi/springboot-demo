@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeInsuranceCompanyMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeInsuranceCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="authorized_ip" jdbcType="VARCHAR" property="authorizedIp" />
+    <result column="secret_key" jdbcType="VARCHAR" property="secretKey" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="task_number" jdbcType="INTEGER" property="taskNumber" />
+    <result column="data_type" jdbcType="INTEGER" property="dataType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, code, short_name, full_name, parent_id, province, city, is_delete, create_date, 
+    authorized_ip, secret_key, update_date, task_number, data_type
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeInsuranceCompanyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_insurance_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_insurance_company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ce_insurance_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeInsuranceCompanyExample">
+    delete from ce_insurance_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeInsuranceCompany">
+    insert into ce_insurance_company (id, code, short_name, 
+      full_name, parent_id, province, 
+      city, is_delete, create_date, 
+      authorized_ip, secret_key, update_date, 
+      task_number, data_type)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{shortName,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{authorizedIp,jdbcType=VARCHAR}, #{secretKey,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{taskNumber,jdbcType=INTEGER}, #{dataType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeInsuranceCompany">
+    insert into ce_insurance_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="shortName != null">
+        short_name,
+      </if>
+      <if test="fullName != null">
+        full_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="authorizedIp != null">
+        authorized_ip,
+      </if>
+      <if test="secretKey != null">
+        secret_key,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="taskNumber != null">
+        task_number,
+      </if>
+      <if test="dataType != null">
+        data_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizedIp != null">
+        #{authorizedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeInsuranceCompanyExample" resultType="java.lang.Long">
+    select count(*) from ce_insurance_company
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_insurance_company
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shortName != null">
+        short_name = #{record.shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fullName != null">
+        full_name = #{record.fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.province != null">
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authorizedIp != null">
+        authorized_ip = #{record.authorizedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secretKey != null">
+        secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskNumber != null">
+        task_number = #{record.taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataType != null">
+        data_type = #{record.dataType,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_insurance_company
+    set id = #{record.id,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      short_name = #{record.shortName,jdbcType=VARCHAR},
+      full_name = #{record.fullName,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      authorized_ip = #{record.authorizedIp,jdbcType=VARCHAR},
+      secret_key = #{record.secretKey,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      task_number = #{record.taskNumber,jdbcType=INTEGER},
+      data_type = #{record.dataType,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeInsuranceCompany">
+    update ce_insurance_company
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        full_name = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authorizedIp != null">
+        authorized_ip = #{authorizedIp,jdbcType=VARCHAR},
+      </if>
+      <if test="secretKey != null">
+        secret_key = #{secretKey,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskNumber != null">
+        task_number = #{taskNumber,jdbcType=INTEGER},
+      </if>
+      <if test="dataType != null">
+        data_type = #{dataType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeInsuranceCompany">
+    update ce_insurance_company
+    set code = #{code,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      authorized_ip = #{authorizedIp,jdbcType=VARCHAR},
+      secret_key = #{secretKey,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      task_number = #{taskNumber,jdbcType=INTEGER},
+      data_type = #{dataType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

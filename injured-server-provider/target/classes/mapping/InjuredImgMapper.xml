@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredImgMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredImg">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_type" jdbcType="INTEGER" property="businessType" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="img_type" jdbcType="INTEGER" property="imgType" />
+    <result column="is_upload" jdbcType="VARCHAR" property="isUpload" />
+    <result column="upload_name" jdbcType="VARCHAR" property="uploadName" />
+    <result column="upload_number" jdbcType="VARCHAR" property="uploadNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, business_id, business_type, regist_id, claim_notification_no, company_code, company_id, 
+    img_url, img_type, is_upload, upload_name, upload_number, create_time, update_time, 
+    is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredImgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_img
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_img
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredImgExample">
+    delete from injured_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredImg">
+    insert into injured_img (id, business_id, business_type, 
+      regist_id, claim_notification_no, company_code, 
+      company_id, img_url, img_type, 
+      is_upload, upload_name, upload_number, 
+      create_time, update_time, is_deleted, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, #{businessType,jdbcType=INTEGER}, 
+      #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, 
+      #{companyId,jdbcType=BIGINT}, #{imgUrl,jdbcType=VARCHAR}, #{imgType,jdbcType=INTEGER}, 
+      #{isUpload,jdbcType=VARCHAR}, #{uploadName,jdbcType=VARCHAR}, #{uploadNumber,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredImg">
+    insert into injured_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="imgType != null">
+        img_type,
+      </if>
+      <if test="isUpload != null">
+        is_upload,
+      </if>
+      <if test="uploadName != null">
+        upload_name,
+      </if>
+      <if test="uploadNumber != null">
+        upload_number,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgType != null">
+        #{imgType,jdbcType=INTEGER},
+      </if>
+      <if test="isUpload != null">
+        #{isUpload,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null">
+        #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadNumber != null">
+        #{uploadNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredImgExample" resultType="java.lang.Long">
+    select count(*) from injured_img
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_img
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessType != null">
+        business_type = #{record.businessType,jdbcType=INTEGER},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyCode != null">
+        company_code = #{record.companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.imgUrl != null">
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgType != null">
+        img_type = #{record.imgType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isUpload != null">
+        is_upload = #{record.isUpload,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadName != null">
+        upload_name = #{record.uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadNumber != null">
+        upload_number = #{record.uploadNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_img
+    set id = #{record.id,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      business_type = #{record.businessType,jdbcType=INTEGER},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      company_code = #{record.companyCode,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      img_type = #{record.imgType,jdbcType=INTEGER},
+      is_upload = #{record.isUpload,jdbcType=VARCHAR},
+      upload_name = #{record.uploadName,jdbcType=VARCHAR},
+      upload_number = #{record.uploadNumber,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredImg">
+    update injured_img
+    <set>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=INTEGER},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgType != null">
+        img_type = #{imgType,jdbcType=INTEGER},
+      </if>
+      <if test="isUpload != null">
+        is_upload = #{isUpload,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadName != null">
+        upload_name = #{uploadName,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadNumber != null">
+        upload_number = #{uploadNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredImg">
+    update injured_img
+    set business_id = #{businessId,jdbcType=BIGINT},
+      business_type = #{businessType,jdbcType=INTEGER},
+      regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      img_type = #{imgType,jdbcType=INTEGER},
+      is_upload = #{isUpload,jdbcType=VARCHAR},
+      upload_name = #{uploadName,jdbcType=VARCHAR},
+      upload_number = #{uploadNumber,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

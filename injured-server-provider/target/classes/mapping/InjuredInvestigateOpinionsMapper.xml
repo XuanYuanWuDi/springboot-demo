@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredInvestigateOpinionsMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredInvestigateOpinions">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="med_basic_info_id" jdbcType="BIGINT" property="medBasicInfoId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="victim_record_photo" jdbcType="INTEGER" property="victimRecordPhoto" />
+    <result column="claim_group_photo" jdbcType="INTEGER" property="claimGroupPhoto" />
+    <result column="actual_survey_report" jdbcType="INTEGER" property="actualSurveyReport" />
+    <result column="statement_opinions" jdbcType="VARCHAR" property="statementOpinions" />
+    <result column="survey_reception_time" jdbcType="TIMESTAMP" property="surveyReceptionTime" />
+    <result column="survey_submit_time" jdbcType="TIMESTAMP" property="surveySubmitTime" />
+    <result column="task status" jdbcType="INTEGER" property="taskStatus" />
+    <result column="adjust_type" jdbcType="INTEGER" property="adjustType" />
+    <result column="adjustment_formula" jdbcType="VARCHAR" property="adjustmentFormula" />
+    <result column="amount_compensation" jdbcType="DECIMAL" property="amountCompensation" />
+    <result column="confirmation_opinions" jdbcType="INTEGER" property="confirmationOpinions" />
+    <result column="confirmation_note" jdbcType="VARCHAR" property="confirmationNote" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, claim_notification_no, regist_id, survey_wou_id, survey_id, med_basic_info_id, 
+    company_id, compant_code, victim_record_photo, claim_group_photo, actual_survey_report, 
+    statement_opinions, survey_reception_time, survey_submit_time, "task status", adjust_type, 
+    adjustment_formula, amount_compensation, confirmation_opinions, confirmation_note, 
+    serial_num, create_time, update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_investigate_opinions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_investigate_opinions
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByStatusUntreated" resultType="java.lang.Integer">
+    select count(*)
+    from injured_investigate_opinions
+    where `task status` in (3,4)
+  </select>
+  <select id="selectByTodayProcessed" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <![CDATA[select count(*)
+    from injured_investigate_opinions
+    where  substr(update_time,1,10)=#{curtime,jdbcType=VARCHAR}
+    and `task status`=6]]>
+  </select>
+ <select id="selectByWeekProcessed" resultType="java.lang.Integer" parameterType="java.lang.String">
+   <![CDATA[select count(*)
+   from injured_investigate_opinions
+   where  update_time BETWEEN #{mondayOfThisWeek,jdbcType=VARCHAR}
+   and NOW()
+   and `task status`=6]]>
+  </select>
+
+  <select id="currentDay" resultType="java.lang.String">
+  select substr(CURRENT_DATE() ,1,10)
+  </select>
+
+  <select id="currentMonth" resultType="java.lang.String">
+  select substr(CURRENT_DATE() ,1,7)
+  </select>
+
+  <select id="currentMonthProcessed"  parameterType="java.lang.String" resultType="com.injured.server.api.model.workbench.DateNum">
+ <![CDATA[select substr(t.update_time,1,10) as dateTime ,count(*) as num
+  from injured_investigate_opinions t
+  where t.update_time like CONCAT(#{curtime,jdbcType=VARCHAR},'%')
+  AND `task status`=6
+  group by substr(t.update_time,1,10)
+  ORDER BY dateTime]]>
+  </select>
+
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_investigate_opinions
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinionsExample">
+    delete from injured_investigate_opinions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinions">
+    insert into injured_investigate_opinions (id, claim_notification_no, regist_id, 
+      survey_wou_id, survey_id, med_basic_info_id, 
+      company_id, compant_code, victim_record_photo, 
+      claim_group_photo, actual_survey_report, statement_opinions, 
+      survey_reception_time, survey_submit_time, 
+      "task status", adjust_type, adjustment_formula, 
+      amount_compensation, confirmation_opinions, 
+      confirmation_note, serial_num, create_time, 
+      update_time, is_deleted, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, #{registId,jdbcType=BIGINT}, 
+      #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, #{medBasicInfoId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{compantCode,jdbcType=VARCHAR}, #{victimRecordPhoto,jdbcType=INTEGER}, 
+      #{claimGroupPhoto,jdbcType=INTEGER}, #{actualSurveyReport,jdbcType=INTEGER}, #{statementOpinions,jdbcType=VARCHAR}, 
+      #{surveyReceptionTime,jdbcType=TIMESTAMP}, #{surveySubmitTime,jdbcType=TIMESTAMP}, 
+      #{taskStatus,jdbcType=INTEGER}, #{adjustType,jdbcType=INTEGER}, #{adjustmentFormula,jdbcType=VARCHAR}, 
+      #{amountCompensation,jdbcType=DECIMAL}, #{confirmationOpinions,jdbcType=INTEGER}, 
+      #{confirmationNote,jdbcType=VARCHAR}, #{serialNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinions">
+    insert into injured_investigate_opinions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="victimRecordPhoto != null">
+        victim_record_photo,
+      </if>
+      <if test="claimGroupPhoto != null">
+        claim_group_photo,
+      </if>
+      <if test="actualSurveyReport != null">
+        actual_survey_report,
+      </if>
+      <if test="statementOpinions != null">
+        statement_opinions,
+      </if>
+      <if test="surveyReceptionTime != null">
+        survey_reception_time,
+      </if>
+      <if test="surveySubmitTime != null">
+        survey_submit_time,
+      </if>
+      <if test="taskStatus != null">
+        "task status",
+      </if>
+      <if test="adjustType != null">
+        adjust_type,
+      </if>
+      <if test="adjustmentFormula != null">
+        adjustment_formula,
+      </if>
+      <if test="amountCompensation != null">
+        amount_compensation,
+      </if>
+      <if test="confirmationOpinions != null">
+        confirmation_opinions,
+      </if>
+      <if test="confirmationNote != null">
+        confirmation_note,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="victimRecordPhoto != null">
+        #{victimRecordPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="claimGroupPhoto != null">
+        #{claimGroupPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="actualSurveyReport != null">
+        #{actualSurveyReport,jdbcType=INTEGER},
+      </if>
+      <if test="statementOpinions != null">
+        #{statementOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyReceptionTime != null">
+        #{surveyReceptionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surveySubmitTime != null">
+        #{surveySubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adjustType != null">
+        #{adjustType,jdbcType=INTEGER},
+      </if>
+      <if test="adjustmentFormula != null">
+        #{adjustmentFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="amountCompensation != null">
+        #{amountCompensation,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmationOpinions != null">
+        #{confirmationOpinions,jdbcType=INTEGER},
+      </if>
+      <if test="confirmationNote != null">
+        #{confirmationNote,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinionsExample" resultType="java.lang.Long">
+    select count(*) from injured_investigate_opinions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_investigate_opinions
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.medBasicInfoId != null">
+        med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.victimRecordPhoto != null">
+        victim_record_photo = #{record.victimRecordPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="record.claimGroupPhoto != null">
+        claim_group_photo = #{record.claimGroupPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="record.actualSurveyReport != null">
+        actual_survey_report = #{record.actualSurveyReport,jdbcType=INTEGER},
+      </if>
+      <if test="record.statementOpinions != null">
+        statement_opinions = #{record.statementOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surveyReceptionTime != null">
+        survey_reception_time = #{record.surveyReceptionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.surveySubmitTime != null">
+        survey_submit_time = #{record.surveySubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskStatus != null">
+        "task status" = #{record.taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustType != null">
+        adjust_type = #{record.adjustType,jdbcType=INTEGER},
+      </if>
+      <if test="record.adjustmentFormula != null">
+        adjustment_formula = #{record.adjustmentFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amountCompensation != null">
+        amount_compensation = #{record.amountCompensation,jdbcType=DECIMAL},
+      </if>
+      <if test="record.confirmationOpinions != null">
+        confirmation_opinions = #{record.confirmationOpinions,jdbcType=INTEGER},
+      </if>
+      <if test="record.confirmationNote != null">
+        confirmation_note = #{record.confirmationNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_investigate_opinions
+    set id = #{record.id,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      victim_record_photo = #{record.victimRecordPhoto,jdbcType=INTEGER},
+      claim_group_photo = #{record.claimGroupPhoto,jdbcType=INTEGER},
+      actual_survey_report = #{record.actualSurveyReport,jdbcType=INTEGER},
+      statement_opinions = #{record.statementOpinions,jdbcType=VARCHAR},
+      survey_reception_time = #{record.surveyReceptionTime,jdbcType=TIMESTAMP},
+      survey_submit_time = #{record.surveySubmitTime,jdbcType=TIMESTAMP},
+      "task status" = #{record.taskStatus,jdbcType=INTEGER},
+      adjust_type = #{record.adjustType,jdbcType=INTEGER},
+      adjustment_formula = #{record.adjustmentFormula,jdbcType=VARCHAR},
+      amount_compensation = #{record.amountCompensation,jdbcType=DECIMAL},
+      confirmation_opinions = #{record.confirmationOpinions,jdbcType=INTEGER},
+      confirmation_note = #{record.confirmationNote,jdbcType=VARCHAR},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinions">
+    update injured_investigate_opinions
+    <set>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="victimRecordPhoto != null">
+        victim_record_photo = #{victimRecordPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="claimGroupPhoto != null">
+        claim_group_photo = #{claimGroupPhoto,jdbcType=INTEGER},
+      </if>
+      <if test="actualSurveyReport != null">
+        actual_survey_report = #{actualSurveyReport,jdbcType=INTEGER},
+      </if>
+      <if test="statementOpinions != null">
+        statement_opinions = #{statementOpinions,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyReceptionTime != null">
+        survey_reception_time = #{surveyReceptionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surveySubmitTime != null">
+        survey_submit_time = #{surveySubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskStatus != null">
+        "task status" = #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adjustType != null">
+        adjust_type = #{adjustType,jdbcType=INTEGER},
+      </if>
+      <if test="adjustmentFormula != null">
+        adjustment_formula = #{adjustmentFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="amountCompensation != null">
+        amount_compensation = #{amountCompensation,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmationOpinions != null">
+        confirmation_opinions = #{confirmationOpinions,jdbcType=INTEGER},
+      </if>
+      <if test="confirmationNote != null">
+        confirmation_note = #{confirmationNote,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredInvestigateOpinions">
+    update injured_investigate_opinions
+    set claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{registId,jdbcType=BIGINT},
+      survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      victim_record_photo = #{victimRecordPhoto,jdbcType=INTEGER},
+      claim_group_photo = #{claimGroupPhoto,jdbcType=INTEGER},
+      actual_survey_report = #{actualSurveyReport,jdbcType=INTEGER},
+      statement_opinions = #{statementOpinions,jdbcType=VARCHAR},
+      survey_reception_time = #{surveyReceptionTime,jdbcType=TIMESTAMP},
+      survey_submit_time = #{surveySubmitTime,jdbcType=TIMESTAMP},
+      "task status" = #{taskStatus,jdbcType=INTEGER},
+      adjust_type = #{adjustType,jdbcType=INTEGER},
+      adjustment_formula = #{adjustmentFormula,jdbcType=VARCHAR},
+      amount_compensation = #{amountCompensation,jdbcType=DECIMAL},
+      confirmation_opinions = #{confirmationOpinions,jdbcType=INTEGER},
+      confirmation_note = #{confirmationNote,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

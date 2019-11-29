@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改用户')" />
+	<th:block th:include="include :: select2-css" />
+	
+	<style>
+		.pull-left.pagination-detail{
+			display: none;
+		}
+		.pull-right.pagination{
+			display: none;
+		}
+		
+		table tbody{
+  			display: block; 
+			max-height:290px;
+			overflow-y: scroll;
+		}
+		table thead, tbody tr {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+            text-align: left;
+        }
+		table td:first-child,table th:first-child{
+			width: 7%;
+		}
+		table td:nth-child(2),table th:nth-child(2){
+			width: 20%;
+		}
+		table td:nth-child(3),table th:nth-child(3){
+			width: 20%;
+		}
+		table td:nth-child(4),table th:nth-child(4){
+			width: 20%;
+		}
+
+	</style>
+</head>
+
+<body>
+    <div class="form-content">
+        <form class="form-horizontal" id="form-user-edit" th:object="${user}">
+            <input name="userId"  type="hidden"  th:field="*{userId}" />
+            <input name="loginName"  type="hidden"  th:field="*{loginName}" />
+            <input name="agencyId"  type="hidden"  th:field="*{agencyId}" id="treeId"/>
+            <h4 class="form-header h4">基本信息</h4>
+            <div class="row" style="">
+            	<div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户状态：</label>
+                        <div class="col-sm-8">
+	                        <div style="padding-top: 5px;float: left;">
+	                            <select id="status"  name ="status" th:field="*{status}" style="width: 80px; height:25px;  display: inline-block" onchange="statusOneChange()">
+									<option value="0">有效</option>
+									<option value="1">无效</option>
+								</select>
+							</div>
+							<div style="padding-top: 5px;float: left;">
+								<select id="userLock" name ="userLock" th:field="*{userLock}" style="width: 80px; height:25px; display: inline-block">
+									<option value="0">未锁定</option>
+									<option value="1">锁定</option>
+								</select>
+	                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户类型：</label>
+                        <div class="col-sm-8">
+                            <div class="radio-box">
+								<input type="radio" value="0" th:field="*{userType}" disabled="disabled">内部
+							</div>
+							<div class="radio-box">
+								<input type="radio" value="1" th:field="*{userType}" disabled="disabled">外部
+							</div>
+                        </div>
+                    </div>
+                </div>
+             <div class="col-sm-4">
+                 <div class="form-group">
+                     <label class="col-sm-4 control-label">新密码：</label>
+                     <div class="col-sm-6">
+                         <input name="password"  class="form-control" type="text">
+                     </div>
+                 </div>
+             </div>
+           </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户名称：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:field="*{userName}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">身份证号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text"  th:field="*{identifyNumber}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>手机号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="phonenumber" type="text"  th:field="*{phonenumber}" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">用户工号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="userNo" type="text"  th:field="*{userNo}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>所属机构：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group" style="width: 130%">
+                                <input class="form-control"  type="text" name="agencyName" onclick="agencyError();selectDeptTree()" id="treeName" th:field="*{agencyName}">
+                            	<span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="form-header h4" style="margin-bottom: 5px"></h4>
+            <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>修改说明：</label>
+                    <div class="col-sm-8">
+                        <textarea name="remark" id="remark" style="width: 180%" maxlength="60" class="form-control" rows="3" onclick="changeError()"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--             <h4 class="form-header h4" style="margin-bottom: 2px">操作记录</h4> -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="select-table table-striped"  style="margin-top: 0px;margin-left: 6%;width: 88%">
+                            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row" >
+        <div class="col-sm-offset-5 col-sm-10" style="margin-top: 15px">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>提 交</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHanPer()"><i class="fa fa-check"></i>提交并配置权限</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script type="text/javascript">
+        var prefix = ctx + "system/user";
+        
+        var id = '[[${user.userId}]]'
+            $(function() {
+    		    var options = {
+   		    		showSearch: false,
+   			        showRefresh: false,
+   			        showToggle: false,
+   			        showColumns: false,
+     		        url: "/monitor/operlog/viewList/"+id+"/15",
+    		        modalName: "机构历史",
+    		        columns: [{
+    		            field: '',
+    		            title: '序号',
+    		            formatter: function (value, row, index) {
+                            return index + 1;
+    	                }
+    		        },
+    		        {
+    		            field: 'submitOpinion',
+    		            title: '操作类型'
+    		        },
+    		        {
+    		            field: 'submitName',
+    		            title: '提交人'
+    		        },
+    		        {
+    		            field: 'submitTime',
+    		            title: '提交时间'
+    		        },
+    		        {
+    		            field: 'opinionDesc',
+    		            title: '操作说明'
+    		        }]
+    		    };
+    		    $.table.init(options);
+    		    $("div.fixed-table-toolbar").hide();
+    		    
+    		    if([[${user.status}]] == 1){
+    		    	$("#userLock").html('');
+    				$("#userLock").append("<option value='1'>锁定</option>");
+    		    }
+    		});
+        	
+            function submitHandler() {
+            	if ($.validate.form()) {
+             		$.operate.saveTab(prefix + "/edit", $('#form-user-edit').serialize());
+            	}
+     	    }
+            var topWindow = $(window.parent.document);
+    		var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
+    		var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
+            function submitHanPer(){
+            	console.log("submit!!!!")
+            	if ($.validate.form()) {
+            		$.operate.userPerTab(prefix + "/edit", $('#form-user-edit').serialize());
+    				var urlP ="/system/role/edit/{id}/userUpdate";
+        			urlP = urlP.replace("{id}", id);
+        			$.modal.openTab("配置权限", urlP);
+        			
+        			$.operate.closeNowPage();		
+    	        }
+            }
+            
+            /*用户管理-修改-选择部门树*/
+            function selectDeptTree() {
+            	var deptId = $.common.isEmpty($("#treeId").val()) ? "100" : $("#treeId").val();
+                var url = ctx + "system/agency/selectDeptTree/" + deptId;
+    		    var options = {
+    				title: '选择部门',
+    				width: "500",
+    				url: url,
+    				callBack: doSubmit
+    			};
+    			$.modal.openOptions(options);
+    		}
+            
+            function doSubmit(index, layero){
+    			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+//     			if ($.tree.notAllowParents(tree)) {
+        			var body = layer.getChildFrame('body', index);
+        			$("#treeId").val(body.find('#treeId').val());
+        			$("#treeName").val(body.find('#treeName').val());
+        			layer.close(index);
+        			
+        			if(body.find('#treeName').val()){
+        				$("#treeName").css("background-color","#ffffff");
+    		    		$("#treeName").css("border-color","#e5e6e7");
+    		    		$("#treeName").css("color","#676a6c");
+    		    		$("#treeName-error").text("");
+        			}
+//     			}
+    		}
+            function statusOneChange(){
+            	if($("#status").val() == "1"){//无效
+            		$("#userLock").html('');
+    				$("#userLock").append("<option value='1'>锁定</option>");
+            	}else if($("#status").val() == "0"){//有效
+            		$("#userLock").html('');
+            		$("#userLock").append("<option value='1'>锁定</option>");
+            		$("#userLock").append("<option value='0'>未锁定</option>");
+            	}
+            }
+            
+          //修改说明 校验
+    	    jQuery.validator.addMethod("remarkValida", function(value, element) {
+    	    	if($.common.trim(value)){
+   	    			$("#remark").css("background-color","#ffffff");
+   		    		$("#remark").css("border-color","#e5e6e7");
+   		    		$("#remark").css("color","#676a6c");
+   	    			return true;
+   	    		}else{
+   	    			$("#remark").css("background-color","#fbe2e2");
+   		    		$("#remark").css("border-color","#c66161");
+   		    		$("#remark").css("color","#c00");
+   	    			return false;
+   	    		}
+    	    }, "请输入修改说明");
+    		function changeError(){
+    			$("#remark").css("background-color","#ffffff");
+        		$("#remark").css("border-color","#e5e6e7");
+        		$("#remark").css("color","#676a6c");
+    		}
+    		
+    		//所属机构 校验
+    	    jQuery.validator.addMethod("agencyNameValida", function(value, element) {
+        		if(value){
+        			$("#treeName").css("background-color","#ffffff");
+    	    		$("#treeName").css("border-color","#e5e6e7");
+    	    		$("#treeName").css("color","#676a6c");
+        			return true;
+        		}else{
+        			$("#treeName").css("background-color","#fbe2e2");
+    	    		$("#treeName").css("border-color","#c66161");
+    	    		$("#treeName").css("color","#c00");
+        			return false;
+        		}
+    	    }, "请选择所属机构");
+    	    function agencyError(){
+    			$("#treeName").css("background-color","#ffffff");
+        		$("#treeName").css("border-color","#e5e6e7");
+        		$("#treeName").css("color","#676a6c");
+    		}
+    	    
+    	  //所属机构 校验
+    	    jQuery.validator.addMethod("passwordValidaOne", function(value, element) {
+    	    	if(value){
+    	    		var oneS = value.substr(0,1);
+            		var letterTest = /[A-Za-z]/;
+            		if(letterTest.test(oneS)){
+            			return true;
+            		}
+            		return false;
+    	    	}else{
+    	    		return true;
+    	    	}
+        		
+    	    }, "首位必须为字母");
+            
+            /*用户管理-修改信息*/
+    	    $("#form-user-edit").validate({
+    	    	onkeyup: false,
+    			rules:{
+    	            password:{
+    	            	rangelength: [6,10],
+    	            	passwordValidaOne: true,
+    	            	remote: {
+    	                    url: prefix + "/checkPassWorld",
+    	                    type: "post",
+    	                    dataType: "json",
+    	                    data: {
+    	                    	identifyNumber : function() {
+    	                            return $("input[name='password']").val();
+    	                        }
+    	                    },
+    	                    dataFilter: function(data, type) {
+    	                    	if(data == "1"){
+    	   						  return true
+    	   					  }else{
+    	   						  return false
+    	   					  } 
+    	                    }
+    	                }
+    	            },
+    				phonenumber: {
+    					required: true,
+    					rangelength: [11,11]
+    	            },
+    	            agencyName: {
+    	            	agencyNameValida: true
+            		},
+    	            remark: {
+    	            	remarkValida: true
+    	            }
+    			},
+    			messages: {
+    	            password:{
+    	            	required: "请输入密码",
+    	            	rangelength: "长度为6-10位",
+    	            	remote: "包含数字 字母 英文符号"
+    	            },
+    	            phonenumber: {
+    	                required: "请输入手机号",
+    	                rangelength: "长度为11位"
+    	            }
+
+    	        },
+    	        focusCleanup: true
+    		});
+    </script>
+</body>
+</html>

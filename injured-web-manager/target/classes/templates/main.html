@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>工作台</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>今日待处理任务</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" id="untreatedNum">0</h1>
+                        <small>条</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>今日已完成任务</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" id="todayProcessed">0</h1>
+                        <small>条</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>本周累计完成任务</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins" id="weekProcessed">0</h1>
+                        <small>条</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>本月工作量统计</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="echarts-bar-chart" style="height:500px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <th:block th:include="include :: echarts-js" />
+    <script type="text/javascript">
+        $(function () {
+
+            var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+	        var baroption = {
+	            tooltip : {
+	                trigger: 'axis'
+	            },
+	            grid:{
+	                x:30,
+	                x2:40,
+	                y2:24
+	            },
+	            calculable : true,
+	            xAxis : [
+	                {
+	                    type : 'category',
+	                    data : []
+	                }
+	            ],
+	            yAxis : [
+	                {
+	                    type : 'value'
+	                }
+	            ],
+	            series : [
+	                {
+	                    name:'任务数',
+	                    type:'bar',
+	                    data:[],
+	                    markPoint : {
+	                        data : [
+	                            {type : 'max', name: '最大值'},
+	                            {type : 'min', name: '最小值'}
+	                        ]
+	                    }
+	                }
+	            ]
+	        };
+
+            untreatedNum = $("#untreatedNum")
+            todayProcessed = $("#todayProcessed")
+            weekProcessed = $("#weekProcessed")
+
+            function query() {
+               $.ajax({
+                  url: "/workbench/list",
+                  success: function(data){
+                    if(data && data.code === '0000'){
+                        untreatedNum.html(data.data.untreatedNum)
+                        todayProcessed.html(data.data.todayProcessed)
+                        weekProcessed.html(data.data.weekProcessed)
+
+                        //处理图表
+                        const currentDate = data.data.currentDate
+
+                        if(currentDate){
+                            currentDate.forEach(item => {
+                                baroption.xAxis[0].data.push(item.dateTime)
+                                baroption.series[0].data.push(item.num)
+                            })
+                        }
+                        barChart.setOption(baroption);
+                    }
+                  }
+               })
+            }
+
+            query()
+
+
+
+
+
+	        window.onresize = barChart.resize;
+        })
+
+    </script>
+
+</body>
+</html>

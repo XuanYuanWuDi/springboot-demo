@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('用户列表')" />
+	<th:block th:include="include :: layout-latest-css" />
+</head>
+<style type="text/css">
+        ul {
+            margin-left: 45px;
+        }
+        li{
+        	padding-right: 30px;
+        }
+</style>
+<body class="gray-bg">
+<div class="container-div ui-layout-center">
+	<div class="row">
+		<div class="col-sm-12 search-collapse">
+			<form id="user-form">
+				<input id="search_status" type="hidden" value="-1" name="pageStatus">
+				<div class="select-list">
+					<ul  class="row">
+						<li class="col-md-3">
+							用户工号 <input type="text" name="userNo"/>
+						</li>
+						<li class="col-md-3">
+							用户名称 <input type="text" name="userName"/>
+							<input name="fuzzy" type="checkbox" value="1" style="height: 15px;width: 20px;">模糊
+						</li>
+						<li class="col-md-3">
+							身份证号 <input type="text" name="identifyNumber"/>
+						</li>
+						<li>
+							用户类型
+							<input type="radio" name="userType" value="0"  style="width: 15px;height: 15px;margin-right: 2px" checked="checked">内部
+							<input type="radio" name="userType" value="1" style="width: 15px;height: 15px;margin-right: 2px">外部
+						</li>
+					</ul>
+					<ul  class="row">
+						<li class="col-md-6">
+							所属机构
+							<select id="oneAgency" name ="oneAgency" style="width: 150px;">
+								<option value="">请选择</option>
+							</select>
+							<select id="twoAgency" name ="twoAgency" style="width: 150px;">
+								<option></option>
+							</select>
+							<select id="threeAgency" name="threeAgency" style="width: 150px;">
+								<option></option>
+							</select>
+							<select id="fourAgency" name="fourAgency" style="width: 150px;">
+								<option></option>
+							</select>
+						</li>
+						<li style="margin-left: 100px">
+							<a class="btn btn-primary btn-rounded btn-sm" onclick="onSearchClick()"><i class="fa fa-search"></i>&nbsp;查询</a>
+							<a class="btn btn-warning btn-rounded btn-sm" onclick="emptySearch()" style="margin-left: 100px"><i class="fa fa-refresh"></i>&nbsp;清空</a>
+						</li>
+					</ul>
+				</div>
+			</form>
+		</div>
+		<div class="btn-group-sm" id="toolbar" role="group">
+			<span class="group-title">查询结果</span>
+		</div>
+		<div class="col-sm-12 select-table table-striped">
+			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+		</div>
+	</div>
+</div>
+
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: layout-latest-js" />
+<script th:inline="javascript">
+		var prefix = ctx + "system/user";
+		var rolePrefix = ctx + "system/role";
+
+		$(function() {
+		    var panehHidden = false;
+		    if ($(this).width() < 769) {
+		        panehHidden = true;
+		    }
+		    $('body').layout({ initClosed: panehHidden, west__size: 185 });
+		    queryUserList();
+		    getOneAgency();
+		});
+
+		function queryUserList() {
+		    var options = {
+		        url: prefix + "/list",
+		        updateUrl: rolePrefix + "/edit/{id}/role",
+		        modalName: "权限",
+		        onClickRow: onClickRow,
+		        columns: [
+		        {
+		            field: 'userNo',
+		            title: '用户工号'
+		        },
+		        {
+		            field: 'userName',
+		            title: '用户名称'
+		        },
+		        {
+		            field: 'identifyNumber',
+		            title: '身份证号'
+		        },
+		        {
+		            field: 'phonenumber',
+		            title: '手机号'
+		        },
+		        {
+		            title: '所属机构',
+		            width: 450,
+		            formatter: function (value, item, index) {
+		            	if(item.agencyId!=null){
+		            		return "("+item.agencyCode+")"+item.agencyName;
+		            	}
+		            	return "";
+		        	}
+		        },
+		        {
+		        	field: 'status',
+		        	title: '状态',
+		        	align: 'center',
+		        	formatter: function (value, item, index) {
+		        		if(item.status == '0'){
+		        			return "有效";
+		        		}else{
+		        			return "无效";
+		        		}
+		        	}
+		        }]
+		    };
+		    $.table.init(options);
+		}
+
+		function onClickRow(row, $element){
+			if(row.status != 1){
+				var urlP = rolePrefix + "/edit/{id}/role";
+				urlP = urlP.replace("{id}", row.userId);
+				/*$.operate.openFullUser("配置权限",urlP);*/
+				$.modal.openTab("配置权限", urlP);
+			}else{
+				$.modal.msgWarning("无效用户不能配置权限！");
+			}
+        }
+
+		//获取一级机构
+		function getOneAgency(){
+			$.post(prefix + "/getOneAgency", {"level": 1}, function (data) {
+
+				if (data.data) {
+					$("#oneAgency").html('');
+					$("#oneAgency").append("<option value=''>--选择--</option>");
+					$("#oneAgency").val('');
+					$.each(data.data, function (i, v) {
+						$("#oneAgency").append("<option value='" + v.id + "'>" + v.agencyName + "</option>");
+					});
+				}
+			}, "json");
+		}
+
+
+		/* 一级机构列表 变化时 */
+		$("#oneAgency").change(function() {
+
+			var oneAgency = document.getElementById("oneAgency").value;
+			//四级机构 置为空
+			$("#fourAgency").html('');
+			$("#fourAgency").val('');
+
+			//三级机构置为空
+			$("#threeAgency").html('');
+			$("#threeAgency").val('');
+
+			if (oneAgency == '' || oneAgency == null) {//如果为空 则清空后面的数据
+				$("#twoAgency").html('');
+				$("#twoAgency").val('');
+			} else {//否则调后台查询二级 三级 市区数据
+				$.post(prefix + "/getAgency", {"agencyId": oneAgency}, function (data) {
+					if (data.data.length>0) {
+						$("#twoAgency").html('');
+						$("#twoAgency").append("<option value=''>--选择--</option>");
+						$("#twoAgency").val('');
+						$.each(data.data, function (i, v) {
+							$("#twoAgency").append("<option value='" + v.id + "'>" + v.agencyName + "</option>");
+						});
+					}else{
+						$("#twoAgency").html('');
+						$("#twoAgency").append("<option>-</option>");
+					}
+				}, "json");
+			}
+		});
+
+		/* 二级机构列表 变化时 */
+		$("#twoAgency").change(function() {
+
+			var twoAgency = document.getElementById("twoAgency").value;
+			//四级机构 置为空
+			$("#fourAgency").html('');
+			$("#fourAgency").val('');
+
+			if (twoAgency == '') {//如果为空 则清空后面的数据
+				$("#threeAgency").html('');
+				$("#threeAgency").val('');
+			} else {//否则调后台查询二级 三级 市区数据
+				$.post(prefix + "/getAgency", {"agencyId": twoAgency}, function (data) {
+					if (data.data.length>0) {
+						$("#threeAgency").html('');
+						$("#threeAgency").append("<option value=''>--选择--</option>");
+						$("#threeAgency").val('');
+						$.each(data.data, function (i, v) {
+							$("#threeAgency").append("<option value='" + v.id + "'>" + v.agencyName + "</option>");
+						});
+					}else{
+						$("#threeAgency").html('');
+						$("#threeAgency").append("<option ></option>");
+					}
+				}, "json");
+			}
+		});
+
+		/* 三级机构列表 变化时 */
+		$("#threeAgency").change(function() {
+
+			var threeAgency = document.getElementById("threeAgency").value;
+
+			if (threeAgency == '') {//如果为空 则清空后面的数据
+				$("#fourAgency").html('');
+				$("#fourAgency").val('');
+			} else {//否则调后台查询二级 三级 市区数据
+				$.post(prefix + "/getAgency", {"agencyId": threeAgency}, function (data) {
+					if (data.data.length>0) {
+						$("#fourAgency").html('');
+						$("#fourAgency").append("<option value=''>--选择--</option>");
+						$("#fourAgency").val('');
+						$.each(data.data, function (i, v) {
+							$("#fourAgency").append("<option value='" + v.id + "'>" + v.agencyName + "</option>");
+						});
+					}else{
+						$("#fourAgency").html('');
+						$("#fourAgency").append("<option ></option>");
+					}
+				}, "json");
+			}
+		});
+		//查询
+		function onSearchClick(){
+			document.getElementById("search_status").value = 1;
+			$.table.search()
+		}
+
+		function emptySearch(){
+			$("input[type=radio][name=userType][value=0]").prop("checked",true);
+			$.form.reset();
+		}
+
+	</script>
+</body>
+</html>

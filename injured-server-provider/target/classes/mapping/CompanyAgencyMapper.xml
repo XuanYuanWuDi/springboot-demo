@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CompanyAgencyMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CompanyAgency">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="agency_name" jdbcType="VARCHAR" property="agencyName" />
+    <result column="agency_code" jdbcType="VARCHAR" property="agencyCode" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="having_child_node" jdbcType="INTEGER" property="havingChildNode" />
+    <result column="is_claim" jdbcType="INTEGER" property="isClaim" />
+    <result column="agency_level" jdbcType="INTEGER" property="agencyLevel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    id, pid, agency_name, agency_code, company_code, having_child_node, is_claim, agency_level, remark ,company_id
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_agency
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectleve1or2" resultType="com.injured.server.api.entity.CompanyAgency">
+    SELECT id,pid,agency_name as agencyName,company_code
+    as companyCode
+    FROM `company_agency`where agency_level in (1,2)
+  </select>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from company_agency
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.injured.server.api.entity.CompanyAgency">
+    insert into company_agency (id, pid, agency_name, 
+      agency_code, company_code, having_child_node, is_claim, agency_level,remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{agencyName,jdbcType=VARCHAR}, 
+      #{agencyCode,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, #{havingChildNode,jdbcType=INTEGER},
+      #{isClaim,jdbcType=INTEGER},#{agencyLevel,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CompanyAgency" useGeneratedKeys="true" keyProperty="id">
+    insert into company_agency
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="agencyName != null">
+        agency_name,
+      </if>
+      <if test="agencyCode != null">
+        agency_code,
+      </if>
+      <if test="companyCode != null">
+        company_code,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="havingChildNode != null">
+        having_child_node,
+      </if>
+      <if test="isClaim != null">
+      	is_claim,
+      </if>
+      <if test="agencyLevel != null">
+      	agency_level,
+      </if>
+      <if test="remark != null">
+      	remark
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="agencyName != null">
+        #{agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyCode != null">
+        #{agencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="havingChildNode != null">
+        #{havingChildNode,jdbcType=INTEGER},
+      </if>
+      <if test="isClaim != null">
+        #{isClaim,jdbcType=INTEGER},
+      </if>
+      <if test="agencyLevel != null">
+        #{agencyLevel,jdbcType=INTEGER},
+       </if>
+       <if test="remark != null">
+        #{remark,jdbcType=VARCHAR}
+       </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CompanyAgency">
+    update company_agency
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="agencyName != null">
+        agency_name = #{agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyCode != null">
+        agency_code = #{agencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="havingChildNode != null">
+        having_child_node = #{havingChildNode,jdbcType=INTEGER},
+      </if>
+      <if test="isClaim != null">
+        is_claim = #{isClaim,jdbcType=INTEGER},
+      </if>
+      <if test="agencyLevel != null">
+        agency_level = #{agencyLevel,jdbcType=INTEGER}
+       </if>
+       <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR}
+       </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CompanyAgency">
+    update company_agency
+    set pid = #{pid,jdbcType=BIGINT},
+      agency_name = #{agencyName,jdbcType=VARCHAR},
+      agency_code = #{agencyCode,jdbcType=VARCHAR},
+      company_code = #{companyCode,jdbcType=VARCHAR},
+      having_child_node = #{havingChildNode,jdbcType=INTEGER},
+      is_claim = #{isClaim,jdbcType=INTEGER},
+      agency_level = #{agencyLevel,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findChildNodeByPidAndCompanyId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from company_agency
+    where pid = #{pid} and company_id = #{companyId}
+  </select>
+  
+  <select id="findAllNode" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+       agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode,
+       agencyA.company_code as companyCode, agencyA.company_id as companyId, agencyA.having_child_node as havingChildNode,
+       agencyA.is_claim as isClaim, agencyA.agency_level as agencyLevel, agencyA.remark as remark, 
+       agencyB.agency_code as agencyCodeUp, agencyB.agency_name as agencyNameUp
+    from company_agency agencyA 
+    left join company_agency agencyB on agencyA.pid = agencyB.id  and agencyA.company_id = agencyB.company_id
+    where  agencyA.company_id = #{companyId}
+  </select>
+  
+  <select id="findAllisClaimNode" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+       agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode,
+       agencyA.company_code as companyCode, agencyA.company_id as companyId, agencyA.having_child_node as havingChildNode,
+       agencyA.is_claim as isClaim, agencyA.agency_level as agencyLevel, agencyA.remark as remark, 
+       agencyB.agency_code as agencyCodeUp, agencyB.agency_name as agencyNameUp
+    from company_agency agencyA 
+    left join company_agency agencyB on agencyA.pid = agencyB.id  and agencyA.company_id = agencyB.company_id
+    where  agencyA.company_id = #{companyId} and agencyA.is_claim = #{isClaim}
+  </select>
+  
+  <select id="findNodeByQuery" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+       agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode,
+       agencyA.having_child_node as havingChildNode,
+       agencyA.is_claim as isClaim, agencyA.agency_level as agencyLevel,
+       agencyB.agency_code as agencyCodeUp, agencyB.agency_name as agencyNameUp
+    from company_agency agencyA 
+    left join company_agency agencyB on agencyA.pid = agencyB.id and agencyA.company_id = agencyB.company_id
+    where  agencyA.company_id = #{companyId,jdbcType=BIGINT}
+    	<if test="fuzzy == 1">
+    		<if test="agencyName != null and agencyName != ''"> and agencyA.agency_name like concat('%',#{agencyName,jdbcType=VARCHAR},'%')</if>
+    	 </if>
+    	 <if test="fuzzy != 1">
+    		<if test="agencyName != null and agencyName != ''"> and agencyA.agency_name = #{agencyName,jdbcType=VARCHAR}</if>
+    	 </if>
+    	 
+    	<if test="isClaim != null and isClaim != 2"> and agencyA.is_claim = #{isClaim,jdbcType=INTEGER}</if>
+  </select>
+  
+  <select id="findAgencyById" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+    agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode,
+       agencyA.having_child_node as havingChildNode,agencyA.company_id as companyId,
+       agencyA.is_claim as isClaim, agencyA.agency_level as agencyLevel,agencyA.remark as remark,
+       agencyB.agency_code as agencyCodeUp, agencyB.agency_name as agencyNameUp
+    from company_agency agencyA 
+    left join company_agency agencyB on agencyA.pid = agencyB.id and agencyA.company_id = agencyB.company_id
+    where agencyA.id = #{id} and agencyA.company_id = #{companyId}
+  </select>
+  
+  <select id="findAgencyByCodeOrName" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+    	agencyA.id
+    from company_agency agencyA 
+    where agencyA.company_id = #{companyId}
+    	<if test="agencyCode != null">
+       		and agencyA.agency_code = #{agencyCode} 
+       	</if>
+       	<if test="agencyName != null">
+       		and agencyA.agency_code = #{agencyName} 
+       	</if> 
+  </select>
+  
+  <select id="findNodeByAgencyLevel" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+      agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode
+    from company_agency agencyA
+    where agencyA.company_id = #{companyId} and agencyA.agency_level = #{agencyLevel}
+  </select>
+  
+  <!-- 获取改保险公司下所有机构 -->
+  <select id="selectAllByCompany" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_agency
+    where company_id = #{companyId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findAgencyOfLevel" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+    agencyA.id, agencyA.pid, agencyA.agency_code as agencyCode,
+       agencyA.is_claim as isClaim, agencyA.agency_level as agencyLevel
+    from company_agency agencyA 
+    where agencyA.id = #{id} and agencyA.company_id = #{companyId}
+  </select>
+  
+  <select id="findAgencyByLevel" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    select
+      agencyA.id, agencyA.pid, agencyA.agency_name as agencyName, agencyA.agency_code as agencyCode,agencyA.agency_level as agencyLevel
+    from company_agency agencyA
+    where agencyA.company_id = #{companyId} and agencyA.agency_level &lt;= #{agencyLevel}
+  </select>
+  
+  <!--根据二级机构查询其父级机构和子级机构 -->
+  <select id="findAllAgencyByTwoId" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+    
+    select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id=#{id} )
+	    
+    union all
+	select  id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+		from company_agency
+	    where pId = #{id}
+	    
+	union all 
+	select  id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+		from company_agency
+	    where pId in (select id from company_agency where pId=#{id} )
+  </select>
+  
+  <!--根据三级机构查询其父级机构和子级机构 -->
+  <select id="findAllAgencyByThreeId" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+  
+   select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id in 
+	    				(select pId from company_agency where id=#{id}) )
+    
+    union all
+    select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id=#{id} )
+	    
+    union all
+	select  id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+		from company_agency
+	    where pId = #{id}
+	    
+  </select>
+  
+   <!--根据四级机构查询其父级机构 -->
+  <select id="findAllAgencyByFourId" resultType="com.injured.server.api.model.request.fast.CompanyAgencyReq">
+  
+   select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id in 
+	    				(select pId from company_agency where id in 
+	    					(select pId from company_agency where id=#{id})) )
+    
+    union all
+    select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id in 
+	    				(select pId from company_agency where id=#{id}) )
+    
+    union all
+    select id, pid, agency_name as agencyName,agency_code as agencyCode,agency_level as agencyLevel
+    	from company_agency
+	    where id in ( select pId from company_agency where id=#{id} )
+	    
+  </select>
+</mapper>

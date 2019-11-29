@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增用户')" />
+	<th:block th:include="include :: select2-css" />
+</head>
+<body>
+    <div class="form-content">
+        <form id="form-user-add" class="form-horizontal">
+            <input name="agencyId" type="hidden" id="treeId"/>
+            <h4 class="form-header h4">基本信息</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户状态：</label>
+                        <div class="col-sm-8">
+	                        <div style="padding-top: 5px;float: left;">
+	                            <select id="status" onchange="statusOneChange()" name ="status" style="width: 80px; height:25px;  display: inline-block">
+	                                <option value="0">有效</option>
+	                                <option value="1">无效</option>
+	                            </select>
+	                        </div>
+	                        <div style="padding-top: 5px;float: left;">
+	                            <select id="userLock"  name ="usertLock" style="width: 80px; height:25px;  display: inline-block">
+	                                <option value="0">未锁定</option>
+	                                <option value="1">锁定</option>
+	                            </select>
+	                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户类型：</label>
+                        <div class="col-sm-8">
+                            <div class="radio-box">
+                                <input type="radio" name="userType" id="userType" value="0" checked="checked">内部
+                            </div>
+                            <div class="radio-box">
+                                <input type="radio" name="userType" id="userType"  value="1" >外部
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span> 用户密码：</label>
+                        <div class="col-sm-6">
+                            <input name="password"  class="form-control" type="text" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户姓名：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" name="userName" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>身份证号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="identifyNumber" type="text" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>手机号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" name="phonenumber" required/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>用户工号：</label>
+                        <div class="col-sm-6">
+                            <input name="userNo" class="form-control" type="text" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>所属机构：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input name="agencyName" onclick="agencyError();selectDeptTree()" id="treeName" type="text" placeholder="请选择归属部门" class="form-control" >
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="form-header h4"></h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label"><span style="color: red; ">*</span>新增说明</label>
+                        <div class="col-sm-8">
+                            <textarea name="remark" id="remark" style="width: 180%;" maxlength="60;" class="form-control" rows="3" onclick="changeError()">[[*{remark}]]</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+      
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-10">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>提 交</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHanPer()"><i class="fa fa-check"></i>提交并配置权限</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script>
+	    var prefix = ctx + "system/user";
+	    
+		//修改说明 校验
+	    jQuery.validator.addMethod("remarkValida", function(value, element) {
+	    	var type = $("input[name=userType]:checked").val();
+	    	if(type == "1"){
+	    		if($.common.trim(value)){
+	    			$("#remark").css("background-color","#ffffff");
+		    		$("#remark").css("border-color","#e5e6e7");
+		    		$("#remark").css("color","#676a6c");
+	    			return true;
+	    		}else{
+	    			$("#remark").css("background-color","#fbe2e2");
+		    		$("#remark").css("border-color","#c66161");
+		    		$("#remark").css("color","#c00");
+	    			return false;
+	    		}
+	    	}else{
+	    		$("#remark").css("background-color","#ffffff");
+	    		$("#remark").css("border-color","#e5e6e7");
+	    		$("#remark").css("color","#676a6c");
+	    		return true;
+	    	}
+	    }, "请输入修改说明");
+		function changeError(){
+			$("#remark").css("background-color","#ffffff");
+    		$("#remark").css("border-color","#e5e6e7");
+    		$("#remark").css("color","#676a6c");
+		}
+		
+		
+		
+		//所属机构 校验
+	    jQuery.validator.addMethod("agencyNameValida", function(value, element) {
+    		if(value){
+    			$("#treeName").css("background-color","#ffffff");
+	    		$("#treeName").css("border-color","#e5e6e7");
+	    		$("#treeName").css("color","#676a6c");
+    			return true;
+    		}else{
+    			$("#treeName").css("background-color","#fbe2e2");
+	    		$("#treeName").css("border-color","#c66161");
+	    		$("#treeName").css("color","#c00");
+    			return false;
+    		}
+	    }, "请选择所属机构");
+	    function agencyError(){
+			$("#treeName").css("background-color","#ffffff");
+    		$("#treeName").css("border-color","#e5e6e7");
+    		$("#treeName").css("color","#676a6c");
+		}
+	    
+	  //身份证号是否重复 校验
+	    jQuery.validator.addMethod("checkIdUnique", function(value, element) {
+	    	var flag = true;
+	    	 $.ajax({
+				  url: prefix + "/checkIdUnique",
+				  async:false,
+				  data:{"identifyNumber": $("input[name='identifyNumber']").val()},
+				  dataType: 'json',
+				  type : "POST",
+				  success: function(data){
+					  if(data == "0"){
+						flag = true;
+					  }else{
+						  flag = false;
+					  }
+				  }
+			   })
+			console.log(flag)
+			return flag;
+	    }, "身份证号已经存在");
+	  
+	  //所属机构 校验
+	    jQuery.validator.addMethod("passwordValidaOne", function(value, element) {
+    		var oneS = value.substr(0,1);
+    		var letterTest = /[A-Za-z]/;
+    		if(letterTest.test(oneS)){
+    			return true;
+    		}
+    		return false;
+	    }, "首位必须为字母");
+	  
+        $("#form-user-add").validate({
+        	onkeyup: false,
+        	rules:{
+        		userNo:{
+        			required: true,
+        			remote: {
+                        url: prefix + "/checkLoginNameUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                        	name : function() {
+                                return $.common.trim($("input[name='userNo']").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                        	return $.validate.unique(data);
+                        }
+                    }
+        		},
+        		userName: {
+        			required: true
+        		},
+        		identifyNumber: {
+        			required: true,
+	        		remote: {
+	                    url: prefix + "/checkIdentify",
+	                    type: "post",
+	                    dataType: "json",
+	                    data: {
+	                    	identifyNumber : function() {
+	                            return $("input[name='identifyNumber']").val();
+	                        }
+	                    },
+	                    dataFilter: function(data, type) {
+	                    	if(data == "1"){
+	   						  return true
+	   					  }else{
+	   						  return false
+	   					  } 
+	                    }
+	                },
+	                checkIdUnique:true
+        		},
+        		phonenumber: {
+					required: true,
+					rangelength: [11,11]
+	            },
+	            agencyName: {
+	            	agencyNameValida: true
+        		},
+        		remark: {
+        			remarkValida: true
+	            },
+	            password:{
+	            	required: true,
+	            	rangelength: [6,10],
+	            	passwordValidaOne: true,
+	            	remote: {
+	                    url: prefix + "/checkPassWorld",
+	                    type: "post",
+	                    dataType: "json",
+	                    data: {
+	                    	identifyNumber : function() {
+	                            return $("input[name='password']").val();
+	                        }
+	                    },
+	                    dataFilter: function(data, type) {
+	                    	if(data == "1"){
+	   						  return true
+	   					  }else{
+	   						  return false
+	   					  } 
+	                    }
+	                }
+	            }
+        		
+        	},
+        	messages: {
+                userNo: {
+                	required: "请输入用户工号",
+                    remote: "用户已经存在"
+                },
+                userName: {
+                	required: "请输入用户名称"
+                },
+                identifyNumber: {
+                	required: "请输入身份证号",
+                	remote: "格式错误"
+                },
+                phonenumber: {
+                	required: "请输入手机号",
+	                rangelength: "长度为11位"
+                },
+                password:{
+	            	required: "请输入密码",
+	            	rangelength: "长度为6-10位",
+	            	remote: "包含数字 字母 英文符号"
+	            }
+            },
+            focusCleanup: true
+        });
+        
+        function submitHandler() {
+	        if ($.validate.form()) {
+	        	var data = $("#form-user-add").serializeArray();
+	        	$.operate.saveTab(prefix + "/addSave", data);
+	        }
+	    }
+         
+        function submitHanPer(){
+        	if ($.validate.form()) {
+	        	var data = $("#form-user-add").serialize();
+	        	$.operate.userPerTab(prefix + "/addSave", data);
+	        	
+	        	selectUserId()
+	        }
+        }
+        
+        function selectUserId(){
+        	var options = {
+     		        updateUrl: "/system/role/edit/{id}/userAdd"
+        	}
+        	var userNo = $("input[name='userNo']").val()
+        	$.ajax({
+					type : "POST",
+					url : prefix + "/getUser",
+					data : {"userNo": userNo},
+					async : false,
+					error : function(request) {
+						$.modal.alertError("系统错误");
+					},
+					success : function(data) {
+						if(data.data.userId != null){
+		        			var urlP = "/system/role/edit/{id}/userAdd";
+		    				urlP = urlP.replace("{id}", data.data.userId);
+		    				/*$.operate.openFullUser("配置权限",urlP);*/
+                            $.modal.openTab("配置权限", urlP);
+		    				//关闭当前页面
+                            $.operate.closeNowPage();
+						}
+					}
+				});
+        }
+        
+        function deleteUser(){
+        	$.ajax({
+				cache : true,
+				type : "POST",
+				url : prefix + "/deleteUser",
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data : JSON.stringify({
+					"userNo": $("input[name='userNo']").val()
+				}),
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+				}
+			});
+        }
+        
+        function alertSave(data){
+        	$.operate.successTabCallback(data);
+        }
+        
+        /*用户管理-修改-选择部门树*/
+        function selectDeptTree() {
+        	var deptId = $.common.isEmpty($("#treeId").val()) ? "0" : $("#treeId").val();
+            var url = ctx + "system/agency/selectDeptTree/" + deptId;
+		    var options = {
+				title: '选择部门',
+				width: "500",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+        
+        function doSubmit(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+// 			if ($.tree.notAllowParents(tree)) {
+    			var body = layer.getChildFrame('body', index);
+    			$("#treeId").val(body.find('#treeId').val());
+    			$("#treeName").val(body.find('#treeName').val());
+    			layer.close(index);
+    			
+    			if(body.find('#treeName').val()){
+    				$("#treeName").css("background-color","#ffffff");
+		    		$("#treeName").css("border-color","#e5e6e7");
+		    		$("#treeName").css("color","#676a6c");
+		    		$("#treeName-error").text("");
+    			}
+// 			}
+		}
+        
+        function statusOneChange(){
+        	if($("#status").val() == "1"){//无效
+        		$("#userLock").html('');
+				$("#userLock").append("<option value='1'>锁定</option>");
+        	}else if($("#status").val() == "0"){//有效
+        		$("#userLock").html('');
+        		$("#userLock").append("<option value='1'>锁定</option>");
+        		$("#userLock").append("<option value='0'>未锁定</option>");
+        	}
+        }
+    </script>
+</body>
+</html>

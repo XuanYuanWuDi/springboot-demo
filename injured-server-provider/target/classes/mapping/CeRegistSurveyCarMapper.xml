@@ -1,0 +1,1099 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeRegistSurveyCarMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeRegistSurveyCar">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="ce_regist_survey_id" jdbcType="BIGINT" property="ceRegistSurveyId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="subject_third" jdbcType="VARCHAR" property="subjectThird" />
+    <result column="license_plate_no" jdbcType="VARCHAR" property="licensePlateNo" />
+    <result column="hkmac_license_plate_no" jdbcType="VARCHAR" property="hkmacLicensePlateNo" />
+    <result column="owner" jdbcType="VARCHAR" property="owner" />
+    <result column="insured_name" jdbcType="VARCHAR" property="insuredName" />
+    <result column="bz_policy_no" jdbcType="VARCHAR" property="bzPolicyNo" />
+    <result column="bz_company_code" jdbcType="VARCHAR" property="bzCompanyCode" />
+    <result column="sub_company_name" jdbcType="VARCHAR" property="subCompanyName" />
+    <result column="model_code" jdbcType="VARCHAR" property="modelCode" />
+    <result column="model_name" jdbcType="VARCHAR" property="modelName" />
+    <result column="vehicle_brand_code" jdbcType="VARCHAR" property="vehicleBrandCode" />
+    <result column="vehicle_series_code" jdbcType="VARCHAR" property="vehicleSeriesCode" />
+    <result column="group_veh_code" jdbcType="VARCHAR" property="groupVehCode" />
+    <result column="manu_code" jdbcType="VARCHAR" property="manuCode" />
+    <result column="transmission_code" jdbcType="VARCHAR" property="transmissionCode" />
+    <result column="transmission_name" jdbcType="VARCHAR" property="transmissionName" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="car_kind_code" jdbcType="VARCHAR" property="carKindCode" />
+    <result column="veh_type_code" jdbcType="VARCHAR" property="vehTypeCode" />
+    <result column="body_type_code" jdbcType="VARCHAR" property="bodyTypeCode" />
+    <result column="brand_model" jdbcType="VARCHAR" property="brandModel" />
+    <result column="license_plate_type" jdbcType="VARCHAR" property="licensePlateType" />
+    <result column="engine_no" jdbcType="VARCHAR" property="engineNo" />
+    <result column="plate_color" jdbcType="VARCHAR" property="plateColor" />
+    <result column="seat_count" jdbcType="TINYINT" property="seatCount" />
+    <result column="vehicle_color" jdbcType="VARCHAR" property="vehicleColor" />
+    <result column="is_modification" jdbcType="BIT" property="isModification" />
+    <result column="driving_license_address" jdbcType="VARCHAR" property="drivingLicenseAddress" />
+    <result column="driving_first_date" jdbcType="TIMESTAMP" property="drivingFirstDate" />
+    <result column="registration_date" jdbcType="TIMESTAMP" property="registrationDate" />
+    <result column="as_date" jdbcType="TIMESTAMP" property="asDate" />
+    <result column="check_num" jdbcType="TINYINT" property="checkNum" />
+    <result column="reserve_estimate_address" jdbcType="VARCHAR" property="reserveEstimateAddress" />
+    <result column="new_vehicle_price" jdbcType="DECIMAL" property="newVehiclePrice" />
+    <result column="is_loss" jdbcType="BIT" property="isLoss" />
+    <result column="is_total_loss" jdbcType="VARCHAR" property="isTotalLoss" />
+    <result column="loss_degree" jdbcType="VARCHAR" property="lossDegree" />
+    <result column="loss_part_data" jdbcType="VARCHAR" property="lossPartData" />
+    <result column="is_carrying_dangerous_goods" jdbcType="BIT" property="isCarryingDangerousGoods" />
+    <result column="has_car_license" jdbcType="BIT" property="hasCarLicense" />
+    <result column="is_person_injured" jdbcType="VARCHAR" property="isPersonInjured" />
+    <result column="is_protect_loss" jdbcType="VARCHAR" property="isProtectLoss" />
+    <result column="is_rescue" jdbcType="VARCHAR" property="isRescue" />
+    <result column="is_disassemble" jdbcType="VARCHAR" property="isDisassemble" />
+    <result column="using_properties" jdbcType="VARCHAR" property="usingProperties" />
+    <result column="rescue_company" jdbcType="VARCHAR" property="rescueCompany" />
+    <result column="rescue_way" jdbcType="VARCHAR" property="rescueWay" />
+    <result column="rescue_traffic" jdbcType="VARCHAR" property="rescueTraffic" />
+    <result column="rescue_distance" jdbcType="DECIMAL" property="rescueDistance" />
+    <result column="specific_factor" jdbcType="VARCHAR" property="specificFactor" />
+    <result column="rescue_amount" jdbcType="DECIMAL" property="rescueAmount" />
+    <result column="estimated_loss_amount" jdbcType="DECIMAL" property="estimatedLossAmount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, ce_regist_survey_id, claim_notification_no, subject_third, license_plate_no, 
+    hkmac_license_plate_no, owner, insured_name, bz_policy_no, bz_company_code, sub_company_name, 
+    model_code, model_name, vehicle_brand_code, vehicle_series_code, group_veh_code, 
+    manu_code, transmission_code, transmission_name, vin, car_kind_code, veh_type_code, 
+    body_type_code, brand_model, license_plate_type, engine_no, plate_color, seat_count, 
+    vehicle_color, is_modification, driving_license_address, driving_first_date, registration_date, 
+    as_date, check_num, reserve_estimate_address, new_vehicle_price, is_loss, is_total_loss, 
+    loss_degree, loss_part_data, is_carrying_dangerous_goods, has_car_license, is_person_injured, 
+    is_protect_loss, is_rescue, is_disassemble, using_properties, rescue_company, rescue_way, 
+    rescue_traffic, rescue_distance, specific_factor, rescue_amount, estimated_loss_amount, 
+    remark, is_delete, ext, update_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyCarExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_regist_survey_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_regist_survey_car
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_regist_survey_car
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyCarExample">
+    delete from ce_regist_survey_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeRegistSurveyCar">
+    insert into ce_regist_survey_car (id, regist_id, ce_regist_survey_id, 
+      claim_notification_no, subject_third, license_plate_no, 
+      hkmac_license_plate_no, owner, insured_name, 
+      bz_policy_no, bz_company_code, sub_company_name, 
+      model_code, model_name, vehicle_brand_code, 
+      vehicle_series_code, group_veh_code, manu_code, 
+      transmission_code, transmission_name, vin, 
+      car_kind_code, veh_type_code, body_type_code, 
+      brand_model, license_plate_type, engine_no, 
+      plate_color, seat_count, vehicle_color, 
+      is_modification, driving_license_address, driving_first_date, 
+      registration_date, as_date, check_num, 
+      reserve_estimate_address, new_vehicle_price, 
+      is_loss, is_total_loss, loss_degree, 
+      loss_part_data, is_carrying_dangerous_goods, has_car_license, 
+      is_person_injured, is_protect_loss, is_rescue, 
+      is_disassemble, using_properties, rescue_company, 
+      rescue_way, rescue_traffic, rescue_distance, 
+      specific_factor, rescue_amount, estimated_loss_amount, 
+      remark, is_delete, ext, 
+      update_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{ceRegistSurveyId,jdbcType=BIGINT}, 
+      #{claimNotificationNo,jdbcType=VARCHAR}, #{subjectThird,jdbcType=VARCHAR}, #{licensePlateNo,jdbcType=VARCHAR}, 
+      #{hkmacLicensePlateNo,jdbcType=VARCHAR}, #{owner,jdbcType=VARCHAR}, #{insuredName,jdbcType=VARCHAR}, 
+      #{bzPolicyNo,jdbcType=VARCHAR}, #{bzCompanyCode,jdbcType=VARCHAR}, #{subCompanyName,jdbcType=VARCHAR}, 
+      #{modelCode,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, #{vehicleBrandCode,jdbcType=VARCHAR}, 
+      #{vehicleSeriesCode,jdbcType=VARCHAR}, #{groupVehCode,jdbcType=VARCHAR}, #{manuCode,jdbcType=VARCHAR}, 
+      #{transmissionCode,jdbcType=VARCHAR}, #{transmissionName,jdbcType=VARCHAR}, #{vin,jdbcType=VARCHAR}, 
+      #{carKindCode,jdbcType=VARCHAR}, #{vehTypeCode,jdbcType=VARCHAR}, #{bodyTypeCode,jdbcType=VARCHAR}, 
+      #{brandModel,jdbcType=VARCHAR}, #{licensePlateType,jdbcType=VARCHAR}, #{engineNo,jdbcType=VARCHAR}, 
+      #{plateColor,jdbcType=VARCHAR}, #{seatCount,jdbcType=TINYINT}, #{vehicleColor,jdbcType=VARCHAR}, 
+      #{isModification,jdbcType=BIT}, #{drivingLicenseAddress,jdbcType=VARCHAR}, #{drivingFirstDate,jdbcType=TIMESTAMP}, 
+      #{registrationDate,jdbcType=TIMESTAMP}, #{asDate,jdbcType=TIMESTAMP}, #{checkNum,jdbcType=TINYINT}, 
+      #{reserveEstimateAddress,jdbcType=VARCHAR}, #{newVehiclePrice,jdbcType=DECIMAL}, 
+      #{isLoss,jdbcType=BIT}, #{isTotalLoss,jdbcType=VARCHAR}, #{lossDegree,jdbcType=VARCHAR}, 
+      #{lossPartData,jdbcType=VARCHAR}, #{isCarryingDangerousGoods,jdbcType=BIT}, #{hasCarLicense,jdbcType=BIT}, 
+      #{isPersonInjured,jdbcType=VARCHAR}, #{isProtectLoss,jdbcType=VARCHAR}, #{isRescue,jdbcType=VARCHAR}, 
+      #{isDisassemble,jdbcType=VARCHAR}, #{usingProperties,jdbcType=VARCHAR}, #{rescueCompany,jdbcType=VARCHAR}, 
+      #{rescueWay,jdbcType=VARCHAR}, #{rescueTraffic,jdbcType=VARCHAR}, #{rescueDistance,jdbcType=DECIMAL}, 
+      #{specificFactor,jdbcType=VARCHAR}, #{rescueAmount,jdbcType=DECIMAL}, #{estimatedLossAmount,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{ext,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeRegistSurveyCar">
+    insert into ce_regist_survey_car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="ceRegistSurveyId != null">
+        ce_regist_survey_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="subjectThird != null">
+        subject_third,
+      </if>
+      <if test="licensePlateNo != null">
+        license_plate_no,
+      </if>
+      <if test="hkmacLicensePlateNo != null">
+        hkmac_license_plate_no,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+      <if test="insuredName != null">
+        insured_name,
+      </if>
+      <if test="bzPolicyNo != null">
+        bz_policy_no,
+      </if>
+      <if test="bzCompanyCode != null">
+        bz_company_code,
+      </if>
+      <if test="subCompanyName != null">
+        sub_company_name,
+      </if>
+      <if test="modelCode != null">
+        model_code,
+      </if>
+      <if test="modelName != null">
+        model_name,
+      </if>
+      <if test="vehicleBrandCode != null">
+        vehicle_brand_code,
+      </if>
+      <if test="vehicleSeriesCode != null">
+        vehicle_series_code,
+      </if>
+      <if test="groupVehCode != null">
+        group_veh_code,
+      </if>
+      <if test="manuCode != null">
+        manu_code,
+      </if>
+      <if test="transmissionCode != null">
+        transmission_code,
+      </if>
+      <if test="transmissionName != null">
+        transmission_name,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="carKindCode != null">
+        car_kind_code,
+      </if>
+      <if test="vehTypeCode != null">
+        veh_type_code,
+      </if>
+      <if test="bodyTypeCode != null">
+        body_type_code,
+      </if>
+      <if test="brandModel != null">
+        brand_model,
+      </if>
+      <if test="licensePlateType != null">
+        license_plate_type,
+      </if>
+      <if test="engineNo != null">
+        engine_no,
+      </if>
+      <if test="plateColor != null">
+        plate_color,
+      </if>
+      <if test="seatCount != null">
+        seat_count,
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color,
+      </if>
+      <if test="isModification != null">
+        is_modification,
+      </if>
+      <if test="drivingLicenseAddress != null">
+        driving_license_address,
+      </if>
+      <if test="drivingFirstDate != null">
+        driving_first_date,
+      </if>
+      <if test="registrationDate != null">
+        registration_date,
+      </if>
+      <if test="asDate != null">
+        as_date,
+      </if>
+      <if test="checkNum != null">
+        check_num,
+      </if>
+      <if test="reserveEstimateAddress != null">
+        reserve_estimate_address,
+      </if>
+      <if test="newVehiclePrice != null">
+        new_vehicle_price,
+      </if>
+      <if test="isLoss != null">
+        is_loss,
+      </if>
+      <if test="isTotalLoss != null">
+        is_total_loss,
+      </if>
+      <if test="lossDegree != null">
+        loss_degree,
+      </if>
+      <if test="lossPartData != null">
+        loss_part_data,
+      </if>
+      <if test="isCarryingDangerousGoods != null">
+        is_carrying_dangerous_goods,
+      </if>
+      <if test="hasCarLicense != null">
+        has_car_license,
+      </if>
+      <if test="isPersonInjured != null">
+        is_person_injured,
+      </if>
+      <if test="isProtectLoss != null">
+        is_protect_loss,
+      </if>
+      <if test="isRescue != null">
+        is_rescue,
+      </if>
+      <if test="isDisassemble != null">
+        is_disassemble,
+      </if>
+      <if test="usingProperties != null">
+        using_properties,
+      </if>
+      <if test="rescueCompany != null">
+        rescue_company,
+      </if>
+      <if test="rescueWay != null">
+        rescue_way,
+      </if>
+      <if test="rescueTraffic != null">
+        rescue_traffic,
+      </if>
+      <if test="rescueDistance != null">
+        rescue_distance,
+      </if>
+      <if test="specificFactor != null">
+        specific_factor,
+      </if>
+      <if test="rescueAmount != null">
+        rescue_amount,
+      </if>
+      <if test="estimatedLossAmount != null">
+        estimated_loss_amount,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="ceRegistSurveyId != null">
+        #{ceRegistSurveyId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectThird != null">
+        #{subjectThird,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateNo != null">
+        #{licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hkmacLicensePlateNo != null">
+        #{hkmacLicensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredName != null">
+        #{insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="bzPolicyNo != null">
+        #{bzPolicyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bzCompanyCode != null">
+        #{bzCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subCompanyName != null">
+        #{subCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null">
+        #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null">
+        #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleBrandCode != null">
+        #{vehicleBrandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSeriesCode != null">
+        #{vehicleSeriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupVehCode != null">
+        #{groupVehCode,jdbcType=VARCHAR},
+      </if>
+      <if test="manuCode != null">
+        #{manuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transmissionCode != null">
+        #{transmissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transmissionName != null">
+        #{transmissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCode != null">
+        #{carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehTypeCode != null">
+        #{vehTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bodyTypeCode != null">
+        #{bodyTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandModel != null">
+        #{brandModel,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateType != null">
+        #{licensePlateType,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNo != null">
+        #{engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateColor != null">
+        #{plateColor,jdbcType=VARCHAR},
+      </if>
+      <if test="seatCount != null">
+        #{seatCount,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleColor != null">
+        #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="isModification != null">
+        #{isModification,jdbcType=BIT},
+      </if>
+      <if test="drivingLicenseAddress != null">
+        #{drivingLicenseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingFirstDate != null">
+        #{drivingFirstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationDate != null">
+        #{registrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="asDate != null">
+        #{asDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkNum != null">
+        #{checkNum,jdbcType=TINYINT},
+      </if>
+      <if test="reserveEstimateAddress != null">
+        #{reserveEstimateAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="newVehiclePrice != null">
+        #{newVehiclePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isLoss != null">
+        #{isLoss,jdbcType=BIT},
+      </if>
+      <if test="isTotalLoss != null">
+        #{isTotalLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="lossDegree != null">
+        #{lossDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="lossPartData != null">
+        #{lossPartData,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarryingDangerousGoods != null">
+        #{isCarryingDangerousGoods,jdbcType=BIT},
+      </if>
+      <if test="hasCarLicense != null">
+        #{hasCarLicense,jdbcType=BIT},
+      </if>
+      <if test="isPersonInjured != null">
+        #{isPersonInjured,jdbcType=VARCHAR},
+      </if>
+      <if test="isProtectLoss != null">
+        #{isProtectLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="isRescue != null">
+        #{isRescue,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisassemble != null">
+        #{isDisassemble,jdbcType=VARCHAR},
+      </if>
+      <if test="usingProperties != null">
+        #{usingProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueCompany != null">
+        #{rescueCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueWay != null">
+        #{rescueWay,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueTraffic != null">
+        #{rescueTraffic,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueDistance != null">
+        #{rescueDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="specificFactor != null">
+        #{specificFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueAmount != null">
+        #{rescueAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="estimatedLossAmount != null">
+        #{estimatedLossAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyCarExample" resultType="java.lang.Long">
+    select count(*) from ce_regist_survey_car
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_regist_survey_car
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ceRegistSurveyId != null">
+        ce_regist_survey_id = #{record.ceRegistSurveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectThird != null">
+        subject_third = #{record.subjectThird,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licensePlateNo != null">
+        license_plate_no = #{record.licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hkmacLicensePlateNo != null">
+        hkmac_license_plate_no = #{record.hkmacLicensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.owner != null">
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredName != null">
+        insured_name = #{record.insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bzPolicyNo != null">
+        bz_policy_no = #{record.bzPolicyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bzCompanyCode != null">
+        bz_company_code = #{record.bzCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subCompanyName != null">
+        sub_company_name = #{record.subCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelCode != null">
+        model_code = #{record.modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelName != null">
+        model_name = #{record.modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleBrandCode != null">
+        vehicle_brand_code = #{record.vehicleBrandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleSeriesCode != null">
+        vehicle_series_code = #{record.vehicleSeriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupVehCode != null">
+        group_veh_code = #{record.groupVehCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manuCode != null">
+        manu_code = #{record.manuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transmissionCode != null">
+        transmission_code = #{record.transmissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transmissionName != null">
+        transmission_name = #{record.transmissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vin != null">
+        vin = #{record.vin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carKindCode != null">
+        car_kind_code = #{record.carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehTypeCode != null">
+        veh_type_code = #{record.vehTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bodyTypeCode != null">
+        body_type_code = #{record.bodyTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandModel != null">
+        brand_model = #{record.brandModel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licensePlateType != null">
+        license_plate_type = #{record.licensePlateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.engineNo != null">
+        engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plateColor != null">
+        plate_color = #{record.plateColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatCount != null">
+        seat_count = #{record.seatCount,jdbcType=TINYINT},
+      </if>
+      <if test="record.vehicleColor != null">
+        vehicle_color = #{record.vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isModification != null">
+        is_modification = #{record.isModification,jdbcType=BIT},
+      </if>
+      <if test="record.drivingLicenseAddress != null">
+        driving_license_address = #{record.drivingLicenseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drivingFirstDate != null">
+        driving_first_date = #{record.drivingFirstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.registrationDate != null">
+        registration_date = #{record.registrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.asDate != null">
+        as_date = #{record.asDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkNum != null">
+        check_num = #{record.checkNum,jdbcType=TINYINT},
+      </if>
+      <if test="record.reserveEstimateAddress != null">
+        reserve_estimate_address = #{record.reserveEstimateAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newVehiclePrice != null">
+        new_vehicle_price = #{record.newVehiclePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isLoss != null">
+        is_loss = #{record.isLoss,jdbcType=BIT},
+      </if>
+      <if test="record.isTotalLoss != null">
+        is_total_loss = #{record.isTotalLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossDegree != null">
+        loss_degree = #{record.lossDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossPartData != null">
+        loss_part_data = #{record.lossPartData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCarryingDangerousGoods != null">
+        is_carrying_dangerous_goods = #{record.isCarryingDangerousGoods,jdbcType=BIT},
+      </if>
+      <if test="record.hasCarLicense != null">
+        has_car_license = #{record.hasCarLicense,jdbcType=BIT},
+      </if>
+      <if test="record.isPersonInjured != null">
+        is_person_injured = #{record.isPersonInjured,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isProtectLoss != null">
+        is_protect_loss = #{record.isProtectLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRescue != null">
+        is_rescue = #{record.isRescue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDisassemble != null">
+        is_disassemble = #{record.isDisassemble,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usingProperties != null">
+        using_properties = #{record.usingProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rescueCompany != null">
+        rescue_company = #{record.rescueCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rescueWay != null">
+        rescue_way = #{record.rescueWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rescueTraffic != null">
+        rescue_traffic = #{record.rescueTraffic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rescueDistance != null">
+        rescue_distance = #{record.rescueDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.specificFactor != null">
+        specific_factor = #{record.specificFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rescueAmount != null">
+        rescue_amount = #{record.rescueAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.estimatedLossAmount != null">
+        estimated_loss_amount = #{record.estimatedLossAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.ext != null">
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_regist_survey_car
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      ce_regist_survey_id = #{record.ceRegistSurveyId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      subject_third = #{record.subjectThird,jdbcType=VARCHAR},
+      license_plate_no = #{record.licensePlateNo,jdbcType=VARCHAR},
+      hkmac_license_plate_no = #{record.hkmacLicensePlateNo,jdbcType=VARCHAR},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      insured_name = #{record.insuredName,jdbcType=VARCHAR},
+      bz_policy_no = #{record.bzPolicyNo,jdbcType=VARCHAR},
+      bz_company_code = #{record.bzCompanyCode,jdbcType=VARCHAR},
+      sub_company_name = #{record.subCompanyName,jdbcType=VARCHAR},
+      model_code = #{record.modelCode,jdbcType=VARCHAR},
+      model_name = #{record.modelName,jdbcType=VARCHAR},
+      vehicle_brand_code = #{record.vehicleBrandCode,jdbcType=VARCHAR},
+      vehicle_series_code = #{record.vehicleSeriesCode,jdbcType=VARCHAR},
+      group_veh_code = #{record.groupVehCode,jdbcType=VARCHAR},
+      manu_code = #{record.manuCode,jdbcType=VARCHAR},
+      transmission_code = #{record.transmissionCode,jdbcType=VARCHAR},
+      transmission_name = #{record.transmissionName,jdbcType=VARCHAR},
+      vin = #{record.vin,jdbcType=VARCHAR},
+      car_kind_code = #{record.carKindCode,jdbcType=VARCHAR},
+      veh_type_code = #{record.vehTypeCode,jdbcType=VARCHAR},
+      body_type_code = #{record.bodyTypeCode,jdbcType=VARCHAR},
+      brand_model = #{record.brandModel,jdbcType=VARCHAR},
+      license_plate_type = #{record.licensePlateType,jdbcType=VARCHAR},
+      engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      plate_color = #{record.plateColor,jdbcType=VARCHAR},
+      seat_count = #{record.seatCount,jdbcType=TINYINT},
+      vehicle_color = #{record.vehicleColor,jdbcType=VARCHAR},
+      is_modification = #{record.isModification,jdbcType=BIT},
+      driving_license_address = #{record.drivingLicenseAddress,jdbcType=VARCHAR},
+      driving_first_date = #{record.drivingFirstDate,jdbcType=TIMESTAMP},
+      registration_date = #{record.registrationDate,jdbcType=TIMESTAMP},
+      as_date = #{record.asDate,jdbcType=TIMESTAMP},
+      check_num = #{record.checkNum,jdbcType=TINYINT},
+      reserve_estimate_address = #{record.reserveEstimateAddress,jdbcType=VARCHAR},
+      new_vehicle_price = #{record.newVehiclePrice,jdbcType=DECIMAL},
+      is_loss = #{record.isLoss,jdbcType=BIT},
+      is_total_loss = #{record.isTotalLoss,jdbcType=VARCHAR},
+      loss_degree = #{record.lossDegree,jdbcType=VARCHAR},
+      loss_part_data = #{record.lossPartData,jdbcType=VARCHAR},
+      is_carrying_dangerous_goods = #{record.isCarryingDangerousGoods,jdbcType=BIT},
+      has_car_license = #{record.hasCarLicense,jdbcType=BIT},
+      is_person_injured = #{record.isPersonInjured,jdbcType=VARCHAR},
+      is_protect_loss = #{record.isProtectLoss,jdbcType=VARCHAR},
+      is_rescue = #{record.isRescue,jdbcType=VARCHAR},
+      is_disassemble = #{record.isDisassemble,jdbcType=VARCHAR},
+      using_properties = #{record.usingProperties,jdbcType=VARCHAR},
+      rescue_company = #{record.rescueCompany,jdbcType=VARCHAR},
+      rescue_way = #{record.rescueWay,jdbcType=VARCHAR},
+      rescue_traffic = #{record.rescueTraffic,jdbcType=VARCHAR},
+      rescue_distance = #{record.rescueDistance,jdbcType=DECIMAL},
+      specific_factor = #{record.specificFactor,jdbcType=VARCHAR},
+      rescue_amount = #{record.rescueAmount,jdbcType=DECIMAL},
+      estimated_loss_amount = #{record.estimatedLossAmount,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeRegistSurveyCar">
+    update ce_regist_survey_car
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="ceRegistSurveyId != null">
+        ce_regist_survey_id = #{ceRegistSurveyId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectThird != null">
+        subject_third = #{subjectThird,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateNo != null">
+        license_plate_no = #{licensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hkmacLicensePlateNo != null">
+        hkmac_license_plate_no = #{hkmacLicensePlateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        owner = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredName != null">
+        insured_name = #{insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="bzPolicyNo != null">
+        bz_policy_no = #{bzPolicyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bzCompanyCode != null">
+        bz_company_code = #{bzCompanyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subCompanyName != null">
+        sub_company_name = #{subCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null">
+        model_code = #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelName != null">
+        model_name = #{modelName,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleBrandCode != null">
+        vehicle_brand_code = #{vehicleBrandCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleSeriesCode != null">
+        vehicle_series_code = #{vehicleSeriesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="groupVehCode != null">
+        group_veh_code = #{groupVehCode,jdbcType=VARCHAR},
+      </if>
+      <if test="manuCode != null">
+        manu_code = #{manuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transmissionCode != null">
+        transmission_code = #{transmissionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="transmissionName != null">
+        transmission_name = #{transmissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCode != null">
+        car_kind_code = #{carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="vehTypeCode != null">
+        veh_type_code = #{vehTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bodyTypeCode != null">
+        body_type_code = #{bodyTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="brandModel != null">
+        brand_model = #{brandModel,jdbcType=VARCHAR},
+      </if>
+      <if test="licensePlateType != null">
+        license_plate_type = #{licensePlateType,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNo != null">
+        engine_no = #{engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateColor != null">
+        plate_color = #{plateColor,jdbcType=VARCHAR},
+      </if>
+      <if test="seatCount != null">
+        seat_count = #{seatCount,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleColor != null">
+        vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      </if>
+      <if test="isModification != null">
+        is_modification = #{isModification,jdbcType=BIT},
+      </if>
+      <if test="drivingLicenseAddress != null">
+        driving_license_address = #{drivingLicenseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingFirstDate != null">
+        driving_first_date = #{drivingFirstDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registrationDate != null">
+        registration_date = #{registrationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="asDate != null">
+        as_date = #{asDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkNum != null">
+        check_num = #{checkNum,jdbcType=TINYINT},
+      </if>
+      <if test="reserveEstimateAddress != null">
+        reserve_estimate_address = #{reserveEstimateAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="newVehiclePrice != null">
+        new_vehicle_price = #{newVehiclePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isLoss != null">
+        is_loss = #{isLoss,jdbcType=BIT},
+      </if>
+      <if test="isTotalLoss != null">
+        is_total_loss = #{isTotalLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="lossDegree != null">
+        loss_degree = #{lossDegree,jdbcType=VARCHAR},
+      </if>
+      <if test="lossPartData != null">
+        loss_part_data = #{lossPartData,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarryingDangerousGoods != null">
+        is_carrying_dangerous_goods = #{isCarryingDangerousGoods,jdbcType=BIT},
+      </if>
+      <if test="hasCarLicense != null">
+        has_car_license = #{hasCarLicense,jdbcType=BIT},
+      </if>
+      <if test="isPersonInjured != null">
+        is_person_injured = #{isPersonInjured,jdbcType=VARCHAR},
+      </if>
+      <if test="isProtectLoss != null">
+        is_protect_loss = #{isProtectLoss,jdbcType=VARCHAR},
+      </if>
+      <if test="isRescue != null">
+        is_rescue = #{isRescue,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisassemble != null">
+        is_disassemble = #{isDisassemble,jdbcType=VARCHAR},
+      </if>
+      <if test="usingProperties != null">
+        using_properties = #{usingProperties,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueCompany != null">
+        rescue_company = #{rescueCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueWay != null">
+        rescue_way = #{rescueWay,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueTraffic != null">
+        rescue_traffic = #{rescueTraffic,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueDistance != null">
+        rescue_distance = #{rescueDistance,jdbcType=DECIMAL},
+      </if>
+      <if test="specificFactor != null">
+        specific_factor = #{specificFactor,jdbcType=VARCHAR},
+      </if>
+      <if test="rescueAmount != null">
+        rescue_amount = #{rescueAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="estimatedLossAmount != null">
+        estimated_loss_amount = #{estimatedLossAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeRegistSurveyCar">
+    update ce_regist_survey_car
+    set regist_id = #{registId,jdbcType=BIGINT},
+      ce_regist_survey_id = #{ceRegistSurveyId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      subject_third = #{subjectThird,jdbcType=VARCHAR},
+      license_plate_no = #{licensePlateNo,jdbcType=VARCHAR},
+      hkmac_license_plate_no = #{hkmacLicensePlateNo,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      insured_name = #{insuredName,jdbcType=VARCHAR},
+      bz_policy_no = #{bzPolicyNo,jdbcType=VARCHAR},
+      bz_company_code = #{bzCompanyCode,jdbcType=VARCHAR},
+      sub_company_name = #{subCompanyName,jdbcType=VARCHAR},
+      model_code = #{modelCode,jdbcType=VARCHAR},
+      model_name = #{modelName,jdbcType=VARCHAR},
+      vehicle_brand_code = #{vehicleBrandCode,jdbcType=VARCHAR},
+      vehicle_series_code = #{vehicleSeriesCode,jdbcType=VARCHAR},
+      group_veh_code = #{groupVehCode,jdbcType=VARCHAR},
+      manu_code = #{manuCode,jdbcType=VARCHAR},
+      transmission_code = #{transmissionCode,jdbcType=VARCHAR},
+      transmission_name = #{transmissionName,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      car_kind_code = #{carKindCode,jdbcType=VARCHAR},
+      veh_type_code = #{vehTypeCode,jdbcType=VARCHAR},
+      body_type_code = #{bodyTypeCode,jdbcType=VARCHAR},
+      brand_model = #{brandModel,jdbcType=VARCHAR},
+      license_plate_type = #{licensePlateType,jdbcType=VARCHAR},
+      engine_no = #{engineNo,jdbcType=VARCHAR},
+      plate_color = #{plateColor,jdbcType=VARCHAR},
+      seat_count = #{seatCount,jdbcType=TINYINT},
+      vehicle_color = #{vehicleColor,jdbcType=VARCHAR},
+      is_modification = #{isModification,jdbcType=BIT},
+      driving_license_address = #{drivingLicenseAddress,jdbcType=VARCHAR},
+      driving_first_date = #{drivingFirstDate,jdbcType=TIMESTAMP},
+      registration_date = #{registrationDate,jdbcType=TIMESTAMP},
+      as_date = #{asDate,jdbcType=TIMESTAMP},
+      check_num = #{checkNum,jdbcType=TINYINT},
+      reserve_estimate_address = #{reserveEstimateAddress,jdbcType=VARCHAR},
+      new_vehicle_price = #{newVehiclePrice,jdbcType=DECIMAL},
+      is_loss = #{isLoss,jdbcType=BIT},
+      is_total_loss = #{isTotalLoss,jdbcType=VARCHAR},
+      loss_degree = #{lossDegree,jdbcType=VARCHAR},
+      loss_part_data = #{lossPartData,jdbcType=VARCHAR},
+      is_carrying_dangerous_goods = #{isCarryingDangerousGoods,jdbcType=BIT},
+      has_car_license = #{hasCarLicense,jdbcType=BIT},
+      is_person_injured = #{isPersonInjured,jdbcType=VARCHAR},
+      is_protect_loss = #{isProtectLoss,jdbcType=VARCHAR},
+      is_rescue = #{isRescue,jdbcType=VARCHAR},
+      is_disassemble = #{isDisassemble,jdbcType=VARCHAR},
+      using_properties = #{usingProperties,jdbcType=VARCHAR},
+      rescue_company = #{rescueCompany,jdbcType=VARCHAR},
+      rescue_way = #{rescueWay,jdbcType=VARCHAR},
+      rescue_traffic = #{rescueTraffic,jdbcType=VARCHAR},
+      rescue_distance = #{rescueDistance,jdbcType=DECIMAL},
+      specific_factor = #{specificFactor,jdbcType=VARCHAR},
+      rescue_amount = #{rescueAmount,jdbcType=DECIMAL},
+      estimated_loss_amount = #{estimatedLossAmount,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      ext = #{ext,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

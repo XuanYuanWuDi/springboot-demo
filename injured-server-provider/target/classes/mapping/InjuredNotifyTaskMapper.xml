@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredNotifyTaskMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredNotifyTask">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="biz_type" jdbcType="VARCHAR" property="bizType" />
+    <result column="notify_last_time" jdbcType="TIMESTAMP" property="notifyLastTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="notify_number" jdbcType="INTEGER" property="notifyNumber" />
+    <result column="notify_param" jdbcType="CHAR" property="notifyParam" />
+    <result column="notify_url" jdbcType="VARCHAR" property="notifyUrl" />
+    <result column="notify_result" jdbcType="VARCHAR" property="notifyResult" />
+    <result column="notify_status" jdbcType="VARCHAR" property="notifyStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="notify_param_type" jdbcType="VARCHAR" property="notifyParamType" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.injured.server.api.entity.InjuredNotifyTask">
+    <result column="notify_other_param" jdbcType="LONGVARCHAR" property="notifyOtherParam" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, business_id, biz_type, notify_last_time, state, notify_number, notify_param, 
+    notify_url, notify_result, notify_status, create_time, update_time, notify_param_type
+  </sql>
+  <sql id="Blob_Column_List">
+    notify_other_param
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.injured.server.api.entity.InjuredNotifyTaskExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from injured_notify_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredNotifyTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_notify_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from injured_notify_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_notify_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredNotifyTaskExample">
+    delete from injured_notify_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    insert into injured_notify_task (id, regist_id, business_id, 
+      biz_type, notify_last_time, state, 
+      notify_number, notify_param, notify_url, 
+      notify_result, notify_status, create_time, 
+      update_time, notify_param_type, notify_other_param
+      )
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{businessId,jdbcType=BIGINT}, 
+      #{bizType,jdbcType=VARCHAR}, #{notifyLastTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, 
+      #{notifyNumber,jdbcType=INTEGER}, #{notifyParam,jdbcType=CHAR}, #{notifyUrl,jdbcType=VARCHAR}, 
+      #{notifyResult,jdbcType=VARCHAR}, #{notifyStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{notifyParamType,jdbcType=VARCHAR}, #{notifyOtherParam,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    insert into injured_notify_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="bizType != null">
+        biz_type,
+      </if>
+      <if test="notifyLastTime != null">
+        notify_last_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="notifyNumber != null">
+        notify_number,
+      </if>
+      <if test="notifyParam != null">
+        notify_param,
+      </if>
+      <if test="notifyUrl != null">
+        notify_url,
+      </if>
+      <if test="notifyResult != null">
+        notify_result,
+      </if>
+      <if test="notifyStatus != null">
+        notify_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="notifyParamType != null">
+        notify_param_type,
+      </if>
+      <if test="notifyOtherParam != null">
+        notify_other_param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null">
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyLastTime != null">
+        #{notifyLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="notifyNumber != null">
+        #{notifyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="notifyParam != null">
+        #{notifyParam,jdbcType=CHAR},
+      </if>
+      <if test="notifyUrl != null">
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyResult != null">
+        #{notifyResult,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyStatus != null">
+        #{notifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyParamType != null">
+        #{notifyParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyOtherParam != null">
+        #{notifyOtherParam,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredNotifyTaskExample" resultType="java.lang.Long">
+    select count(*) from injured_notify_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_notify_task
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizType != null">
+        biz_type = #{record.bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyLastTime != null">
+        notify_last_time = #{record.notifyLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.notifyNumber != null">
+        notify_number = #{record.notifyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.notifyParam != null">
+        notify_param = #{record.notifyParam,jdbcType=CHAR},
+      </if>
+      <if test="record.notifyUrl != null">
+        notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyResult != null">
+        notify_result = #{record.notifyResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyStatus != null">
+        notify_status = #{record.notifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.notifyParamType != null">
+        notify_param_type = #{record.notifyParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyOtherParam != null">
+        notify_other_param = #{record.notifyOtherParam,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update injured_notify_task
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      biz_type = #{record.bizType,jdbcType=VARCHAR},
+      notify_last_time = #{record.notifyLastTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER},
+      notify_number = #{record.notifyNumber,jdbcType=INTEGER},
+      notify_param = #{record.notifyParam,jdbcType=CHAR},
+      notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      notify_result = #{record.notifyResult,jdbcType=VARCHAR},
+      notify_status = #{record.notifyStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      notify_param_type = #{record.notifyParamType,jdbcType=VARCHAR},
+      notify_other_param = #{record.notifyOtherParam,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_notify_task
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      biz_type = #{record.bizType,jdbcType=VARCHAR},
+      notify_last_time = #{record.notifyLastTime,jdbcType=TIMESTAMP},
+      state = #{record.state,jdbcType=INTEGER},
+      notify_number = #{record.notifyNumber,jdbcType=INTEGER},
+      notify_param = #{record.notifyParam,jdbcType=CHAR},
+      notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      notify_result = #{record.notifyResult,jdbcType=VARCHAR},
+      notify_status = #{record.notifyStatus,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      notify_param_type = #{record.notifyParamType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    update injured_notify_task
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null">
+        biz_type = #{bizType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyLastTime != null">
+        notify_last_time = #{notifyLastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="notifyNumber != null">
+        notify_number = #{notifyNumber,jdbcType=INTEGER},
+      </if>
+      <if test="notifyParam != null">
+        notify_param = #{notifyParam,jdbcType=CHAR},
+      </if>
+      <if test="notifyUrl != null">
+        notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyResult != null">
+        notify_result = #{notifyResult,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyStatus != null">
+        notify_status = #{notifyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyParamType != null">
+        notify_param_type = #{notifyParamType,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyOtherParam != null">
+        notify_other_param = #{notifyOtherParam,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    update injured_notify_task
+    set regist_id = #{registId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      notify_last_time = #{notifyLastTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      notify_number = #{notifyNumber,jdbcType=INTEGER},
+      notify_param = #{notifyParam,jdbcType=CHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      notify_result = #{notifyResult,jdbcType=VARCHAR},
+      notify_status = #{notifyStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      notify_param_type = #{notifyParamType,jdbcType=VARCHAR},
+      notify_other_param = #{notifyOtherParam,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    update injured_notify_task
+    set regist_id = #{registId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      biz_type = #{bizType,jdbcType=VARCHAR},
+      notify_last_time = #{notifyLastTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      notify_number = #{notifyNumber,jdbcType=INTEGER},
+      notify_param = #{notifyParam,jdbcType=CHAR},
+      notify_url = #{notifyUrl,jdbcType=VARCHAR},
+      notify_result = #{notifyResult,jdbcType=VARCHAR},
+      notify_status = #{notifyStatus,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      notify_param_type = #{notifyParamType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <!-- 自定义 -->
+  <select id="selectNotifyTaskUnsent" resultMap="BaseResultMap" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    select
+    <include refid="Base_Column_List" />
+    from injured_notify_task
+    where (state = #{state,jdbcType=TINYINT} and notify_number <![CDATA[<]]> #{notifyNumber,jdbcType=TINYINT}
+    and notify_last_time <![CDATA[<=]]> #{notifyLastTimeBegin,jdbcType=TIMESTAMP}
+    and notify_last_time <![CDATA[>=]]> #{notifyLastTimeEnd,jdbcType=TIMESTAMP}) or
+    (state = 0 and notify_number = 0 and notify_last_time <![CDATA[<=]]>  NOW()
+    and notify_last_time <![CDATA[>=]]> #{notifyLastTimeEnd,jdbcType=TIMESTAMP})
+  </select>
+
+  <select id="selectNotifyTaskList" resultMap="BaseResultMap" parameterType="com.injured.server.api.entity.InjuredNotifyTask">
+    select
+    <include refid="Base_Column_List" />
+    from injured_notify_task
+    where 1=1
+    <if test="registId != null" >
+      and regist_id = #{registId,jdbcType=BIGINT}
+    </if>
+    <if test="estimateId != null" >
+      and estimate_id = #{estimateId,jdbcType=BIGINT}
+    </if>
+    <if test="state != null" >
+      and state = #{state,jdbcType=BIT}
+    </if>
+    <if test="notifyLastTimeBegin != null" >
+      and notify_last_time &gt;= CONCAT(#{notifyLastTimeBegin},'00:00:00')
+    </if>
+    <if test="notifyLastTimeEnd != null" >
+      and notify_last_time &lt;= CONCAT(#{notifyLastTimeEnd},'23:59:59')
+    </if>
+  </select>
+</mapper>

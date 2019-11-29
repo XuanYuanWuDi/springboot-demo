@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('详情页面')" />
+    <th:block th:include="include :: ztree-css" />
+    <th:block th:include="include :: footer" />
+    <style>
+        .title{
+            position: relative;
+            background: gray;
+            color: white;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+        .title a{
+            color: white;
+        }
+
+        .title > div > * {
+            margin: 0 20px;
+        }
+
+        .panel{
+            margin: 10px 0;
+        }
+
+        .panel .panel-body{
+            padding: 10px 20px;
+        }
+
+        .panel-body .col2 .form-group{
+            width: 50%;
+            display: inline-block;
+        }
+
+        .col3 .form-group{
+            width: 33%;
+            display: inline-block;
+        }
+
+        .panel-body .col4 .form-group{
+            width: 25%;
+            display: inline-block;
+        }
+
+        .ce-table tr td,
+        .ce-table tr th{
+            padding: 8px 10px;
+        }
+
+        .ce-show{
+            display: inline-block;
+        }
+
+        .ce-hide{
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 5px;
+        }
+        @media (min-width: 768px){
+            .form-group{
+                font-size: 8px;
+            }
+        }
+        .control-label {
+            padding-top: 7px;
+            margin-bottom: 0;
+            text-align: right;
+        }
+    </style>
+    <script type="text/javascript">
+
+        function closeForm(){
+            window.parent.$.modal.closeAll();
+        }
+        function shangyeClick() {
+            $("#jiaoqiang").removeAttr("class","ce-show");
+            $("#shangye").removeAttr("class","ce-hide");
+            $("#shangye").attr("class","ce-show");
+            $("#jiaoqiang").attr("class","ce-hide");
+        }
+
+        function jiaoqiangClick() {
+            $("#shangye").removeAttr("class","ce-show");
+            $("#jiaoqiang").removeAttr("class","ce-hide");
+            $("#jiaoqiang").attr("class","ce-show");
+            $("#shangye").attr("class","ce-hide");
+        }
+
+    </script>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <div class="row title">
+        <div style="float:left">
+            <span>保单信息</span>
+        </div>
+    </div>
+    <div id="baodan-xinxi" style="display: inline-block" th:object="${insuranceDetail}">
+        <ul id="myTab" class="nav nav-tabs" style="margin-top: 20px">
+            <li th:if="${insuranceDetail != null && insuranceDetail.compulsoryInsuranceResponse != null && insuranceDetail.compulsoryInsuranceResponse.policyNo!=null}"
+                th:class="${insuranceDetail != null && insuranceDetail.compulsoryInsuranceResponse != null && insuranceDetail.compulsoryInsuranceResponse.policyNo!=null}?'active'">
+                <a href="#jiaoqiang" onclick="jiaoqiangClick()" data-toggle="tab" th:style="'display:' + @{(${insuranceDetail.compulsoryInsuranceResponse.policyNo != null} ? 'inline-block' : 'none')} + ''">交强险代抄单</a>
+            </li>
+            <li th:if="${insuranceDetail != null && insuranceDetail.commercialInsuranceResponse != null && insuranceDetail.commercialInsuranceResponse.policyNo!=null}"
+                th:class="${insuranceDetail != null && insuranceDetail.commercialInsuranceResponse != null && insuranceDetail.commercialInsuranceResponse.policyNo!=null
+				                              && insuranceDetail.compulsoryInsuranceResponse.policyNo == null}?'active'">
+                <a href="#shangye" onclick="shangyeClick()" data-toggle="tab" th:style="'display:' + @{(${insuranceDetail.commercialInsuranceResponse.policyNo != null} ? 'inline-block' : 'none' )} + ''">商业险代抄单</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content">
+            <div id="jiaoqiang" style="margin-top: 20px" th:if="${insuranceDetail != null && insuranceDetail.compulsoryInsuranceResponse !=null}"
+                 th:class="@{(${insuranceDetail.compulsoryInsuranceResponse.policyNo != null} ? 'ce-show' : 'ce-hide')}"
+            >
+
+                <div class="row" style="text-align: center">
+                    <div class="form-group col-sm-5">
+                        保单号：<input class="form-control" type="text" th:value='*{commercialInsuranceResponse.policyNo}' disabled="disabled"
+                                   style="display: inline-block;width: 50%">
+                    </div>
+                    <div class="form-group col-sm-5">
+                        报案号：<input class="form-control" type="text" th:value='*{commercialInsuranceResponse.claimNotificationNo}' disabled="disabled"
+                                   style="display: inline-block;width: 50%">
+                    </div>
+                </div>
+                <div class="row col3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.insuredName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车牌号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.licensePlateNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">号牌底色：</label>
+                        <div class="col-sm-6" th:if="*{compulsoryInsuranceResponse.plateColor != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("plateColor",insuranceDetail.getCompulsoryInsuranceResponse().getPlateColor())}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人证件类型：</label>
+                        <div class="col-sm-6" th:if="*{compulsoryInsuranceResponse.insuredIdentifyType != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("identifyType",insuranceDetail.getCompulsoryInsuranceResponse().getInsuredIdentifyType())}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人证件号码：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.insuredIdentifyNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">代理人/公司名称：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.agencyName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车型名称：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.modelName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">厂牌型号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.brandModel}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车身颜色：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("vehicleColor",insuranceDetail.getCompulsoryInsuranceResponse().getVehicleColor())}'
+                                   disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车架号/VIN码：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.vehicleFrameNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">发动机号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.engineNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">进口/国产车：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.importDomestic == 0?"国产车":"进口车"}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆初登日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.firstRegistrationDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">核定载客载质量：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.seatsQualities}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆已使用年限：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.usedYears}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">新车购置价：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{#numbers.formatDecimal(compulsoryInsuranceResponse.newVehiclePrice,1,2)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">实际价值：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{#numbers.formatDecimal(compulsoryInsuranceResponse.vehiclePrice,1,2)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆使用性质：</label>
+                        <div class="col-sm-6" th:if="*{compulsoryInsuranceResponse.usingProperties != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("usingProperties",__${insuranceDetail.compulsoryInsuranceResponse.usingProperties}__)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">行驶证车主：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.owner}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆种类：</label>
+                        <div class="col-sm-6" th:if="*{compulsoryInsuranceResponse.carKindCode != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("carKindCode",__${insuranceDetail.compulsoryInsuranceResponse.carKindCode}__)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">是否过户车：</label>
+                        <div class="col-sm-6">
+                            <input type="radio" name="isTransfer" disabled="disabled" value="0" th:field="*{compulsoryInsuranceResponse.isTransfer}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="isTransfer" disabled="disabled" value="1" th:field="*{compulsoryInsuranceResponse.isTransfer}">&nbsp;是
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">投保人：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.policyHolder}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">业务渠道：</label>
+                        <div class="col-sm-6" th:if="${insuranceDetail.compulsoryInsuranceResponse !=null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("channels",__${insuranceDetail.compulsoryInsuranceResponse.channels}__)}'
+                                   disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">是否续保业务：</label>
+                        <div class="col-sm-6">
+                            <input type="radio" name="isContinuousPolicy" disabled="disabled" value="0" th:field="*{compulsoryInsuranceResponse.isContinuousPolicy}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="isContinuousPolicy" disabled="disabled" value="1" th:field="*{compulsoryInsuranceResponse.isContinuousPolicy}">&nbsp;是
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">起保日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.startDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">终保日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.endDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">承保机构：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.companyName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">签单日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{compulsoryInsuranceResponse.signDate}' disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="row col3">
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4">承保险种：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>险别名称</th>
+                            <th>保额/限额</th>
+                            <th>免赔率</th>
+                            <th>免赔额</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="insuranceItem,insuranceItemStatus : *{compulsoryInsuranceResponse.insuranceItems}">
+                            <td th:text="${insuranceItemStatus.count}"></td>
+                            <td th:text="${insuranceItem.name}"></td>
+                            <td th:text="${#numbers.formatDecimal(insuranceItem.insuranceAmout,1,2)}"></td>
+                            <td th:text="${insuranceItem.deductibleRate}"></td>
+                            <td th:text="${#numbers.formatDecimal(insuranceItem.deductibleMoney,1,2)}"></td>
+                            <td th:text="${insuranceItem.remark}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4">特别约定：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>约定详情</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="specialAgreement : *{compulsoryInsuranceResponse.specialAgreements}">
+                            <td th:text="${specialAgreement.content}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4">批改信息：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>批单号</th>
+                            <th>批改时间</th>
+                            <th>批改内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="insuranceModification : *{compulsoryInsuranceResponse.insuranceModifications}">
+                            <td th:text="${insuranceModification.modificationBillNo}"></td>
+                            <td th:text="${insuranceModification.mofificationDate}"></td>
+                            <td th:text="${insuranceModification.content}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin-top: 20px;margin: 20px;">
+                        <label class="col-sm-4">保单出险记录：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>出险时间</th>
+                            <th>出险经过</th>
+                            <th>结案时间</th>
+                            <th>结案金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="historicalClaim,historicalClaimStatus : *{compulsoryInsuranceResponse.historicalClaims}">
+                            <td th:text="${historicalClaimStatus.count}"></td>
+                            <td th:text="${historicalClaim.claimDate}"></td>
+                            <td th:text="${historicalClaim.dangerDesc}"></td>
+                            <td th:text="${historicalClaim.claimEndDate}"></td>
+                            <td th:text="${#numbers.formatDecimal(historicalClaim.paidAmount,1,2)}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row col3" style="margin-top: 20px;">
+                    <div class="form-group "></div>
+                    <div class="form-group "></div>
+                    <div class="form-group ">
+                        <label class="col-sm-4 control-label">签单日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.signDate}' disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade col3" id="shangye" style="margin-top: 20px" th:if="${insuranceDetail != null && insuranceDetail.commercialInsuranceResponse != null}"
+                 th:class="@{(${insuranceDetail.commercialInsuranceResponse.policyNo != null && insuranceDetail.compulsoryInsuranceResponse.policyNo == null} ? 'ce-show' : 'ce-hide')}"
+            >
+                <div class="row" style="text-align: center">
+                    <div class="form-group col-sm-5">
+                        保单号：<input class="form-control" type="text" th:value='*{commercialInsuranceResponse.policyNo}' disabled="disabled"
+                                   style="display: inline-block;width: 50%">
+                    </div>
+                    <div class="form-group col-sm-5">
+                        报案号：<input class="form-control" type="text" th:value='*{commercialInsuranceResponse.claimNotificationNo}' disabled="disabled"
+                                   style="display: inline-block;width: 50%">
+                    </div>
+                </div>
+                <div class="row col3">
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.insuredName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车牌号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.licensePlateNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">号牌底色：</label>
+                        <div class="col-sm-6" th:if="*{commercialInsuranceResponse.plateColor != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("plateColor",insuranceDetail.getCommercialInsuranceResponse().getPlateColor())}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人证件类型：</label>
+                        <div class="col-sm-6" th:if="*{commercialInsuranceResponse.insuredIdentifyType != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("identifyType",insuranceDetail.getCommercialInsuranceResponse().getInsuredIdentifyType())}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">被保险人证件号码：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.insuredIdentifyNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">代理人/公司名称：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.agencyName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车型名称：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.modelName}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">厂牌型号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.brandModel}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车身颜色：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("vehicleColor",insuranceDetail.getCommercialInsuranceResponse().getVehicleColor())}'
+                                   disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车架号/VIN码：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.vehicleFrameNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">发动机号：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.engineNo}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">进口/国产车：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.importDomestic  == 0?"国产车":"进口车" }' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆初登日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.firstRegistrationDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">核定载客载质量：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.seatsQualities}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆已使用年限：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.usedYears}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">新车购置价：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{#numbers.formatDecimal(commercialInsuranceResponse.newVehiclePrice,1,2)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">实际价值：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{#numbers.formatDecimal(commercialInsuranceResponse.vehiclePrice,1,2)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆使用性质：</label>
+                        <div class="col-sm-6" th:if="*{commercialInsuranceResponse.usingProperties != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("usingProperties",__${insuranceDetail.commercialInsuranceResponse.usingProperties}__)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">行驶证车主：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.owner}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆种类：</label>
+                        <div class="col-sm-6" th:if="*{commercialInsuranceResponse.carKindCode != null}">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("carKindCode",__${insuranceDetail.commercialInsuranceResponse.carKindCode}__)}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">是否过户车：</label>
+                        <div class="col-sm-6">
+                            <input type="radio" name="isTransfers" disabled="disabled" value="0" th:field="*{commercialInsuranceResponse.isTransfer}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="isTransfers" disabled="disabled" value="1" th:field="*{commercialInsuranceResponse.isTransfer}">&nbsp;是
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">投保人：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.policyHolder}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">业务渠道：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='${@ce_dict.getDictNameByTypeAndCode("channels",__${insuranceDetail.commercialInsuranceResponse.channels}__)}'
+                                   disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">是否续保业务：</label>
+                        <div class="col-sm-6">
+                            <input type="radio" name="isContinuousPolicys" disabled="disabled" value="0" th:field="*{commercialInsuranceResponse.isContinuousPolicy}">&nbsp;否&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="isContinuousPolicys" disabled="disabled" value="1" th:field="*{commercialInsuranceResponse.isContinuousPolicy}">&nbsp;是
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">起保日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.startDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">终保日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.endDate}' disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">承保机构：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.companyName}' disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+                <div class="row col3">
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4 control-label">承保险种：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>险别名称</th>
+                            <th>保额/限额</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="insuranceItem : *{commercialInsuranceResponse.insuranceItems}">
+                            <td></td>
+                            <td th:text="${insuranceItem.name}"></td>
+                            <td th:text="${#numbers.formatDecimal(insuranceItem.insuranceAmout,1,2)}"></td>
+                            <td th:text="${insuranceItem.remark}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4 control-label">特别约定：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>约定详情</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="specialAgreement : *{commercialInsuranceResponse.specialAgreements}">
+                            <td th:text="${specialAgreement.content}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin: 20px;">
+                        <label class="col-sm-4 control-label">批改信息：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>批单号</th>
+                            <th>批改时间</th>
+                            <th>批改内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="insuranceModification : *{commercialInsuranceResponse.insuranceModifications}">
+                            <td th:text="${insuranceModification.modificationBillNo}"></td>
+                            <td th:text="${insuranceModification.mofificationDate}"></td>
+                            <td th:text="${insuranceModification.content}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group" style="margin-top: 20px;margin: 20px">
+                        <label class="col-sm-4 control-label">保单出险记录：</label>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                    <table class="table" style="width: 90%; margin: auto" data-mobile-responsive="true">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>出险时间</th>
+                            <th>出险经过</th>
+                            <th>结案时间</th>
+                            <th>结案金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="historicalClaim : *{commercialInsuranceResponse.historicalClaims}">
+                            <td></td>
+                            <td th:text="${historicalClaim.claimDate}"></td>
+                            <td th:text="${historicalClaim.dangerDesc}"></td>
+                            <td th:text="${historicalClaim.claimEndDate}"></td>
+                            <td th:text="${#numbers.formatDecimal(historicalClaim.paidAmount,1,2)}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row col3" style="margin-top: 20px;">
+                    <div class="form-group "></div>
+                    <div class="form-group "></div>
+                    <div class="form-group ">
+                        <label class="col-sm-4 control-label">签单日期：</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" th:value='*{commercialInsuranceResponse.signDate}' disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: ztree-js" />
+
+</body>
+</html>

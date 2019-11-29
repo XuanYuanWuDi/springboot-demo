@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredTreatInfoMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredTreatInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="med_basic_info_id" jdbcType="BIGINT" property="medBasicInfoId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="is_hospital_survey" jdbcType="INTEGER" property="isHospitalSurvey" />
+    <result column="send_doctor_type" jdbcType="INTEGER" property="sendDoctorType" />
+    <result column="send_doctor_time" jdbcType="TIMESTAMP" property="sendDoctorTime" />
+    <result column="discharge_status" jdbcType="INTEGER" property="dischargeStatus" />
+    <result column="meal_standard" jdbcType="DECIMAL" property="mealStandard" />
+    <result column="is_past_damage" jdbcType="INTEGER" property="isPastDamage" />
+    <result column="past_damage" jdbcType="VARCHAR" property="pastDamage" />
+    <result column="medical_fee" jdbcType="DECIMAL" property="medicalFee" />
+    <result column="medical_insurance" jdbcType="DECIMAL" property="medicalInsurance" />
+    <result column="irrelevant_medication" jdbcType="DECIMAL" property="irrelevantMedication" />
+    <result column="reimbursed" jdbcType="DECIMAL" property="reimbursed" />
+    <result column="continued_medical_fee" jdbcType="DECIMAL" property="continuedMedicalFee" />
+    <result column="inju_treatment_remark" jdbcType="VARCHAR" property="injuTreatmentRemark" />
+    <result column="whether_passed" jdbcType="INTEGER" property="whetherPassed" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, claim_notification_no, regist_id, survey_wou_id, survey_id, med_basic_info_id, 
+    company_id, compant_code, serial_num, is_hospital_survey, send_doctor_type, send_doctor_time, 
+    discharge_status, meal_standard, is_past_damage, past_damage, medical_fee, medical_insurance, 
+    irrelevant_medication, reimbursed, continued_medical_fee, inju_treatment_remark, 
+    whether_passed, create_time, update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredTreatInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_treat_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_treat_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_treat_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredTreatInfoExample">
+    delete from injured_treat_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredTreatInfo">
+    insert into injured_treat_info (id, claim_notification_no, regist_id, 
+      survey_wou_id, survey_id, med_basic_info_id, 
+      company_id, compant_code, serial_num, 
+      is_hospital_survey, send_doctor_type, send_doctor_time, 
+      discharge_status, meal_standard, is_past_damage, 
+      past_damage, medical_fee, medical_insurance, 
+      irrelevant_medication, reimbursed, continued_medical_fee, 
+      inju_treatment_remark, whether_passed, create_time, 
+      update_time, is_deleted, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, #{registId,jdbcType=BIGINT}, 
+      #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, #{medBasicInfoId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{compantCode,jdbcType=VARCHAR}, #{serialNum,jdbcType=INTEGER}, 
+      #{isHospitalSurvey,jdbcType=INTEGER}, #{sendDoctorType,jdbcType=INTEGER}, #{sendDoctorTime,jdbcType=TIMESTAMP}, 
+      #{dischargeStatus,jdbcType=INTEGER}, #{mealStandard,jdbcType=DECIMAL}, #{isPastDamage,jdbcType=INTEGER}, 
+      #{pastDamage,jdbcType=VARCHAR}, #{medicalFee,jdbcType=DECIMAL}, #{medicalInsurance,jdbcType=DECIMAL}, 
+      #{irrelevantMedication,jdbcType=DECIMAL}, #{reimbursed,jdbcType=DECIMAL}, #{continuedMedicalFee,jdbcType=DECIMAL}, 
+      #{injuTreatmentRemark,jdbcType=VARCHAR}, #{whetherPassed,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredTreatInfo">
+    insert into injured_treat_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="isHospitalSurvey != null">
+        is_hospital_survey,
+      </if>
+      <if test="sendDoctorType != null">
+        send_doctor_type,
+      </if>
+      <if test="sendDoctorTime != null">
+        send_doctor_time,
+      </if>
+      <if test="dischargeStatus != null">
+        discharge_status,
+      </if>
+      <if test="mealStandard != null">
+        meal_standard,
+      </if>
+      <if test="isPastDamage != null">
+        is_past_damage,
+      </if>
+      <if test="pastDamage != null">
+        past_damage,
+      </if>
+      <if test="medicalFee != null">
+        medical_fee,
+      </if>
+      <if test="medicalInsurance != null">
+        medical_insurance,
+      </if>
+      <if test="irrelevantMedication != null">
+        irrelevant_medication,
+      </if>
+      <if test="reimbursed != null">
+        reimbursed,
+      </if>
+      <if test="continuedMedicalFee != null">
+        continued_medical_fee,
+      </if>
+      <if test="injuTreatmentRemark != null">
+        inju_treatment_remark,
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="isHospitalSurvey != null">
+        #{isHospitalSurvey,jdbcType=INTEGER},
+      </if>
+      <if test="sendDoctorType != null">
+        #{sendDoctorType,jdbcType=INTEGER},
+      </if>
+      <if test="sendDoctorTime != null">
+        #{sendDoctorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeStatus != null">
+        #{dischargeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mealStandard != null">
+        #{mealStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="isPastDamage != null">
+        #{isPastDamage,jdbcType=INTEGER},
+      </if>
+      <if test="pastDamage != null">
+        #{pastDamage,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalFee != null">
+        #{medicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="medicalInsurance != null">
+        #{medicalInsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="irrelevantMedication != null">
+        #{irrelevantMedication,jdbcType=DECIMAL},
+      </if>
+      <if test="reimbursed != null">
+        #{reimbursed,jdbcType=DECIMAL},
+      </if>
+      <if test="continuedMedicalFee != null">
+        #{continuedMedicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="injuTreatmentRemark != null">
+        #{injuTreatmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherPassed != null">
+        #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredTreatInfoExample" resultType="java.lang.Long">
+    select count(*) from injured_treat_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_treat_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.medBasicInfoId != null">
+        med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.isHospitalSurvey != null">
+        is_hospital_survey = #{record.isHospitalSurvey,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendDoctorType != null">
+        send_doctor_type = #{record.sendDoctorType,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendDoctorTime != null">
+        send_doctor_time = #{record.sendDoctorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dischargeStatus != null">
+        discharge_status = #{record.dischargeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.mealStandard != null">
+        meal_standard = #{record.mealStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isPastDamage != null">
+        is_past_damage = #{record.isPastDamage,jdbcType=INTEGER},
+      </if>
+      <if test="record.pastDamage != null">
+        past_damage = #{record.pastDamage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalFee != null">
+        medical_fee = #{record.medicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.medicalInsurance != null">
+        medical_insurance = #{record.medicalInsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.irrelevantMedication != null">
+        irrelevant_medication = #{record.irrelevantMedication,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reimbursed != null">
+        reimbursed = #{record.reimbursed,jdbcType=DECIMAL},
+      </if>
+      <if test="record.continuedMedicalFee != null">
+        continued_medical_fee = #{record.continuedMedicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.injuTreatmentRemark != null">
+        inju_treatment_remark = #{record.injuTreatmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.whetherPassed != null">
+        whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_treat_info
+    set id = #{record.id,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      is_hospital_survey = #{record.isHospitalSurvey,jdbcType=INTEGER},
+      send_doctor_type = #{record.sendDoctorType,jdbcType=INTEGER},
+      send_doctor_time = #{record.sendDoctorTime,jdbcType=TIMESTAMP},
+      discharge_status = #{record.dischargeStatus,jdbcType=INTEGER},
+      meal_standard = #{record.mealStandard,jdbcType=DECIMAL},
+      is_past_damage = #{record.isPastDamage,jdbcType=INTEGER},
+      past_damage = #{record.pastDamage,jdbcType=VARCHAR},
+      medical_fee = #{record.medicalFee,jdbcType=DECIMAL},
+      medical_insurance = #{record.medicalInsurance,jdbcType=DECIMAL},
+      irrelevant_medication = #{record.irrelevantMedication,jdbcType=DECIMAL},
+      reimbursed = #{record.reimbursed,jdbcType=DECIMAL},
+      continued_medical_fee = #{record.continuedMedicalFee,jdbcType=DECIMAL},
+      inju_treatment_remark = #{record.injuTreatmentRemark,jdbcType=VARCHAR},
+      whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredTreatInfo">
+    update injured_treat_info
+    <set>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="isHospitalSurvey != null">
+        is_hospital_survey = #{isHospitalSurvey,jdbcType=INTEGER},
+      </if>
+      <if test="sendDoctorType != null">
+        send_doctor_type = #{sendDoctorType,jdbcType=INTEGER},
+      </if>
+      <if test="sendDoctorTime != null">
+        send_doctor_time = #{sendDoctorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeStatus != null">
+        discharge_status = #{dischargeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="mealStandard != null">
+        meal_standard = #{mealStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="isPastDamage != null">
+        is_past_damage = #{isPastDamage,jdbcType=INTEGER},
+      </if>
+      <if test="pastDamage != null">
+        past_damage = #{pastDamage,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalFee != null">
+        medical_fee = #{medicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="medicalInsurance != null">
+        medical_insurance = #{medicalInsurance,jdbcType=DECIMAL},
+      </if>
+      <if test="irrelevantMedication != null">
+        irrelevant_medication = #{irrelevantMedication,jdbcType=DECIMAL},
+      </if>
+      <if test="reimbursed != null">
+        reimbursed = #{reimbursed,jdbcType=DECIMAL},
+      </if>
+      <if test="continuedMedicalFee != null">
+        continued_medical_fee = #{continuedMedicalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="injuTreatmentRemark != null">
+        inju_treatment_remark = #{injuTreatmentRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredTreatInfo">
+    update injured_treat_info
+    set claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{registId,jdbcType=BIGINT},
+      survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      is_hospital_survey = #{isHospitalSurvey,jdbcType=INTEGER},
+      send_doctor_type = #{sendDoctorType,jdbcType=INTEGER},
+      send_doctor_time = #{sendDoctorTime,jdbcType=TIMESTAMP},
+      discharge_status = #{dischargeStatus,jdbcType=INTEGER},
+      meal_standard = #{mealStandard,jdbcType=DECIMAL},
+      is_past_damage = #{isPastDamage,jdbcType=INTEGER},
+      past_damage = #{pastDamage,jdbcType=VARCHAR},
+      medical_fee = #{medicalFee,jdbcType=DECIMAL},
+      medical_insurance = #{medicalInsurance,jdbcType=DECIMAL},
+      irrelevant_medication = #{irrelevantMedication,jdbcType=DECIMAL},
+      reimbursed = #{reimbursed,jdbcType=DECIMAL},
+      continued_medical_fee = #{continuedMedicalFee,jdbcType=DECIMAL},
+      inju_treatment_remark = #{injuTreatmentRemark,jdbcType=VARCHAR},
+      whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

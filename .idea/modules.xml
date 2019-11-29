@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/injured.iml" filepath="$PROJECT_DIR$/injured.iml" />
+      <module fileurl="file://$PROJECT_DIR$/injured-commons-utils/injured-commons-utils.iml" filepath="$PROJECT_DIR$/injured-commons-utils/injured-commons-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/injured-server-api/injured-server-api.iml" filepath="$PROJECT_DIR$/injured-server-api/injured-server-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/injured-server-provider/injured-server-provider.iml" filepath="$PROJECT_DIR$/injured-server-provider/injured-server-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/injured-web-api/injured-web-api.iml" filepath="$PROJECT_DIR$/injured-web-api/injured-web-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/injured-web-manager/injured-web-manager.iml" filepath="$PROJECT_DIR$/injured-web-manager/injured-web-manager.iml" />
+    </modules>
+  </component>
+</project>

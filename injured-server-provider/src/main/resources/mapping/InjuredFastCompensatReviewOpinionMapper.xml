@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredFastCompensatReviewOpinionMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredFastCompensatReviewOpinion">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="fast_info_id" jdbcType="BIGINT" property="fastInfoId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="reviewer_name" jdbcType="VARCHAR" property="reviewerName" />
+    <result column="reviewer_no" jdbcType="VARCHAR" property="reviewerNo" />
+    <result column="reviewer_time" jdbcType="TIMESTAMP" property="reviewerTime" />
+    <result column="reviewer_submit_time" jdbcType="TIMESTAMP" property="reviewerSubmitTime" />
+    <result column="injury_recommended_type" jdbcType="TINYINT" property="injuryRecommendedType" />
+    <result column="is_qualificat_survey" jdbcType="TINYINT" property="isQualificatSurvey" />
+    <result column="audit_opinion" jdbcType="VARCHAR" property="auditOpinion" />
+    <result column="audit_instruc" jdbcType="VARCHAR" property="auditInstruc" />
+    <result column="default_system" jdbcType="VARCHAR" property="defaultSystem" />
+    <result column="next_track_type" jdbcType="TINYINT" property="nextTrackType" />
+    <result column="next_track_time" jdbcType="TIMESTAMP" property="nextTrackTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, fast_info_id, survey_id, serial_num, company_id, compant_code, remark, 
+    reviewer_name, reviewer_no, reviewer_time, reviewer_submit_time, injury_recommended_type, 
+    is_qualificat_survey, audit_opinion, audit_instruc, default_system, next_track_type, 
+    next_track_time, update_time, create_time, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_fast_compensat_review_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_fast_compensat_review_opinion
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_fast_compensat_review_opinion
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinionExample">
+    delete from injured_fast_compensat_review_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinion">
+    insert into injured_fast_compensat_review_opinion (id, regist_id, fast_info_id, 
+      survey_id, serial_num, company_id, 
+      compant_code, remark, reviewer_name, 
+      reviewer_no, reviewer_time, reviewer_submit_time, 
+      injury_recommended_type, is_qualificat_survey, 
+      audit_opinion, audit_instruc, default_system, 
+      next_track_type, next_track_time, update_time, 
+      create_time, is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{fastInfoId,jdbcType=BIGINT}, 
+      #{surveyId,jdbcType=BIGINT}, #{serialNum,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{compantCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{reviewerName,jdbcType=VARCHAR}, 
+      #{reviewerNo,jdbcType=VARCHAR}, #{reviewerTime,jdbcType=TIMESTAMP}, #{reviewerSubmitTime,jdbcType=TIMESTAMP}, 
+      #{injuryRecommendedType,jdbcType=TINYINT}, #{isQualificatSurvey,jdbcType=TINYINT}, 
+      #{auditOpinion,jdbcType=VARCHAR}, #{auditInstruc,jdbcType=VARCHAR}, #{defaultSystem,jdbcType=VARCHAR}, 
+      #{nextTrackType,jdbcType=TINYINT}, #{nextTrackTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinion">
+    insert into injured_fast_compensat_review_opinion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="fastInfoId != null">
+        fast_info_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="reviewerName != null">
+        reviewer_name,
+      </if>
+      <if test="reviewerNo != null">
+        reviewer_no,
+      </if>
+      <if test="reviewerTime != null">
+        reviewer_time,
+      </if>
+      <if test="reviewerSubmitTime != null">
+        reviewer_submit_time,
+      </if>
+      <if test="injuryRecommendedType != null">
+        injury_recommended_type,
+      </if>
+      <if test="isQualificatSurvey != null">
+        is_qualificat_survey,
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion,
+      </if>
+      <if test="auditInstruc != null">
+        audit_instruc,
+      </if>
+      <if test="defaultSystem != null">
+        default_system,
+      </if>
+      <if test="nextTrackType != null">
+        next_track_type,
+      </if>
+      <if test="nextTrackTime != null">
+        next_track_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="fastInfoId != null">
+        #{fastInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerName != null">
+        #{reviewerName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerNo != null">
+        #{reviewerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerTime != null">
+        #{reviewerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewerSubmitTime != null">
+        #{reviewerSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="injuryRecommendedType != null">
+        #{injuryRecommendedType,jdbcType=TINYINT},
+      </if>
+      <if test="isQualificatSurvey != null">
+        #{isQualificatSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="auditOpinion != null">
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInstruc != null">
+        #{auditInstruc,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultSystem != null">
+        #{defaultSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTrackType != null">
+        #{nextTrackType,jdbcType=TINYINT},
+      </if>
+      <if test="nextTrackTime != null">
+        #{nextTrackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinionExample" resultType="java.lang.Long">
+    select count(*) from injured_fast_compensat_review_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_fast_compensat_review_opinion
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fastInfoId != null">
+        fast_info_id = #{record.fastInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewerName != null">
+        reviewer_name = #{record.reviewerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewerNo != null">
+        reviewer_no = #{record.reviewerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewerTime != null">
+        reviewer_time = #{record.reviewerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reviewerSubmitTime != null">
+        reviewer_submit_time = #{record.reviewerSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.injuryRecommendedType != null">
+        injury_recommended_type = #{record.injuryRecommendedType,jdbcType=TINYINT},
+      </if>
+      <if test="record.isQualificatSurvey != null">
+        is_qualificat_survey = #{record.isQualificatSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="record.auditOpinion != null">
+        audit_opinion = #{record.auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditInstruc != null">
+        audit_instruc = #{record.auditInstruc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultSystem != null">
+        default_system = #{record.defaultSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nextTrackType != null">
+        next_track_type = #{record.nextTrackType,jdbcType=TINYINT},
+      </if>
+      <if test="record.nextTrackTime != null">
+        next_track_time = #{record.nextTrackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_fast_compensat_review_opinion
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      fast_info_id = #{record.fastInfoId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      reviewer_name = #{record.reviewerName,jdbcType=VARCHAR},
+      reviewer_no = #{record.reviewerNo,jdbcType=VARCHAR},
+      reviewer_time = #{record.reviewerTime,jdbcType=TIMESTAMP},
+      reviewer_submit_time = #{record.reviewerSubmitTime,jdbcType=TIMESTAMP},
+      injury_recommended_type = #{record.injuryRecommendedType,jdbcType=TINYINT},
+      is_qualificat_survey = #{record.isQualificatSurvey,jdbcType=TINYINT},
+      audit_opinion = #{record.auditOpinion,jdbcType=VARCHAR},
+      audit_instruc = #{record.auditInstruc,jdbcType=VARCHAR},
+      default_system = #{record.defaultSystem,jdbcType=VARCHAR},
+      next_track_type = #{record.nextTrackType,jdbcType=TINYINT},
+      next_track_time = #{record.nextTrackTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinion">
+    update injured_fast_compensat_review_opinion
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="fastInfoId != null">
+        fast_info_id = #{fastInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerName != null">
+        reviewer_name = #{reviewerName,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerNo != null">
+        reviewer_no = #{reviewerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewerTime != null">
+        reviewer_time = #{reviewerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reviewerSubmitTime != null">
+        reviewer_submit_time = #{reviewerSubmitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="injuryRecommendedType != null">
+        injury_recommended_type = #{injuryRecommendedType,jdbcType=TINYINT},
+      </if>
+      <if test="isQualificatSurvey != null">
+        is_qualificat_survey = #{isQualificatSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInstruc != null">
+        audit_instruc = #{auditInstruc,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultSystem != null">
+        default_system = #{defaultSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="nextTrackType != null">
+        next_track_type = #{nextTrackType,jdbcType=TINYINT},
+      </if>
+      <if test="nextTrackTime != null">
+        next_track_time = #{nextTrackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredFastCompensatReviewOpinion">
+    update injured_fast_compensat_review_opinion
+    set regist_id = #{registId,jdbcType=BIGINT},
+      fast_info_id = #{fastInfoId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      reviewer_name = #{reviewerName,jdbcType=VARCHAR},
+      reviewer_no = #{reviewerNo,jdbcType=VARCHAR},
+      reviewer_time = #{reviewerTime,jdbcType=TIMESTAMP},
+      reviewer_submit_time = #{reviewerSubmitTime,jdbcType=TIMESTAMP},
+      injury_recommended_type = #{injuryRecommendedType,jdbcType=TINYINT},
+      is_qualificat_survey = #{isQualificatSurvey,jdbcType=TINYINT},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      audit_instruc = #{auditInstruc,jdbcType=VARCHAR},
+      default_system = #{defaultSystem,jdbcType=VARCHAR},
+      next_track_type = #{nextTrackType,jdbcType=TINYINT},
+      next_track_time = #{nextTrackTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

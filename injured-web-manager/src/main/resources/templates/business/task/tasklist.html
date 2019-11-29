@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('任务查询')" />
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="dept-form">
+                <input id="search_status" type="hidden" value="-1" name="status">
+                <div class="select-list">
+                    <ul class="row">
+                        <li class="col-md-3">
+                            报&nbsp;&nbsp;案&nbsp;&nbsp;号：<input type="text" name="claimNotificationNo"/>
+                            <input type="text" name="isYourSelf" value="false" style="display: none"/>
+                        </li>
+                        <li class="col-md-3">
+                            被保险人：<input type="text" name="theInsuredName"/>
+                        </li>
+                        <li>
+                            理赔机构：
+                            <select id="companyAgencyIdFirst" name="companyAgencyIdFirst"
+                                    th:with="type=${@ce_agency.findAgencyByLevel(1)}"
+                                    onchange="changeCompanyAgencyId()">
+                                <option value="-1">--请选择--</option>
+                                <option th:each="dict : ${type}" th:text="${dict.agencyName}" th:value="${dict.id}"></option>
+                            </select>
+                            <select id="companyAgencyId" name="companyAgencyId">
+                                <option value="-1">--请选择--</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="row">
+                        <li class=" col-md-3 select-time">
+                            <label>出险日期： </label>
+                            <input type="text" class="time-input" id="lossTimeBegin" placeholder="开始时间" name="lossTimeBegin"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="lossTimeEnd" placeholder="结束时间" name="lossTimeEnd"/>
+                        </li>
+
+                        <li class="col-md-3">
+                            任务类型：
+                            <select name="taskTypeFirst" id="taskTypeFirst" th:with="type=${@ce_dict.getParents('taskType')}"
+                                    onchange="changeTaskTypeFirst()" style="width: 100px;">
+                                <option value="">--请选择--</option>
+                                <option th:each="dict : ${type}" th:text="${dict.name}" th:value="${dict.code}" th:target="${dict.id}"></option>
+                            </select>
+                            <select name="taskTypeSecond" id="taskTypeSecond"  style="width: 100px;">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </li>
+                        <li style="margin-left: 100px;">
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="onSearchClick()"><i class="fa fa-search"></i>&nbsp;查询</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="reset()" style="margin-left: 100px;"><i class="fa fa-refresh"></i>&nbsp;清空</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <span class="group-title">查询结果</span>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+		var editFlag = [[${@permission.hasPermi('injured:compensat:edit')}]];
+        var datas = [[${@ce_dict.getType('taskStatus')}]];
+        var datasTaskType = [[${@ce_dict.getType('taskType')}]];
+		var prefix = ctx + "compensat"
+
+		function onSearchClick(){
+			document.getElementById("search_status").value = 1;
+			$.table.search()
+		}
+
+        function changeCompanyAgencyId() {
+            var parentId = $('#companyAgencyIdFirst').val();
+            if(parentId == '' || parentId == null){
+                return;
+            }
+            if(parentId == -1){
+                $('#companyAgencyId').html('');
+                $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+                return;
+            }
+            // 获取子机构
+            $.ajax({
+                type : "GET",
+                url : "/system/agency/findAgencyByPid",
+                dataType : "JSON",
+                data : {"pid":parentId},
+                success : function(datas)
+                {
+                    $('#companyAgencyId').html('');
+                    $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+                    for (var i = 0; i < datas.length; i++) {
+                        $('#companyAgencyId').append("<option value = "+datas[i].id+">"+datas[i].agencyName+"</option>");
+                    }
+
+                },error:function(){
+                    $.modal.alertError("获取数据失败");
+                }
+            });
+        }
+
+
+
+        function changeTaskTypeFirst() {
+            var parentId = $('#taskTypeFirst').find("option:selected").attr("target");
+            if(parentId == '' || parentId == null){
+                $("#taskTypeSecond").hide();
+                return;
+            }
+            // 获取子机构
+            $.ajax({
+                type : "GET",
+                url : "/cedict/findAgencyByParentId",
+                dataType : "JSON",
+                data : {"parentId":parentId},
+                success : function(datas)
+                {
+                    if(datas != null && datas != ''){
+                        $("#taskTypeSecond").show();
+                        $('#taskTypeSecond').html('');
+                        $('#taskTypeSecond').append("<option value = ''>所有</option>");
+                        for (var i = 0; i < datas.length; i++) {
+                            $('#taskTypeSecond').append("<option value = "+datas[i].code+">"+datas[i].name+"</option>");
+                        }
+                    }else{
+                        $("#taskTypeSecond").hide();
+                    }
+
+                },error:function(){
+                    $.modal.alertError("获取数据失败");
+                }
+            });
+        }
+
+        function reset(){
+            $("#dept-form")[0].reset();
+            $('#companyAgencyId').html('');
+            $('#companyAgencyId').append("<option value = "+-1+">--请选择--</option>");
+        }
+
+
+		$(function() {
+
+		    var options = {
+		        url: prefix + "/list",
+                detailUrl: prefix + "/detail/{id}/{htmlName}",
+		        modalName: "任务查询",
+                sortName: "create_time desc",
+                escape: true,
+                showPageGo: true,
+                rememberSelected: true,
+		        columns: [
+                 {
+                	field: 'claimNotificationNo',
+ 		            title: '报案号'
+
+		        },
+                {
+                    field: 'taskTypeFirst',
+                    title: '任务类型',
+                    align: "left",
+                    formatter: function(value, item, index) {
+                        return $.table.selectCeDictLabel(datasTaskType,value);
+                    }
+
+                },
+		        {
+		        	field: 'theInsuredName',
+		            title: '被保险人',
+		            align: "left"
+		        },
+                {
+                    field: 'reportDate',
+                    title: '报案时间',
+                    align: "left"
+                },
+                {
+                    field: 'humanName',
+                    title: '伤者姓名',
+                    align: "left"
+                },
+                {
+                    field: 'lossTime',
+                    title: '出险时间',
+                    align: "left"
+                },
+                {
+                    field: 'companyAgencyName',
+                    title: '理赔机构',
+                    align: "left"
+                },
+                {
+                    field: 'reviewerName',
+                    title: '处理人',
+                    align: "left",
+                    formatter: function(value, row, index) {
+                        if(row.taskStatus != null && row.taskStatus != '' && row.taskStatus != 8){
+                            return row.damageName;
+                        }
+                        return row.reviewerName;
+                    }
+                },
+                {
+                    field: 'reviewStatus',
+                    title: '任务状态',
+                    align: "left",
+                    formatter: function(value, row, index) {
+                        if(row.taskStatus != null && row.taskStatus != '' && row.taskStatus != 8){
+                            return $.table.selectCeDictLabel(datas,row.taskStatus);
+                        }
+                        return $.table.selectCeDictLabel(datas,value);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        url = $.table._option.detailUrl;
+                        url = url.replace("{id}", row.id);
+                        url = url.replace("{htmlName}", 'tasklist');
+                        actions.push('<a class="btn btn-warning btn-xs" href="javascript:void(0)" onclick="$.operate.openTab(\'审批信息\', \'' + url + '\', \'/task/tasklist\')"><i class="fa fa-search"></i>详细</a>');
+                        return actions.join('');
+                    }
+                }
+		        ]
+		    };
+		    $.table.init(options);
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredRaiseInfoMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredRaiseInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="having_dependent" jdbcType="TINYINT" property="havingDependent" />
+    <result column="whether_passed" jdbcType="INTEGER" property="whetherPassed" />
+    <result column="is_field_survey" jdbcType="TINYINT" property="isFieldSurvey" />
+    <result column="is_other_sources_income" jdbcType="TINYINT" property="isOtherSourcesIncome" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, survey_wou_id, survey_id, regist_id, claim_notification_no, company_id, compant_code, 
+    having_dependent, whether_passed, is_field_survey, is_other_sources_income, serial_num, 
+    create_time, update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredRaiseInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_raise_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_raise_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_raise_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredRaiseInfoExample">
+    delete from injured_raise_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredRaiseInfo">
+    insert into injured_raise_info (id, survey_wou_id, survey_id, 
+      regist_id, claim_notification_no, company_id, 
+      compant_code, having_dependent, whether_passed, 
+      is_field_survey, is_other_sources_income, serial_num, 
+      create_time, update_time, is_deleted, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, 
+      #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{compantCode,jdbcType=VARCHAR}, #{havingDependent,jdbcType=TINYINT}, #{whetherPassed,jdbcType=INTEGER}, 
+      #{isFieldSurvey,jdbcType=TINYINT}, #{isOtherSourcesIncome,jdbcType=TINYINT}, #{serialNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredRaiseInfo">
+    insert into injured_raise_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="havingDependent != null">
+        having_dependent,
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed,
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey,
+      </if>
+      <if test="isOtherSourcesIncome != null">
+        is_other_sources_income,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="havingDependent != null">
+        #{havingDependent,jdbcType=TINYINT},
+      </if>
+      <if test="whetherPassed != null">
+        #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="isFieldSurvey != null">
+        #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="isOtherSourcesIncome != null">
+        #{isOtherSourcesIncome,jdbcType=TINYINT},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredRaiseInfoExample" resultType="java.lang.Long">
+    select count(*) from injured_raise_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_raise_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.havingDependent != null">
+        having_dependent = #{record.havingDependent,jdbcType=TINYINT},
+      </if>
+      <if test="record.whetherPassed != null">
+        whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="record.isFieldSurvey != null">
+        is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="record.isOtherSourcesIncome != null">
+        is_other_sources_income = #{record.isOtherSourcesIncome,jdbcType=TINYINT},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_raise_info
+    set id = #{record.id,jdbcType=BIGINT},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      having_dependent = #{record.havingDependent,jdbcType=TINYINT},
+      whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      is_other_sources_income = #{record.isOtherSourcesIncome,jdbcType=TINYINT},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredRaiseInfo">
+    update injured_raise_info
+    <set>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="havingDependent != null">
+        having_dependent = #{havingDependent,jdbcType=TINYINT},
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="isOtherSourcesIncome != null">
+        is_other_sources_income = #{isOtherSourcesIncome,jdbcType=TINYINT},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredRaiseInfo">
+    update injured_raise_info
+    set survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      having_dependent = #{havingDependent,jdbcType=TINYINT},
+      whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      is_other_sources_income = #{isOtherSourcesIncome,jdbcType=TINYINT},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

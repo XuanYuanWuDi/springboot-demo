@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeInsuranceModificationMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeInsuranceModification">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="insurance_id" jdbcType="BIGINT" property="insuranceId" />
+    <result column="modification_bill_no" jdbcType="VARCHAR" property="modificationBillNo" />
+    <result column="applicant_name" jdbcType="VARCHAR" property="applicantName" />
+    <result column="applicant_date" jdbcType="TIMESTAMP" property="applicantDate" />
+    <result column="modification_time" jdbcType="TIMESTAMP" property="modificationTime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, insurance_id, modification_bill_no, applicant_name, applicant_date, 
+    modification_time, content, is_delete, ext, update_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeInsuranceModificationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_insurance_modification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_insurance_modification
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_insurance_modification
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeInsuranceModificationExample">
+    delete from ce_insurance_modification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeInsuranceModification" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_insurance_modification (id, regist_id, insurance_id, 
+      modification_bill_no, applicant_name, applicant_date, 
+      modification_time, content, is_delete, 
+      ext, update_time, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{insuranceId,jdbcType=BIGINT}, 
+      #{modificationBillNo,jdbcType=VARCHAR}, #{applicantName,jdbcType=VARCHAR}, #{applicantDate,jdbcType=TIMESTAMP}, 
+      #{modificationTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, 
+      #{ext,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeInsuranceModification" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_insurance_modification
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="insuranceId != null">
+        insurance_id,
+      </if>
+      <if test="modificationBillNo != null">
+        modification_bill_no,
+      </if>
+      <if test="applicantName != null">
+        applicant_name,
+      </if>
+      <if test="applicantDate != null">
+        applicant_date,
+      </if>
+      <if test="modificationTime != null">
+        modification_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceId != null">
+        #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="modificationBillNo != null">
+        #{modificationBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantName != null">
+        #{applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantDate != null">
+        #{applicantDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modificationTime != null">
+        #{modificationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeInsuranceModificationExample" resultType="java.lang.Long">
+    select count(*) from ce_insurance_modification
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_insurance_modification
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.insuranceId != null">
+        insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.modificationBillNo != null">
+        modification_bill_no = #{record.modificationBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantName != null">
+        applicant_name = #{record.applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantDate != null">
+        applicant_date = #{record.applicantDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modificationTime != null">
+        modification_time = #{record.modificationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.ext != null">
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_insurance_modification
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      insurance_id = #{record.insuranceId,jdbcType=BIGINT},
+      modification_bill_no = #{record.modificationBillNo,jdbcType=VARCHAR},
+      applicant_name = #{record.applicantName,jdbcType=VARCHAR},
+      applicant_date = #{record.applicantDate,jdbcType=TIMESTAMP},
+      modification_time = #{record.modificationTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeInsuranceModification">
+    update ce_insurance_modification
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="insuranceId != null">
+        insurance_id = #{insuranceId,jdbcType=BIGINT},
+      </if>
+      <if test="modificationBillNo != null">
+        modification_bill_no = #{modificationBillNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantName != null">
+        applicant_name = #{applicantName,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantDate != null">
+        applicant_date = #{applicantDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modificationTime != null">
+        modification_time = #{modificationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeInsuranceModification">
+    update ce_insurance_modification
+    set regist_id = #{registId,jdbcType=BIGINT},
+      insurance_id = #{insuranceId,jdbcType=BIGINT},
+      modification_bill_no = #{modificationBillNo,jdbcType=VARCHAR},
+      applicant_name = #{applicantName,jdbcType=VARCHAR},
+      applicant_date = #{applicantDate,jdbcType=TIMESTAMP},
+      modification_time = #{modificationTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      ext = #{ext,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

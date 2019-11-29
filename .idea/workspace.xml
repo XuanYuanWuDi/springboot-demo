@@ -1,0 +1,2011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="25c80c6b-9d1b-4456-8641-e3d14408ff09" name="Default Changelist" comment="变更排序">
+      <change beforePath="$PROJECT_DIR$/injured-server-provider/src/main/resources/dev/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/injured-server-provider/src/main/resources/dev/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/ApiJsonTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/ApiJsonTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application-druid.yml" beforeDir="false" afterPath="$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application-druid.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injured-web-manager/src/test/java/com/test/CompanyAgencyExcelUploadTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/injured-web-manager/src/test/java/com/test/CompanyAgencyExcelUploadTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/injured-web-manager/src/test/java/com/test/TaskTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/injured-web-manager/src/test/java/com/test/TaskTest.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/injured-server-api/target/" />
+    <ignored path="$PROJECT_DIR$/injured-commons-utils/target/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="$PROJECT_DIR$/injured-server-provider/target/" />
+    <ignored path="$PROJECT_DIR$/injured-web-manager/target/" />
+    <ignored path="$PROJECT_DIR$/injured-web-api/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/injured$InjuredServerProviderApplication.ic" NAME="InjuredServerProviderApplication Coverage Results" MODIFIED="1564737915172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/injured$InjuredApplication.ic" NAME="InjuredApplication Coverage Results" MODIFIED="1568702120004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="269" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/config/WebConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="29" column="30" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/handler/ExceptionHandle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="718">
+              <caret line="32" column="5" selection-start-line="22" selection-start-column="4" selection-end-line="32" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/test_qa/application-druid.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="36" column="31" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="36" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2252">
+              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/injured-web-manager/pom.xml">
+          <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="306" column="27" selection-start-line="306" selection-start-column="24" selection-end-line="306" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/ApiController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="Kotlin File" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="FxmlFile" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>allowDrivingVehicle</find>
+      <find>IsTransfer</find>
+      <find>licensePlateNo</find>
+      <find>img_show</find>
+      <find>showimage</find>
+      <find>full-image</find>
+      <find>影像</find>
+      <find>image-list</find>
+      <find>accidentLiability</find>
+      <find>isFirstScene</find>
+      <find>layui</find>
+      <find>layui-layer-phimg</find>
+      <find>layui-layer-phimg img</find>
+      <find>datasHumanType</find>
+      <find>humanT</find>
+      <find>human</find>
+      <find>onSearchClick</find>
+      <find>isTransfer</find>
+      <find>核定</find>
+      <find>reset</find>
+      <find>伤者人数</find>
+      <find>事故责任</find>
+      <find>车牌</find>
+      <find>请求快赔业务接口处理END</find>
+      <find>injuredTableExecutor</find>
+      <find>Byte</find>
+      <find>ceTableExecutor</find>
+      <find>%</find>
+      <find>CheckNull</find>
+      <find>dru</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+      <replace>@DataSource(&quot;slave&quot;)</replace>
+      <replace>import com.injured.server.provider.db.annotation.DataSource;</replace>
+      <replace>InjuredNotifyTask</replace>
+      <replace>29</replace>
+      <replace>2</replace>
+      <replace>Integer</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\java\com\injured\framework</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\resources\templates</dir>
+      <dir>E:\workspaces-inju\injured-server-provider\src\main\java\com\injured\server\provider\service\impl</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\resources\templates\monitor</dir>
+      <dir>E:\workspaces-inju\injured-web-api</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\java\com\injured\project\system\user</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\java\com\injured\project\system</dir>
+      <dir>E:\workspaces-inju\injured-web-manager</dir>
+      <dir>E:\workspaces-inju\injured-web-manager\src\main\resources\dev</dir>
+      <dir>E:\workspaces-inju</dir>
+    </dirStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/agencyLevel/mapper/CompanyAgencyUnderMapper.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/mybatis/system/CompanyAgencyUnderMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/agencyLevel/service/AgencyUnderServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/agencyLevel/service/AgencyUnderService.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/user/domain/CompanyAgencyId.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/mybatis/system/UserMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/compensat/service/DispatchedWorkerService.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/user/service/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/agencyLevel/controller/AgencyLevelController.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/InjuredServerProviderApplicationTests.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/monitor/online/service/UserOnlineServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/CompanyAgencyServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application.properties" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/test/application.properties" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/test_qa/application.properties" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/Report.java" />
+        <option value="$PROJECT_DIR$/injured-web-api/src/main/resources/dev/application.properties" />
+        <option value="$PROJECT_DIR$/injured-web-api/src/main/resources/test/application.properties" />
+        <option value="$PROJECT_DIR$/injured-web-api/src/main/resources/test_qa/application.properties" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/query/CeInsuranceInfoDetail.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/query/FastCompensatRegistRes.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/dubbo/controllers/CompensatController.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/static/ajax/libs/layer/layer.min.js" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/framework/web/service/CeDictService.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/detail.html" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/query/FastCompensatQueryRes.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/dubbo/controllers/TaskController.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/caseinformation/HuManInfoResponse.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/Check.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/Vehicle.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeRegistSurveyCar.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeRegistSurvey.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/StrCountAndReverse.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/CompensatServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/CommercialInsurance.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/InsurancePolicyServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatProcessServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/list.html" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FileServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/ApiJsonTest.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeInsurance.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeInsuranceMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/caseDetail.html" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/resources/dev/application.yml" />
+        <option value="$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application-druid.yml" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyCarMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistMessageMapper.xml" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/enums/DictEnum.java" />
+        <option value="$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatServiceImpl.java" />
+        <option value="$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/FastCompensatInfoRequest.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="enabledProfiles">
+      <list>
+        <option value="dev" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Profiles" type="6783ec58:MavenProjectsStructure$ProfilesNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="injured" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="injured" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="injured-web-manager" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="injured-web-manager" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="injured" type="b2602c69:ProjectViewProjectNode" />
+              <item name="workspaces-inju" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="injured" type="b2602c69:ProjectViewProjectNode" />
+              <item name="workspaces-inju" type="462c0819:PsiDirectoryNode" />
+              <item name="injured-web-manager" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573204592976" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Rainbow Brackets" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.injured.server.provider" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workspaces-inju\injured-server-provider\src\main\resources\mapping" />
+      <recent name="E:\workspaces-inju\injured-server-api\src\main\java\com\injured\server\api\entity" />
+      <recent name="E:\workspaces-inju\injured-web-manager\src\main\resources\static\css\image" />
+      <recent name="E:\workspaces-inju\injured-web-manager\src\main\resources\static\js\plugins\image" />
+      <recent name="E:\workspaces-inju\injured-web-manager\src\main\resources\static\img" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.injured.project.monitor.job.task" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workspaces-inju\injured-web-manager\src\main\resources\dev" />
+      <recent name="E:\workspaces-inju\injured-web-api\src\main\resources\dev" />
+      <recent name="E:\workspaces-inju\injured-server-provider\src\main\resources\dev" />
+      <recent name="E:\workspaces-inju\injured-server-provider\src\main\resources\test" />
+      <recent name="E:\workspaces-inju\injured-web-manager\src\main\resources\templates\business" />
+    </key>
+  </component>
+  <component name="RestServicesNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="Found 283 services " type="fcff1e1b:RestServiceStructure$RootNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.InjuredApplication">
+    <configuration name="CompensatServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.injured.server.provider.service.impl.CompensatServiceImpl" />
+      <module name="injured-server-provider" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.injured.server.provider.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StrCountAndReverse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.injured.server.provider.StrCountAndReverse" />
+      <module name="injured-server-provider" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.injured.server.provider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InjuredServerProviderApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="injured-server-provider" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.injured.server.provider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.injured.server.provider" />
+      <option name="MAIN_CLASS_NAME" value="com.injured.server.provider.InjuredServerProviderApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InjuredServerProviderApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="injured-server-provider" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.injured.server.provider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.injured.server.provider" />
+      <option name="MAIN_CLASS_NAME" value="com.injured.server.provider.InjuredServerProviderApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TaskTest.task" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="injured-web-manager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.test" />
+      <option name="MAIN_CLASS_NAME" value="com.test.TaskTest" />
+      <option name="METHOD_NAME" value="task" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="clean install api test" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map>
+                <entry key="P" value="false" />
+                <entry key="test" value="true" />
+              </map>
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/injured-web-api" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="clean install manager test" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map>
+                <entry key="P" value="false" />
+                <entry key="test" value="true" />
+              </map>
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/injured-web-manager" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="clean install provider test" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="install" />
+                <option value="-X" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map>
+                <entry key="P" value="false" />
+                <entry key="test" value="true" />
+              </map>
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/injured-server-provider" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="InjuredApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="injured-web-manager" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.injured.InjuredApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InjuredServerProviderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="injured-server-provider" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.injured.server.provider.InjuredServerProviderApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InjuredWebApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="injured-web-api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.injured.web.api.InjuredWebApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.CompensatServiceImpl" />
+      <item itemvalue="Application.StrCountAndReverse" />
+      <item itemvalue="JUnit.TaskTest.task" />
+      <item itemvalue="JUnit.InjuredServerProviderApplicationTests.contextLoads" />
+      <item itemvalue="JUnit.InjuredServerProviderApplicationTests" />
+      <item itemvalue="Maven.clean install provider test" />
+      <item itemvalue="Maven.clean install manager test" />
+      <item itemvalue="Maven.clean install api test" />
+      <item itemvalue="Spring Boot.InjuredApplication" />
+      <item itemvalue="Spring Boot.InjuredServerProviderApplication" />
+      <item itemvalue="Spring Boot.InjuredWebApiApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.StrCountAndReverse" />
+        <item itemvalue="Application.CompensatServiceImpl" />
+        <item itemvalue="JUnit.InjuredServerProviderApplicationTests.contextLoads" />
+        <item itemvalue="JUnit.InjuredServerProviderApplicationTests" />
+        <item itemvalue="JUnit.TaskTest.task" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\zlu\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju" />
+          <option name="myCopyRoot" value="E:\workspaces-inju" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju\injured-commons-utils" />
+          <option name="myCopyRoot" value="E:\workspaces-inju\injured-commons-utils" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju\injured-server-api" />
+          <option name="myCopyRoot" value="E:\workspaces-inju\injured-server-api" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju\injured-server-provider" />
+          <option name="myCopyRoot" value="E:\workspaces-inju\injured-server-provider" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju\injured-web-api" />
+          <option name="myCopyRoot" value="E:\workspaces-inju\injured-web-api" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju\injured-web-manager" />
+          <option name="myCopyRoot" value="E:\workspaces-inju\injured-web-manager" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspaces-inju" />
+          <option name="myCopyRoot" value="E:\workspaces-inju" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="25c80c6b-9d1b-4456-8641-e3d14408ff09" name="Default Changelist" comment="" />
+      <created>1564026257772</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1564026257772</updated>
+      <workItem from="1564026261059" duration="9112000" />
+      <workItem from="1564038665996" duration="43628000" />
+      <workItem from="1564370647339" duration="121974000" />
+      <workItem from="1564987362713" duration="90169000" />
+      <workItem from="1565688287264" duration="40171000" />
+      <workItem from="1565864315638" duration="90225000" />
+      <workItem from="1566452140029" duration="94707000" />
+      <workItem from="1567130843884" duration="24076000" />
+      <workItem from="1567479625427" duration="535000" />
+      <workItem from="1567493144307" duration="7822000" />
+      <workItem from="1567582264416" duration="74199000" />
+      <workItem from="1568250468636" duration="127557000" />
+      <workItem from="1569464679186" duration="24817000" />
+      <workItem from="1570500014975" duration="14413000" />
+      <workItem from="1570671951085" duration="10383000" />
+      <workItem from="1570760067341" duration="12000" />
+      <workItem from="1571896985515" duration="596000" />
+      <workItem from="1572255620396" duration="2917000" />
+      <workItem from="1572943703403" duration="2128000" />
+      <workItem from="1573192294758" duration="3946000" />
+      <workItem from="1574061018861" duration="105000" />
+      <workItem from="1574063099690" duration="1787000" />
+      <workItem from="1574071643402" duration="617000" />
+      <workItem from="1574161861700" duration="1192000" />
+    </task>
+    <task id="LOCAL-00171" summary="1">
+      <created>1568880342358</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1568880342358</updated>
+    </task>
+    <task id="LOCAL-00172" summary="1">
+      <created>1568880573271</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1568880573271</updated>
+    </task>
+    <task id="LOCAL-00173" summary="1">
+      <created>1568956388725</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1568956388726</updated>
+    </task>
+    <task id="LOCAL-00174" summary="1">
+      <created>1568957515155</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1568957515155</updated>
+    </task>
+    <task id="LOCAL-00175" summary="1">
+      <created>1568969062261</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1568969062261</updated>
+    </task>
+    <task id="LOCAL-00176" summary="菜单2004散乱收集">
+      <created>1569043414604</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1569043414604</updated>
+    </task>
+    <task id="LOCAL-00177" summary="1">
+      <created>1569045798172</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1569045798172</updated>
+    </task>
+    <task id="LOCAL-00178" summary="1">
+      <created>1569046656284</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1569046656284</updated>
+    </task>
+    <task id="LOCAL-00179" summary="1">
+      <created>1569050540597</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1569050540597</updated>
+    </task>
+    <task id="LOCAL-00180" summary="1">
+      <created>1569051048919</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1569051048919</updated>
+    </task>
+    <task id="LOCAL-00181" summary="1">
+      <created>1569051678518</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1569051678518</updated>
+    </task>
+    <task id="LOCAL-00182" summary="1">
+      <created>1569051694128</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1569051694128</updated>
+    </task>
+    <task id="LOCAL-00183" summary="1">
+      <created>1569052328966</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1569052328966</updated>
+    </task>
+    <task id="LOCAL-00184" summary="1">
+      <created>1569210994560</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1569210994560</updated>
+    </task>
+    <task id="LOCAL-00185" summary="1">
+      <created>1569220870434</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1569220870435</updated>
+    </task>
+    <task id="LOCAL-00186" summary="1">
+      <created>1569221689946</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1569221689946</updated>
+    </task>
+    <task id="LOCAL-00187" summary="保单信息因为交强险没有报错">
+      <created>1569222695931</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1569222695931</updated>
+    </task>
+    <task id="LOCAL-00188" summary="过户车字段类型不匹配">
+      <created>1569224002227</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1569224002227</updated>
+    </task>
+    <task id="LOCAL-00189" summary="是否过户车">
+      <created>1569224565363</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1569224565363</updated>
+    </task>
+    <task id="LOCAL-00190" summary="是否现场报案字段更改">
+      <created>1569227114926</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1569227114927</updated>
+    </task>
+    <task id="LOCAL-00191" summary="报文压缩">
+      <created>1569228523547</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1569228523547</updated>
+    </task>
+    <task id="LOCAL-00192" summary="责任类型改为带出查勘节点的">
+      <created>1569230114316</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1569230114316</updated>
+    </task>
+    <task id="LOCAL-00193" summary="1">
+      <created>1569231233961</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1569231233962</updated>
+    </task>
+    <task id="LOCAL-00194" summary="出险原因">
+      <created>1569232992877</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1569232992877</updated>
+    </task>
+    <task id="LOCAL-00195" summary="查勘车牌号更改取查勘报文中代入的">
+      <created>1569233735721</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1569233735721</updated>
+    </task>
+    <task id="LOCAL-00196" summary="图片放大效果">
+      <created>1569296853250</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1569296853250</updated>
+    </task>
+    <task id="LOCAL-00197" summary="放大镜效果">
+      <created>1569307319224</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1569307319224</updated>
+    </task>
+    <task id="LOCAL-00198" summary="图片旋转功能实现">
+      <created>1569315590114</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1569315590114</updated>
+    </task>
+    <task id="LOCAL-00199" summary="更新空字段页面框显示">
+      <created>1569319206995</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1569319206995</updated>
+    </task>
+    <task id="LOCAL-00200" summary="更改列表人伤属性">
+      <created>1569320514976</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1569320514976</updated>
+    </task>
+    <task id="LOCAL-00201" summary="照片排序">
+      <created>1569397439164</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1569397439164</updated>
+    </task>
+    <task id="LOCAL-00202" summary="变更排序">
+      <created>1569399385450</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1569399385450</updated>
+    </task>
+    <task id="LOCAL-00203" summary="变更排序">
+      <created>1569402551380</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1569402551380</updated>
+    </task>
+    <task id="LOCAL-00204" summary="去除搜索条件两头的空格">
+      <created>1569403417278</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1569403417278</updated>
+    </task>
+    <task id="LOCAL-00205" summary="基础数据库字段变更">
+      <created>1569488315878</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1569488315879</updated>
+    </task>
+    <task id="LOCAL-00206" summary="变更排序">
+      <created>1569550170333</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1569550170333</updated>
+    </task>
+    <task id="LOCAL-00207" summary="变更排序">
+      <created>1569550343801</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1569550343801</updated>
+    </task>
+    <task id="LOCAL-00208" summary="变更排序">
+      <created>1569561307792</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1569561307792</updated>
+    </task>
+    <task id="LOCAL-00209" summary="保单表变更字段-核定载客质量数量">
+      <created>1569568529211</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1569568529211</updated>
+    </task>
+    <task id="LOCAL-00210" summary="变更排序">
+      <created>1569569264174</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1569569264174</updated>
+    </task>
+    <task id="LOCAL-00211" summary="清空form更改">
+      <created>1569573138231</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1569573138231</updated>
+    </task>
+    <task id="LOCAL-00212">
+      <created>1569577607819</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1569577607819</updated>
+    </task>
+    <task id="LOCAL-00213" summary="七牛云图片处理">
+      <created>1569725601683</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1569725601683</updated>
+    </task>
+    <task id="LOCAL-00214" summary="123">
+      <created>1569735232451</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1569735232451</updated>
+    </task>
+    <task id="LOCAL-00215" summary="变更排序">
+      <created>1569738545317</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1569738545317</updated>
+    </task>
+    <task id="LOCAL-00216" summary="变更排序">
+      <created>1569739750138</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1569739750138</updated>
+    </task>
+    <task id="LOCAL-00217" summary="变更排序">
+      <created>1569740166220</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1569740166220</updated>
+    </task>
+    <task id="LOCAL-00218">
+      <created>1569741205026</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1569741205026</updated>
+    </task>
+    <task id="LOCAL-00219" summary="增加主键返回">
+      <created>1569742484346</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1569742484346</updated>
+    </task>
+    <option name="localTasksCounter" value="220" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="ApiJsonTest_testJson1 - 2019.08.30 at 10h 08m 23s.xml">
+      <configuration name="ApiJsonTest.testJson1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApiJsonTest_testJson1 - 2019.08.30 at 16h 28m 23s.xml">
+      <configuration name="ApiJsonTest.testJson1" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ApiJsonTest_testJson2 - 2019.08.30 at 16h 53m 36s.xml">
+      <configuration name="ApiJsonTest.testJson2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TaskTest_task - 2019.09.12 at 16h 15m 03s.xml">
+      <configuration name="TaskTest.task" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TaskTest_task - 2019.09.12 at 16h 19m 48s.xml">
+      <configuration name="TaskTest.task" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TaskTest_task - 2019.09.17 at 19h 44m 48s.xml">
+      <configuration name="TaskTest.task" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InjuredServerProviderApplicationTests_contextLoads - 2019.09.21 at 15h 11m 31s.xml">
+      <configuration name="InjuredServerProviderApplicationTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InjuredServerProviderApplicationTests - 2019.09.21 at 15h 14m 38s.xml">
+      <configuration name="InjuredServerProviderApplicationTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InjuredServerProviderApplicationTests_contextLoads - 2019.09.21 at 15h 16m 22s.xml">
+      <configuration name="InjuredServerProviderApplicationTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="InjuredServerProviderApplicationTests_contextLoads - 2019.09.21 at 15h 17m 02s.xml">
+      <configuration name="InjuredServerProviderApplicationTests.contextLoads" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="787088000" />
+  </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Image Layers" order="0" />
+      <window_info id="UI Designer" order="1" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Web" order="4" side_tool="true" />
+      <window_info id="Designer" order="5" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.28533334" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Java Enterprise" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="5" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.14301191" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3434453" />
+      <window_info anchor="bottom" id="MyBatis Sql Log" order="8" weight="0.64788735" />
+      <window_info anchor="bottom" id="Debug with VisualVM" order="9" />
+      <window_info anchor="bottom" id="Message" order="10" />
+      <window_info anchor="bottom" id="Find" order="11" weight="0.14517877" />
+      <window_info anchor="bottom" id="Run" order="12" weight="0.36511377" />
+      <window_info anchor="bottom" id="Debug" order="13" weight="0.68039006" />
+      <window_info anchor="bottom" id="Run with VisualVM" order="14" />
+      <window_info anchor="bottom" id="Cvs" order="15" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="16" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="17" weight="0.32936078" />
+      <window_info anchor="bottom" id="CheckStyle" order="18" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296" />
+      <window_info anchor="right" id="Palette" order="1" />
+      <window_info anchor="right" id="Capture Analysis" order="2" />
+      <window_info anchor="right" id="Mybatis datasource" order="3" side_tool="true" weight="0.3296" />
+      <window_info anchor="right" id="Key Promoter X" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Redis Servers" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="RestServices" order="9" weight="0.3296" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
+      <window_info anchor="right" id="Maven" order="11" weight="0.21973333" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="12" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="13" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="14" weight="0.2496" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Image Layers" order="0" />
+      <window_info id="UI Designer" order="1" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Web" order="4" side_tool="true" />
+      <window_info id="Designer" order="5" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.27253333" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" order="0" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Java Enterprise" order="4" />
+      <window_info anchor="bottom" id="Database Changes" order="5" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.14301191" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.3434453" />
+      <window_info anchor="bottom" id="MyBatis Sql Log" order="8" weight="0.64788735" />
+      <window_info anchor="bottom" id="Debug with VisualVM" order="9" />
+      <window_info anchor="bottom" id="Message" order="10" />
+      <window_info anchor="bottom" id="Find" order="11" weight="0.14517877" />
+      <window_info anchor="bottom" id="Run" order="12" weight="0.36511377" />
+      <window_info anchor="bottom" id="Debug" order="13" weight="0.68039006" />
+      <window_info anchor="bottom" id="Run with VisualVM" order="14" />
+      <window_info anchor="bottom" id="Cvs" order="15" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="16" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="17" weight="0.32936078" />
+      <window_info anchor="right" id="Coverage" order="0" side_tool="true" weight="0.3296" />
+      <window_info anchor="right" id="Palette" order="1" />
+      <window_info anchor="right" id="Capture Analysis" order="2" />
+      <window_info anchor="right" id="Mybatis datasource" order="3" side_tool="true" weight="0.3296" />
+      <window_info anchor="right" id="Key Promoter X" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Redis Servers" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="RestServices" order="9" weight="0.3296" />
+      <window_info anchor="right" id="Bean Validation" order="10" />
+      <window_info anchor="right" id="Maven" order="11" weight="0.21973333" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="12" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="13" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="14" weight="0.2496" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="更新日期获取" />
+    <MESSAGE value="菜单2004散乱收集" />
+    <MESSAGE value="保单信息因为交强险没有报错" />
+    <MESSAGE value="过户车字段类型不匹配" />
+    <MESSAGE value="是否过户车" />
+    <MESSAGE value="是否现场报案字段更改" />
+    <MESSAGE value="报文压缩" />
+    <MESSAGE value="责任类型改为带出查勘节点的" />
+    <MESSAGE value="1" />
+    <MESSAGE value="出险原因" />
+    <MESSAGE value="查勘车牌号更改取查勘报文中代入的" />
+    <MESSAGE value="图片放大效果" />
+    <MESSAGE value="放大镜效果" />
+    <MESSAGE value="图片旋转功能实现" />
+    <MESSAGE value="更新空字段页面框显示" />
+    <MESSAGE value="更改列表人伤属性" />
+    <MESSAGE value="照片排序" />
+    <MESSAGE value="去除搜索条件两头的空格" />
+    <MESSAGE value="基础数据库字段变更" />
+    <MESSAGE value="保单表变更字段-核定载客质量数量" />
+    <MESSAGE value="清空form更改" />
+    <MESSAGE value="七牛云图片处理" />
+    <MESSAGE value="123" />
+    <MESSAGE value="变更排序" />
+    <MESSAGE value="增加主键返回" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加主键返回" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/monitor/job/task/NotifyTask.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/InjuredNotifyTaskServiceImpl.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/FastCompensatController.java</url>
+          <line>135</line>
+          <properties />
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/config/RedisConfig.java</url>
+          <line>152</line>
+          <properties />
+          <option name="timeStamp" value="83" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-commons-utils/src/main/java/com/injured/commons/redis/RedisUtil.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.10.RELEASE/spring-data-redis-2.1.10.RELEASE.jar!/org/springframework/data/redis/core/DefaultListOperations.class</url>
+          <line>96</line>
+          <properties />
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.10.RELEASE/spring-data-redis-2.1.10.RELEASE-sources.jar!/org/springframework/data/redis/core/DefaultListOperations.java</url>
+          <line>170</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/data/spring-data-redis/2.1.10.RELEASE/spring-data-redis-2.1.10.RELEASE-sources.jar!/org/springframework/data/redis/core/DefaultValueOperations.java</url>
+          <line>56</line>
+          <properties />
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/user/controller/ProfileController.java</url>
+          <line>159</line>
+          <properties />
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/FastCompensatController.java</url>
+          <line>66</line>
+          <properties />
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/FastCompensatController.java</url>
+          <line>65</line>
+          <properties />
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/system/agencyLevel/controller/AgencyLevelController.java</url>
+          <line>140</line>
+          <properties />
+          <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatServiceImpl.java</url>
+          <line>198</line>
+          <properties />
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatServiceImpl.java</url>
+          <line>708</line>
+          <properties />
+          <option name="timeStamp" value="197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/dubbo/controllers/CompensatController.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="198" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="setValue">
+      <expression>
+        <expression-string>87337000</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>injuredFastCompensatInfo.getFixedLossSubmitTime()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>injuredFastCompensatInfo.getReviewStatus()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>compulsoryInsurance.getId()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ReviewStatusEnum.PRIMARY_REVIEWING.getCode() != injuredFastCompensatInfo.getReviewStatus()
+           || ReviewStatusEnum.UITIMATE_REVIEWING.getCode() != injuredFastCompensatInfo.getReviewStatus()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>throw new BusinessException(ResultEnum.REVIEW_STATUS_ERROR);</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ResultEnum.REVIEW_STATUS_ERROR</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>user.getUserLock()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>injuredFastCompensatInfo.getHumanType()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>HumanTypeEnum.getMsg(injuredFastCompensatInfo.getHumanType())</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="20" column="29" lean-forward="true" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#li#0;n#ul#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/insuranceDetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="136" column="64" selection-start-line="136" selection-start-column="62" selection-end-line="136" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FileServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="103" column="54" lean-forward="true" selection-start-line="103" selection-start-column="54" selection-end-line="103" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/CompensatServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="236" column="13" lean-forward="true" selection-start-line="236" selection-start-column="13" selection-end-line="236" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/Vehicle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="102" column="32" selection-start-line="102" selection-start-column="19" selection-end-line="102" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/test_qa/application.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/test_qa/application.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/test/java/com/injured/server/provider/ApiJsonTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="376" column="53" selection-start-line="376" selection-start-column="53" selection-end-line="376" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/aop/validation/CheckNullForList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="224" column="132" selection-start-line="224" selection-start-column="132" selection-end-line="224" selection-end-column="132" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeInsuranceExample.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeInsurance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="270" column="7" lean-forward="true" selection-start-line="270" selection-start-column="7" selection-end-line="270" selection-end-column="7" />
+          <folding>
+            <element signature="e#4724#4725#0" expanded="true" />
+            <element signature="e#4749#4750#0" expanded="true" />
+            <element signature="e#4783#4784#0" expanded="true" />
+            <element signature="e#4811#4812#0" expanded="true" />
+            <element signature="e#4844#4845#0" expanded="true" />
+            <element signature="e#4875#4876#0" expanded="true" />
+            <element signature="e#4921#4922#0" expanded="true" />
+            <element signature="e#4961#4962#0" expanded="true" />
+            <element signature="e#4996#4997#0" expanded="true" />
+            <element signature="e#5027#5028#0" expanded="true" />
+            <element signature="e#5075#5076#0" expanded="true" />
+            <element signature="e#5115#5116#0" expanded="true" />
+            <element signature="e#5161#5162#0" expanded="true" />
+            <element signature="e#5203#5204#0" expanded="true" />
+            <element signature="e#5273#5274#0" expanded="true" />
+            <element signature="e#5335#5336#0" expanded="true" />
+            <element signature="e#5373#5374#0" expanded="true" />
+            <element signature="e#5407#5408#0" expanded="true" />
+            <element signature="e#5461#5462#0" expanded="true" />
+            <element signature="e#5507#5508#0" expanded="true" />
+            <element signature="e#5544#5545#0" expanded="true" />
+            <element signature="e#5576#5577#0" expanded="true" />
+            <element signature="e#5627#5628#0" expanded="true" />
+            <element signature="e#5669#5670#0" expanded="true" />
+            <element signature="e#5707#5708#0" expanded="true" />
+            <element signature="e#5741#5742#0" expanded="true" />
+            <element signature="e#5795#5796#0" expanded="true" />
+            <element signature="e#5841#5842#0" expanded="true" />
+            <element signature="e#5878#5879#0" expanded="true" />
+            <element signature="e#5911#5912#0" expanded="true" />
+            <element signature="e#5963#5964#0" expanded="true" />
+            <element signature="e#6007#6008#0" expanded="true" />
+            <element signature="e#6048#6049#0" expanded="true" />
+            <element signature="e#6085#6086#0" expanded="true" />
+            <element signature="e#6145#6146#0" expanded="true" />
+            <element signature="e#6197#6198#0" expanded="true" />
+            <element signature="e#6238#6239#0" expanded="true" />
+            <element signature="e#6275#6276#0" expanded="true" />
+            <element signature="e#6335#6336#0" expanded="true" />
+            <element signature="e#6387#6388#0" expanded="true" />
+            <element signature="e#6431#6432#0" expanded="true" />
+            <element signature="e#6471#6472#0" expanded="true" />
+            <element signature="e#6537#6538#0" expanded="true" />
+            <element signature="e#6595#6596#0" expanded="true" />
+            <element signature="e#6646#6647#0" expanded="true" />
+            <element signature="e#6689#6690#0" expanded="true" />
+            <element signature="e#6872#6873#0" expanded="true" />
+            <element signature="e#6907#6908#0" expanded="true" />
+            <element signature="e#6967#6968#0" expanded="true" />
+            <element signature="e#7015#7016#0" expanded="true" />
+            <element signature="e#7061#7062#0" expanded="true" />
+            <element signature="e#7099#7100#0" expanded="true" />
+            <element signature="e#7165#7166#0" expanded="true" />
+            <element signature="e#7219#7220#0" expanded="true" />
+            <element signature="e#7253#7254#0" expanded="true" />
+            <element signature="e#7285#7286#0" expanded="true" />
+            <element signature="e#7333#7334#0" expanded="true" />
+            <element signature="e#7375#7376#0" expanded="true" />
+            <element signature="e#7407#7408#0" expanded="true" />
+            <element signature="e#7437#7438#0" expanded="true" />
+            <element signature="e#7481#7482#0" expanded="true" />
+            <element signature="e#7519#7520#0" expanded="true" />
+            <element signature="e#7552#7553#0" expanded="true" />
+            <element signature="e#7583#7584#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
+            <element signature="e#7715#7716#0" expanded="true" />
+            <element signature="e#7759#7760#0" expanded="true" />
+            <element signature="e#7935#7936#0" expanded="true" />
+            <element signature="e#7965#7966#0" expanded="true" />
+            <element signature="e#8015#8016#0" expanded="true" />
+            <element signature="e#8053#8054#0" expanded="true" />
+            <element signature="e#8092#8093#0" expanded="true" />
+            <element signature="e#8123#8124#0" expanded="true" />
+            <element signature="e#8175#8176#0" expanded="true" />
+            <element signature="e#8215#8216#0" expanded="true" />
+            <element signature="e#8250#8251#0" expanded="true" />
+            <element signature="e#8281#8282#0" expanded="true" />
+            <element signature="e#8329#8330#0" expanded="true" />
+            <element signature="e#8369#8370#0" expanded="true" />
+            <element signature="e#8415#8416#0" expanded="true" />
+            <element signature="e#8453#8454#0" expanded="true" />
+            <element signature="e#8519#8520#0" expanded="true" />
+            <element signature="e#8573#8574#0" expanded="true" />
+            <element signature="e#8616#8617#0" expanded="true" />
+            <element signature="e#8651#8652#0" expanded="true" />
+            <element signature="e#8711#8712#0" expanded="true" />
+            <element signature="e#8759#8760#0" expanded="true" />
+            <element signature="e#8798#8799#0" expanded="true" />
+            <element signature="e#8833#8834#0" expanded="true" />
+            <element signature="e#8889#8890#0" expanded="true" />
+            <element signature="e#8937#8938#0" expanded="true" />
+            <element signature="e#8970#8971#0" expanded="true" />
+            <element signature="e#8999#9000#0" expanded="true" />
+            <element signature="e#9043#9044#0" expanded="true" />
+            <element signature="e#9079#9080#0" expanded="true" />
+            <element signature="e#9125#9126#0" expanded="true" />
+            <element signature="e#9167#9168#0" expanded="true" />
+            <element signature="e#9237#9238#0" expanded="true" />
+            <element signature="e#9299#9300#0" expanded="true" />
+            <element signature="e#9344#9345#0" expanded="true" />
+            <element signature="e#9385#9386#0" expanded="true" />
+            <element signature="e#9453#9454#0" expanded="true" />
+            <element signature="e#9513#9514#0" expanded="true" />
+            <element signature="e#9551#9552#0" expanded="true" />
+            <element signature="e#9584#9585#0" expanded="true" />
+            <element signature="e#9637#9638#0" expanded="true" />
+            <element signature="e#9681#9682#0" expanded="true" />
+            <element signature="e#9723#9724#0" expanded="true" />
+            <element signature="e#9761#9762#0" expanded="true" />
+            <element signature="e#9823#9824#0" expanded="true" />
+            <element signature="e#9877#9878#0" expanded="true" />
+            <element signature="e#9914#9915#0" expanded="true" />
+            <element signature="e#9946#9947#0" expanded="true" />
+            <element signature="e#9997#9998#0" expanded="true" />
+            <element signature="e#10039#10040#0" expanded="true" />
+            <element signature="e#10079#10080#0" expanded="true" />
+            <element signature="e#10111#10112#0" expanded="true" />
+            <element signature="e#10165#10166#0" expanded="true" />
+            <element signature="e#10207#10208#0" expanded="true" />
+            <element signature="e#10252#10253#0" expanded="true" />
+            <element signature="e#10289#10290#0" expanded="true" />
+            <element signature="e#10353#10354#0" expanded="true" />
+            <element signature="e#10405#10406#0" expanded="true" />
+            <element signature="e#10440#10441#0" expanded="true" />
+            <element signature="e#10471#10472#0" expanded="true" />
+            <element signature="e#10519#10520#0" expanded="true" />
+            <element signature="e#10559#10560#0" expanded="true" />
+            <element signature="e#10602#10603#0" expanded="true" />
+            <element signature="e#10640#10641#0" expanded="true" />
+            <element signature="e#10703#10704#0" expanded="true" />
+            <element signature="e#10757#10758#0" expanded="true" />
+            <element signature="e#10796#10797#0" expanded="true" />
+            <element signature="e#10830#10831#0" expanded="true" />
+            <element signature="e#10885#10886#0" expanded="true" />
+            <element signature="e#10931#10932#0" expanded="true" />
+            <element signature="e#10969#10970#0" expanded="true" />
+            <element signature="e#11002#11003#0" expanded="true" />
+            <element signature="e#11055#11056#0" expanded="true" />
+            <element signature="e#11099#11100#0" expanded="true" />
+            <element signature="e#11142#11143#0" expanded="true" />
+            <element signature="e#11181#11182#0" expanded="true" />
+            <element signature="e#11245#11246#0" expanded="true" />
+            <element signature="e#11301#11302#0" expanded="true" />
+            <element signature="e#11344#11345#0" expanded="true" />
+            <element signature="e#11383#11384#0" expanded="true" />
+            <element signature="e#11447#11448#0" expanded="true" />
+            <element signature="e#11503#11504#0" expanded="true" />
+            <element signature="e#11549#11550#0" expanded="true" />
+            <element signature="e#11591#11592#0" expanded="true" />
+            <element signature="e#11661#11662#0" expanded="true" />
+            <element signature="e#11723#11724#0" expanded="true" />
+            <element signature="e#11757#11758#0" expanded="true" />
+            <element signature="e#11787#11788#0" expanded="true" />
+            <element signature="e#11833#11834#0" expanded="true" />
+            <element signature="e#11871#11872#0" expanded="true" />
+            <element signature="e#11903#11904#0" expanded="true" />
+            <element signature="e#11931#11932#0" expanded="true" />
+            <element signature="e#11973#11974#0" expanded="true" />
+            <element signature="e#12007#12008#0" expanded="true" />
+            <element signature="e#12043#12044#0" expanded="true" />
+            <element signature="e#12075#12076#0" expanded="true" />
+            <element signature="e#12125#12126#0" expanded="true" />
+            <element signature="e#12167#12168#0" expanded="true" />
+            <element signature="e#12203#12204#0" expanded="true" />
+            <element signature="e#12235#12236#0" expanded="true" />
+            <element signature="e#12285#12286#0" expanded="true" />
+            <element signature="e#12327#12328#0" expanded="true" />
+            <element signature="e#12364#12365#0" expanded="true" />
+            <element signature="e#12397#12398#0" expanded="true" />
+            <element signature="e#12449#12450#0" expanded="true" />
+            <element signature="e#12493#12494#0" expanded="true" />
+            <element signature="e#12532#12533#0" expanded="true" />
+            <element signature="e#12567#12568#0" expanded="true" />
+            <element signature="e#12623#12624#0" expanded="true" />
+            <element signature="e#12671#12672#0" expanded="true" />
+            <element signature="e#12711#12712#0" expanded="true" />
+            <element signature="e#12747#12748#0" expanded="true" />
+            <element signature="e#12805#12806#0" expanded="true" />
+            <element signature="e#12855#12856#0" expanded="true" />
+            <element signature="e#12896#12897#0" expanded="true" />
+            <element signature="e#12933#12934#0" expanded="true" />
+            <element signature="e#12993#12994#0" expanded="true" />
+            <element signature="e#13045#13046#0" expanded="true" />
+            <element signature="e#13091#13092#0" expanded="true" />
+            <element signature="e#13133#13134#0" expanded="true" />
+            <element signature="e#13203#13204#0" expanded="true" />
+            <element signature="e#13265#13266#0" expanded="true" />
+            <element signature="e#13303#13304#0" expanded="true" />
+            <element signature="e#13337#13338#0" expanded="true" />
+            <element signature="e#13391#13392#0" expanded="true" />
+            <element signature="e#13437#13438#0" expanded="true" />
+            <element signature="e#13475#13476#0" expanded="true" />
+            <element signature="e#13509#13510#0" expanded="true" />
+            <element signature="e#13563#13564#0" expanded="true" />
+            <element signature="e#13609#13610#0" expanded="true" />
+            <element signature="e#13648#13649#0" expanded="true" />
+            <element signature="e#13683#13684#0" expanded="true" />
+            <element signature="e#13739#13740#0" expanded="true" />
+            <element signature="e#13787#13788#0" expanded="true" />
+            <element signature="e#13824#13825#0" expanded="true" />
+            <element signature="e#13856#13857#0" expanded="true" />
+            <element signature="e#13907#13908#0" expanded="true" />
+            <element signature="e#13949#13950#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeInsuranceMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="68" column="36" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/mapper/CeInsuranceMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/dev/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application-druid.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-674">
+          <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/templates/business/compensat/caseDetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="325" column="116" selection-start-line="325" selection-start-column="116" selection-end-line="325" selection-end-column="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/dubbo/controllers/CompensatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="128" selection-start-line="128" selection-end-line="128" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/java/com/injured/project/compensat/service/DispatchedWorkerService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/CaseDetailsServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/entity/CeRegistSurveyCar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+          <folding>
+            <element signature="e#4103#4104#0" expanded="true" />
+            <element signature="e#4128#4129#0" expanded="true" />
+            <element signature="e#4162#4163#0" expanded="true" />
+            <element signature="e#4190#4191#0" expanded="true" />
+            <element signature="e#4223#4224#0" expanded="true" />
+            <element signature="e#4254#4255#0" expanded="true" />
+            <element signature="e#4300#4301#0" expanded="true" />
+            <element signature="e#4340#4341#0" expanded="true" />
+            <element signature="e#4381#4382#0" expanded="true" />
+            <element signature="e#4420#4421#0" expanded="true" />
+            <element signature="e#4482#4483#0" expanded="true" />
+            <element signature="e#4538#4539#0" expanded="true" />
+            <element signature="e#4584#4585#0" expanded="true" />
+            <element signature="e#4626#4627#0" expanded="true" />
+            <element signature="e#4696#4697#0" expanded="true" />
+            <element signature="e#4758#4759#0" expanded="true" />
+            <element signature="e#4797#4798#0" expanded="true" />
+            <element signature="e#4832#4833#0" expanded="true" />
+            <element signature="e#4888#4889#0" expanded="true" />
+            <element signature="e#4936#4937#0" expanded="true" />
+            <element signature="e#4977#4978#0" expanded="true" />
+            <element signature="e#5014#5015#0" expanded="true" />
+            <element signature="e#5074#5075#0" expanded="true" />
+            <element signature="e#5126#5127#0" expanded="true" />
+            <element signature="e#5172#5173#0" expanded="true" />
+            <element signature="e#5214#5215#0" expanded="true" />
+            <element signature="e#5284#5285#0" expanded="true" />
+            <element signature="e#5346#5347#0" expanded="true" />
+            <element signature="e#5378#5379#0" expanded="true" />
+            <element signature="e#5406#5407#0" expanded="true" />
+            <element signature="e#5448#5449#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5520#5521#0" expanded="true" />
+            <element signature="e#5554#5555#0" expanded="true" />
+            <element signature="e#5608#5609#0" expanded="true" />
+            <element signature="e#5654#5655#0" expanded="true" />
+            <element signature="e#5691#5692#0" expanded="true" />
+            <element signature="e#5724#5725#0" expanded="true" />
+            <element signature="e#5776#5777#0" expanded="true" />
+            <element signature="e#5820#5821#0" expanded="true" />
+            <element signature="e#5860#5861#0" expanded="true" />
+            <element signature="e#5896#5897#0" expanded="true" />
+            <element signature="e#5954#5955#0" expanded="true" />
+            <element signature="e#6004#6005#0" expanded="true" />
+            <element signature="e#6045#6046#0" expanded="true" />
+            <element signature="e#6082#6083#0" expanded="true" />
+            <element signature="e#6142#6143#0" expanded="true" />
+            <element signature="e#6194#6195#0" expanded="true" />
+            <element signature="e#6230#6231#0" expanded="true" />
+            <element signature="e#6262#6263#0" expanded="true" />
+            <element signature="e#6312#6313#0" expanded="true" />
+            <element signature="e#6354#6355#0" expanded="true" />
+            <element signature="e#6390#6391#0" expanded="true" />
+            <element signature="e#6422#6423#0" expanded="true" />
+            <element signature="e#6472#6473#0" expanded="true" />
+            <element signature="e#6514#6515#0" expanded="true" />
+            <element signature="e#6557#6558#0" expanded="true" />
+            <element signature="e#6596#6597#0" expanded="true" />
+            <element signature="e#6660#6661#0" expanded="true" />
+            <element signature="e#6716#6717#0" expanded="true" />
+            <element signature="e#6760#6761#0" expanded="true" />
+            <element signature="e#6800#6801#0" expanded="true" />
+            <element signature="e#6866#6867#0" expanded="true" />
+            <element signature="e#6924#6925#0" expanded="true" />
+            <element signature="e#6963#6964#0" expanded="true" />
+            <element signature="e#6998#6999#0" expanded="true" />
+            <element signature="e#7054#7055#0" expanded="true" />
+            <element signature="e#7102#7103#0" expanded="true" />
+            <element signature="e#7137#7138#0" expanded="true" />
+            <element signature="e#7168#7169#0" expanded="true" />
+            <element signature="e#7216#7217#0" expanded="true" />
+            <element signature="e#7256#7257#0" expanded="true" />
+            <element signature="e#7299#7300#0" expanded="true" />
+            <element signature="e#7338#7339#0" expanded="true" />
+            <element signature="e#7402#7403#0" expanded="true" />
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#7501#7502#0" expanded="true" />
+            <element signature="e#7540#7541#0" expanded="true" />
+            <element signature="e#7604#7605#0" expanded="true" />
+            <element signature="e#7660#7661#0" expanded="true" />
+            <element signature="e#7690#7691#0" expanded="true" />
+            <element signature="e#7716#7717#0" expanded="true" />
+            <element signature="e#7754#7755#0" expanded="true" />
+            <element signature="e#7784#7785#0" expanded="true" />
+            <element signature="e#7822#7823#0" expanded="true" />
+            <element signature="e#7856#7857#0" expanded="true" />
+            <element signature="e#7910#7911#0" expanded="true" />
+            <element signature="e#7956#7957#0" expanded="true" />
+            <element signature="e#7994#7995#0" expanded="true" />
+            <element signature="e#8028#8029#0" expanded="true" />
+            <element signature="e#8082#8083#0" expanded="true" />
+            <element signature="e#8128#8129#0" expanded="true" />
+            <element signature="e#8167#8168#0" expanded="true" />
+            <element signature="e#8202#8203#0" expanded="true" />
+            <element signature="e#8258#8259#0" expanded="true" />
+            <element signature="e#8306#8307#0" expanded="true" />
+            <element signature="e#8343#8344#0" expanded="true" />
+            <element signature="e#8376#8377#0" expanded="true" />
+            <element signature="e#8428#8429#0" expanded="true" />
+            <element signature="e#8472#8473#0" expanded="true" />
+            <element signature="e#8515#8516#0" expanded="true" />
+            <element signature="e#8554#8555#0" expanded="true" />
+            <element signature="e#8618#8619#0" expanded="true" />
+            <element signature="e#8674#8675#0" expanded="true" />
+            <element signature="e#8709#8710#0" expanded="true" />
+            <element signature="e#8740#8741#0" expanded="true" />
+            <element signature="e#8788#8789#0" expanded="true" />
+            <element signature="e#8828#8829#0" expanded="true" />
+            <element signature="e#8865#8866#0" expanded="true" />
+            <element signature="e#8898#8899#0" expanded="true" />
+            <element signature="e#8950#8951#0" expanded="true" />
+            <element signature="e#8994#8995#0" expanded="true" />
+            <element signature="e#9031#9032#0" expanded="true" />
+            <element signature="e#9063#9064#0" expanded="true" />
+            <element signature="e#9114#9115#0" expanded="true" />
+            <element signature="e#9156#9157#0" expanded="true" />
+            <element signature="e#9195#9196#0" expanded="true" />
+            <element signature="e#9230#9231#0" expanded="true" />
+            <element signature="e#9286#9287#0" expanded="true" />
+            <element signature="e#9334#9335#0" expanded="true" />
+            <element signature="e#9376#9377#0" expanded="true" />
+            <element signature="e#9413#9414#0" expanded="true" />
+            <element signature="e#9474#9475#0" expanded="true" />
+            <element signature="e#9526#9527#0" expanded="true" />
+            <element signature="e#9574#9575#0" expanded="true" />
+            <element signature="e#9618#9619#0" expanded="true" />
+            <element signature="e#9799#9800#0" expanded="true" />
+            <element signature="e#9838#9839#0" expanded="true" />
+            <element signature="e#9900#9901#0" expanded="true" />
+            <element signature="e#9956#9957#0" expanded="true" />
+            <element signature="e#9997#9998#0" expanded="true" />
+            <element signature="e#10036#10037#0" expanded="true" />
+            <element signature="e#10098#10099#0" expanded="true" />
+            <element signature="e#10154#10155#0" expanded="true" />
+            <element signature="e#10185#10186#0" expanded="true" />
+            <element signature="e#10214#10215#0" expanded="true" />
+            <element signature="e#10256#10257#0" expanded="true" />
+            <element signature="e#10292#10293#0" expanded="true" />
+            <element signature="e#10328#10329#0" expanded="true" />
+            <element signature="e#10359#10360#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatProcessServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6960">
+          <caret line="288" column="11" selection-start-line="288" selection-start-column="11" selection-end-line="288" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyCarMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6330">
+          <caret line="211" column="12" selection-start-line="211" selection-start-column="12" selection-end-line="211" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.6/mybatis-3.4.6.jar!/org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5760">
+          <caret line="192" column="32" selection-start-line="192" selection-start-column="32" selection-end-line="192" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyCarDriverMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistMessageMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3960">
+          <caret line="132" column="124" selection-start-line="132" selection-start-column="124" selection-end-line="132" selection-end-column="124" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistSurveyLossMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="26" column="47" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/resources/mapping/CeRegistMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5460">
+          <caret line="182" column="117" selection-start-line="182" selection-start-column="77" selection-end-line="182" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="17" column="56" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/FastCompensatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="104" column="5" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-commons-utils/src/main/java/com/injured/commons/ReflectionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="36" column="35" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/enums/DictEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/contract/FastCompensatContract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/enums/ResultEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/service/impl/FastCompensatServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2640">
+          <caret line="115" column="92" selection-start-line="115" selection-start-column="68" selection-end-line="115" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/FastCompensatInfoRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/Check.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="25" column="31" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-api/src/main/java/com/injured/server/api/model/request/fast/CommercialInsurance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="29" column="37" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-server-provider/src/main/java/com/injured/server/provider/aop/validation/CheckNullAspect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="113" column="33" selection-start-line="113" selection-start-column="33" selection-end-line="113" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/InjuredWebApiApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/resources/dev/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="27" column="24" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/resources/dev/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="3" column="33" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/dev/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4470">
+          <caret line="149" column="15" selection-start-line="149" selection-start-column="15" selection-end-line="149" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/pom.xml">
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="7" column="30" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/test/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="150" column="13" lean-forward="true" selection-start-line="150" selection-start-column="13" selection-end-line="150" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/config/WebConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="29" column="30" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/controller/ApiController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-api/src/main/java/com/injured/web/api/handler/ExceptionHandle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="718">
+          <caret line="32" column="5" selection-start-line="22" selection-start-column="4" selection-end-line="32" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2252">
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/pom.xml">
+      <provider editor-type-id="MavenHelperPluginDependencyAnalyzer" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="306" column="27" selection-start-line="306" selection-start-column="24" selection-end-line="306" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/injured-web-manager/src/main/resources/test_qa/application-druid.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="36" column="31" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="36" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

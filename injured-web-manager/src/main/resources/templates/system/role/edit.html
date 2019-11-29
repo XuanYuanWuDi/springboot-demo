@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改角色')" />
+	<th:block th:include="include :: ztree-css" />
+
+	<style>
+		.org-menu-list{
+			margin-left: 20px;
+		}
+
+		.org-menu-list li{
+			margin: 5px 0;
+		}
+
+		.org-menu-list li input{
+			width: 70%
+		}
+
+		.org-panel{
+			max-height: 340px;
+			overflow-y: auto;
+		}
+		
+		::-webkit-scrollbar{
+			width: 0px;
+		}
+		
+		.pull-left.pagination-detail{
+			display: none;
+		}
+		.pull-right.pagination{
+			display: none;
+		}
+		table tbody{
+  			display: block; 
+			max-height:180px;
+			overflow-y: scroll;
+		}
+		table thead, tbody tr {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+            text-align: left;
+        }
+		table td:first-child,table th:first-child{
+			width: 7%;
+		}
+		table td:nth-child(2),table th:nth-child(2){
+			width: 20%;
+		}
+		table td:nth-child(3),table th:nth-child(3){
+			width: 20%;
+		}
+		table td:nth-child(4),table th:nth-child(4){
+			width: 20%;
+		}
+	</style>
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<ul id="myTab" class="nav nav-tabs">
+			<li class="active">
+				<a href="#menu" data-toggle="tab">菜单权限</a>
+			</li>
+			<li>
+				<a href="#org" data-toggle="tab" onclick="iniAgencyTree()">机构权限</a>
+			</li>
+			<li>
+				<a href="#price" data-toggle="tab">金额权限</a>
+			</li>
+			<li style="margin-left: 65%;margin-top: 15px">
+				<span style="font-weight: 600;font-size: 120% ">[[${user.userNo}]] -- [[${user.userName}]]</span>
+			</li>
+		</ul>
+
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="menu" style="margin-top: 20px">
+				<div class="row" style="height: 395px">
+					<div class="col-sm-6">
+						<h4 class="form-header h4">作业权限</h4>
+						<ul id="bizList"></ul>
+					</div>
+					<div class="col-sm-6">
+						<h4 class="form-header h4">审批权限</h4>
+						<ul id="spList"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="org" style="margin-top: 20px">
+				<div class="row" style="height: 395px">
+					<div class="col-sm-6">
+						<h4 class="form-header h4">菜单列表</h4>
+						<div class="org-panel" style="margin-left: 10px">
+							<div style="font-weight: bold">作业权限</div>
+							<ul class="org-menu-list" id="bizOrgList"></ul>
+							<div style="font-weight: bold">审批权限</div>
+							<ul class="org-menu-list" id="spOrgList"></ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div style="position: relative">
+							<h4 class="form-header h4">机构列表<span id="org-title-name"></span></h4>
+							<button style="position: absolute; top: -10px; right: 10px;" onclick="onOrgEnterClick()">确定</button>
+						</div>
+						<div class="org-panel">
+							<div id="menuTrees" class="ztree"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="price" style="margin-top: 20px">
+				<div class="row" style="height: 395px">
+					<div class="col-sm-6">
+						<h4 class="form-header h4">作业金额权限</h4>
+						<div id="price_zy_Trees" class="ztree"></div>
+					</div>
+					<div class="col-sm-6">
+						<h4 class="form-header h4">审批金额权限</h4>
+						<div class="org-panel">
+						<div id="price_sp_Trees" class="ztree"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 10px;margin-left: 15px">
+			<div style="float: left; margin-right: 20px;margin-left: 25px" ><span style="color: red; ">*</span>修改说明</div>
+			<div style="float: left;width: 60%">
+				<textarea name="remark" id="remark" maxlength="60" class="form-control" rows="2" required></textarea>
+			</div>
+		</div>
+		<div class="col-sm-12 select-table table-striped" style="width: 95%;margin-left: 15px">
+			<table id="bootstrap-table-remark" data-mobile-responsive="true"></table>
+		</div>
+	</div>
+	<div class="row" >
+		<div class="col-sm-offset-5 col-sm-10" style="margin-top: 15px">
+			<button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>完成配置权限并提交</button>&nbsp
+			<button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: ztree-js" />
+	<script type="text/javascript">
+
+		const userRoleList = {
+			zuoYe: [],
+			shenPi: []
+		}
+
+		let treeDataMap = {}
+		let treeData = []
+
+		var userId = '[[${userId}]]'
+		var roleId = '[[${roleId}]]'
+		var flag = '[[${flag}]]'
+		
+		var menuSelectedList = []
+		var menuSelectedMap = {}
+		var priceSelectedList = []
+		
+		var setting = {}
+		
+		var menuPriceList = {}//记录变化数据
+		var menuPriceListTab = {}//记录原始数据
+		
+	     $(function() {
+	    	 var url = ctx + "system/agency/managerTreeData";
+			    $.ajax({
+					  url: url,
+					  async:false,
+					  success: function(data){
+						  if(data){
+				        	data.map(item => treeDataMap[item.id] = item);
+				        	treeData = data;
+				          }
+					  }
+				   })
+	    	 setting = {
+				check: {
+					enable: true,
+					chkboxType: {"Y":"ps","N":"ps"}
+				},
+				data: {
+					simpleData: {
+						enable: true
+					}
+				},
+				view: {
+					selectedMulti: false
+				},
+				expandLevel: 0
+			};
+		//Y 属性定义 checkbox 被勾选后的情况； 
+		//N 属性定义 checkbox 取消勾选后的情况； 
+		//"p" 表示操作会影响父级节点； 
+		//"s" 表示操作会影响子级节点。
+
+	    	$.fn.zTree.init($("#menuTrees"), setting, treeData); 
+	    	selectedMenu()
+			queryUser()
+			showLogs("bootstrap-table-remark",16)
+			
+		});
+		
+		//初始化机构树
+		 function iniAgencyTree(){
+			treeData.map(data => {
+					data.checked = false
+			})
+			 $.fn.zTree.init($("#menuTrees"), setting, treeData); 
+			 //机构列表右侧菜单名称删除
+			 $("#org-title-name").html("");
+			 checkedMenuItem = null; 
+		 }
+		
+
+		function edit() {
+			var remark = $("#remark").val();//菜单权限修改说明
+			if(remark==null || (remark!=null && $.common.trim(remark)=="")){
+				$.modal.msgWarning("请填写修改说明！");
+				return;
+			}
+			console.log("!!!!!!!!!!!!")
+			console.log(priceSPTreeData);
+			var priceList = [];
+			var node={};
+			var menuList = [];
+			var menuNode = {};
+			var prices="";
+			var resultAll = {}
+			
+			var menulist =[];
+			
+			var uRList = userRoleList["shenPi"];
+			if(uRList){
+				for(let i=0, ilen = uRList.length; i<ilen; i++){
+					item = uRList[i];
+					if(item.checked == 1){
+						menulist.push(item);
+					}
+				}
+			}
+			//若没有选择任何菜单，则删除所有权限信息
+			if(menulist.length==0){
+				resultAll = {"userId": userId,
+							"roleId": roleId}
+			}else{
+				//若选择菜单，必须选择机构填写金额
+				if(priceSPTreeData!=null && priceSPTreeData.length>0){
+					for(var i=0;i<priceSPTreeData.length;i++){
+						node = {};
+						prices="";
+						
+						menuNode={
+							"roleId":roleId,
+							"menuId": priceSPTreeData[i].id,
+							"underLevel": priceSPTreeData[i]._menu.underLevel
+						};
+						menuList.push(menuNode);
+						
+						var priceTreeData = priceSPTreeData[i]._treeData
+						for(var j=0; j<priceTreeData.length;j++){
+							if(priceTreeData[j].isCheck == "checked"){
+								//拼接价格范围
+								prices="";
+								//校验有效金额
+								var fixTest = /^[0-9]*[0-9][0-9]*$/;
+								//价格范围
+								var startPrice = $("input[name=start_price_"+priceTreeData[j].id+"]").val();
+								var endPrice = $("input[name=end_price_"+priceTreeData[j].id+"]").val();
+								
+								
+								if(startPrice != null && startPrice!=""){
+									if(!(fixTest.test(startPrice) || startPrice==-1)){
+										$.modal.msgWarning("金额【"+startPrice+"】格式错误，需为整数且范围为【-1-99999999】！");
+										return;
+									}else if(!(startPrice*1>=-1 && startPrice*1<=99999999)){
+										$.modal.msgWarning("金额【"+startPrice+"】格式错误，需为整数且范围为【-1-99999999】！");
+										return;
+									}
+									prices = ">"+startPrice;
+								}else{
+									$.modal.msgWarning("请填写金额！");
+									return;
+								}
+								
+								if(endPrice != null && endPrice!=""){
+									if(!(fixTest.test(endPrice) || endPrice==-1)){
+										$.modal.msgWarning("金额【"+endPrice+"】格式错误，需为整数且范围为【-1-99999999】！");
+										return;
+									}else if(!(endPrice*1>=-1 && endPrice*1<=99999999)){
+										$.modal.msgWarning("金额【"+endPrice+"】格式错误，需为整数且范围为【-1-99999999】！");
+										return;
+									}
+									if(startPrice*1 - endPrice*1 >= 0){
+										$.modal.msgWarning("前面金额必须小于后面金额！");
+										return;
+									}
+									prices += ("&<="+endPrice);
+								}else{
+									$.modal.msgWarning("请填写金额！");
+									return;
+								}
+								
+								node={
+									"userId": userId,
+									"menuId": priceSPTreeData[i].id,
+									"agencyId": priceTreeData[j].id,
+									"priceScope": prices,
+									"underLevel": priceSPTreeData[i]._menu.underLevel
+								}
+								priceList.push(node);
+							}
+						}
+					}
+					
+					resultAll = {
+							"priceList": priceList,
+							"menuList": menuList,
+							"userId": userId,
+							"remark": remark}
+				}else{
+					$.modal.msgWarning("请填写机构和金额权限！");
+					return;
+				}
+			}
+			
+			$.ajax({
+				cache : true,
+				type : "POST",
+				url : ctx + "system/role/edit",
+				dataType: 'json',
+				contentType: "application/json; charset=utf-8",
+				data : JSON.stringify(resultAll),
+				async : false,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+
+					if(flag == "userUpdate" || flag == "userAdd"){
+						$.modal.closeTab();
+					}else{
+						$.operate.successTabCallback(data);
+					}
+					
+				}
+			});
+		}
+		
+		function submitHandler() {
+	        edit();
+	    }
+
+		function checkChanged(ck, type){
+			console.log(ck)
+		}
+
+	    zuoYeElement = $("#bizList")
+	    shenPiElement = $("#spList")
+
+	    zuoYeOrgElement = $("#bizOrgList")
+	    shenPiOrgElement = $("#spOrgList")
+
+		function getCheckBoxElement(item, sp){
+	    	if(item.checked == 1){
+	    		html = '<li><label class="check-box" style="margin-left: 10px;width: 150px;"><input type="checkbox" data-key='+ (sp ? 'shenPi': 'zuoYe')+' value="'+item.id+'" checked="checked">&nbsp;&nbsp;'+item.name+'</label>'
+	    	
+	    		if(sp){
+	    			if(item.underLevel == 1){
+	    				html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio"  data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="1" checked="checked">&nbsp;&nbsp;初核</label>'
+						html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio" data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="2">&nbsp;&nbsp;终核</label>'
+	    			}else{
+	    				html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio"  data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="1" >&nbsp;&nbsp;初核</label>'
+						html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio" data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="2" checked="checked">&nbsp;&nbsp;终核</label>'
+	    			}
+				}
+	    	}else{
+	    		html = '<li><label class="check-box" style="margin-left: 10px;width: 150px;"><input type="checkbox" data-key='+ (sp ? 'shenPi': 'zuoYe')+' value="'+item.id+'">&nbsp;&nbsp;'+item.name+'</label>'
+	    		if(sp){
+		    		html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio"  data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="1">&nbsp;&nbsp;初核</label>'
+					html += '<label class="radio-box" style="margin-left: 10px;"><input type="radio"  data-key='+ (sp ? 'shenPi': 'zuoYe')+' name="'+item.id+'" value="2">&nbsp;&nbsp;终核</label>'
+	    		}
+	    	}
+			return html + '</li>'
+		}
+
+		function getOrgElement(item, key){
+			if(menuPriceList[item.id] !=null && typeof(menuPriceList[item.id]) != "undefined" && menuPriceList[item.id].nameList != null){
+				html = '<li><span style="display:inline-block; width: 100px">'+ item.name+'</span><input type="text" data-key='+key+' data-id='+item.id+' id="txt_org_'+ key + '_' + item.id +'" name="txt_org_'+ key + '_' + item.id +'" value="'+menuPriceList[item.id].nameList+'" title="'+menuPriceList[item.id].nameList+'" readonly onclick="onTxtClick(this)"></li>'
+			}else{
+				html = '<li><span style="display:inline-block; width: 100px">'+ item.name+'</span><input type="text" data-key='+key+' data-id='+item.id+' id="txt_org_'+ key + '_' + item.id +'" name="txt_org_'+ key + '_' + item.id +'" readonly onclick="onTxtClick(this)"></li>'
+			}
+			return html
+		}
+
+		function updateData(key, id, checked){
+			list = userRoleList[key]
+
+			if(list){
+				for(let i=0, ilen = list.length; i<ilen; i++){
+					item = list[i]
+					if(item.id == id){
+						item.checked = checked
+						break
+					}
+				}
+			}
+		}
+		
+		function updateRadioData(key, id){
+			list = userRoleList[key]
+
+			if(list){
+				for(let i=0, ilen = list.length; i<ilen; i++){
+					item = list[i]
+					if(item.id == id){
+						item.underLevel = $("input[name="+id+"]:checked").val();
+						break
+					}
+				}
+			}
+		}
+
+		function getData(key, id){
+			list = userRoleList[key]
+
+			if(list){
+				for(let i=0, ilen = list.length; i<ilen; i++){
+					item = list[i]
+					if(item.id == id){
+						return item
+					}
+				}
+			}
+			return null
+		}
+
+		function updateUI(){
+			zyHtml = ""
+			userRoleList["zuoYe"].map(item => {
+				zyHtml += getCheckBoxElement(item)
+			})
+			zuoYeElement.html(zyHtml)
+
+
+			spHeml = ""
+			userRoleList["shenPi"].map(item => {
+				spHeml += getCheckBoxElement(item, true)
+			})
+			shenPiElement.html(spHeml)
+
+			//设置iCheck组件初始化
+			$(".check-box:not(.noicheck),.radio-box:not(.noicheck)").iCheck({
+				checkboxClass: 'icheckbox-blue',
+                radioClass: 'iradio-blue',
+			});
+
+			$('input:checkbox').on('ifChecked', function(event){
+				sender = $(event.target)
+				key = sender.attr("data-key")
+				value = sender.val()
+// 				radioChecked(value,1)
+				updateData(key, value, 1)
+				reductionPer(key,value)
+			});
+
+			$('input:checkbox').on('ifUnchecked', function(event){
+				sender = $(event.target)
+
+				key = sender.attr("data-key")
+				value = sender.val()
+// 				radioChecked(value,0)
+				updateData(key, value, 0)
+				updateOrgUI(key)
+				updatePriceTree(value)
+			});
+			
+			$('input:radio').on('ifChecked', function(event){
+                sender = $(event.target)
+                key = sender.attr("data-key")
+                value = sender[0].name
+                updateRadioData(key, value)
+            });
+		}
+		//当菜单权限，删除勾选菜单时，删除金额权限中有关此菜单的树
+		function updatePriceTree(id){
+			for(var i=0;i<priceSPTreeData.length;i++){
+				if(priceSPTreeData[i].id == id){
+					priceSPTreeData.splice(i,1)
+					break
+				}
+			}
+            menuPriceList[id]={
+                "ztreeList":null,
+                "idList":null,
+                "nameList":null,
+                "menuId":id
+            }
+            updateSPPriceUI()
+		}
+		function reductionPer(key,id){
+			if(menuPriceListTab!=null && menuPriceListTab!={} && menuPriceListTab[id]!=null){
+				menuPriceList[id] = menuPriceListTab[id]
+				//机构管理回显
+				userRoleList["shenPi"].map(userItem =>{
+					if(userItem.id == id){
+						userItem.orgIds = item.idList
+						//机构权限-左边菜单处补充名字
+						$("#txt_org_" + userItem.key + "_" + userItem.id).val(item.nameList)
+						$("#txt_org_" + userItem.key + "_" + userItem.id).attr("title",item.nameList)
+						addPrice(userItem,menuPriceList[id].ztreeList);
+					}
+				})
+
+			}else{
+				menuPriceList[id] ={
+					"ztreeList":null,
+					"idList" : null,
+					"nameList" : null,
+					"menuId" : id
+				}
+			}
+			updateOrgUI(key)
+		}
+		
+		//根据选择框内容重绘列表
+		function updateOrgUI(key){
+
+			if(key == "zuoYe"){
+				zuoYeOrgHtml = ""
+				userRoleList["zuoYe"].map(item => {
+					if(item.checked){
+						zuoYeOrgHtml += getOrgElement(item, "zuoYe")
+					}
+				})
+				zuoYeOrgElement.html(zuoYeOrgHtml)
+			}else if(key == "shenPi"){
+				shenPiOrgHtml = ""
+				userRoleList["shenPi"].map(item => {
+					if(item.checked){
+						shenPiOrgHtml += getOrgElement(item, "shenPi")
+					}
+				})
+				shenPiOrgElement.html(shenPiOrgHtml)
+			}
+		}
+
+		/*
+			机构权限逻辑
+		*/
+		let checkedMenuItem = null;
+
+		function onTxtClick(event){
+			sender = $(event)
+
+			key = sender.attr("data-key")
+			id = sender.attr("data-id")
+
+			checkedMenuItem = getData(key, id)
+
+			if(checkedMenuItem){
+				$("#org-title-name").html(" - " + item.name)
+			}
+
+			if(menuPriceList!={} && menuPriceList[id]!= null && menuPriceList[id].ztreeList!=null){
+				treeData.map(data => {
+					data.checked = false
+					menuPriceList[id].ztreeList.map(agency => {
+						if(agency.id == data.id){
+							data.checked = true
+						}
+					})
+				})
+			    $.fn.zTree.init($("#menuTrees"), setting, treeData); 
+				var agencyZtree = $.fn.zTree.getZTreeObj("menuTrees");
+				var nodes = agencyZtree.transformToArray(agencyZtree.getNodes());
+				var checkArry = [];
+				for (var i = 0; i < nodes.length; i++) { //设置节点展开
+					if(nodes[i].getCheckStatus().half){
+						agencyZtree.expandNode(nodes[i], true, false, true);
+					}
+	            }
+			}else{
+				treeData.map(data => {
+					data.checked = false
+				})
+			 	$.fn.zTree.init($("#menuTrees"), setting, treeData); 
+			}
+		}
+
+		function onOrgEnterClick(){
+			if(checkedMenuItem!=null){
+				//获取选择机构列表
+				var zTree = $.fn.zTree.getZTreeObj("menuTrees");//换成实际的图层的id
+				var changedNodes = zTree.getCheckedNodes(true); //获取改变的全部结点
+				var checkedArray = [];
+				//判断是否
+				for(var i=0; i<changedNodes.length; i++){
+					//清空
+					changedNodes[i].isCheck = "checkedNo";
+					if(changedNodes[i].getCheckStatus().half){
+						changedNodes[i].isCheck = "checkedNo";
+					}else{
+						if($.inArray(changedNodes[i].pId,checkedArray)<0){
+							changedNodes[i].isCheck = "checked";
+						}
+						checkedArray.push(changedNodes[i].id);
+					}
+				}
+				if(menuPriceListTab!={} && menuPriceListTab[checkedMenuItem.id]!= null && menuPriceListTab[checkedMenuItem.id].ztreeList!=null){
+					//重新给选中值赋值
+					menuPriceListTab[checkedMenuItem.id].ztreeList.map(agency => {
+						changedNodes.map(node => {
+							if(node.id == agency.id){
+								node.startPrice = agency.startPrice;
+								node.endPrice = agency.endPrice;
+							}
+						})
+					})
+				}
+
+				var selectedItemIds = "";
+				var selectedItemNames = "";
+				if(changedNodes){
+					//机构id，机构名称
+					changedNodes.map(node => {
+						if(node.isCheck == "checked" && selectedItemNames == ""){
+							selectedItemIds += node.id
+							selectedItemNames += node.name
+						}else if(node.isCheck == "checked"){
+							selectedItemIds += ","+node.id
+							selectedItemNames+=","+node.name 
+						}
+					})
+				}
+				menuPriceList[checkedMenuItem.id]={
+					"ztreeList":changedNodes,
+					"idList" : selectedItemIds,
+					"nameList" : selectedItemNames,
+					"menuId" : checkedMenuItem.id
+				}
+				console.log(selectedItemNames)
+	
+				if(checkedMenuItem){
+				    checkedMenuItem.orgIds = selectedItemIds
+					//机构权限-左边菜单处补充名字
+					$("#txt_org_" + checkedMenuItem.key + "_" + checkedMenuItem.id).val(selectedItemNames)
+					$("#txt_org_" + checkedMenuItem.key + "_" + checkedMenuItem.id).attr("title",selectedItemNames)
+					//金额权限 拼树
+					addPrice(checkedMenuItem, changedNodes)
+				} 
+			}
+		}
+
+		/*
+			金额逻辑
+		*/
+		let priceZYTreeData = []
+		let priceSPTreeData = []
+		//保存时所用数据
+		 
+
+		let treeZY = null
+		let treeSP = null
+
+		function updateZYPriceUI(){
+			$.fn.zTree.destroy("price_zy_Trees")
+			treeZY = $.fn.zTree.init($("#price_zy_Trees"), {
+				view: {
+					addDiyDom: addDiyDom
+				}
+			}, priceZYTreeData);
+		}
+
+		function updateSPPriceUI(){
+			$.fn.zTree.destroy("price_sp_Trees")
+			treeSP = $.fn.zTree.init($("#price_sp_Trees"), {
+				view: {
+					addDiyDom: addDiyDom
+				}
+			}, priceSPTreeData);
+			//全选的节点，关闭子集；未全选的展开
+			var priceZtree =  $.fn.zTree.getZTreeObj("price_sp_Trees");
+			var nodes = priceZtree.transformToArray(priceZtree.getNodes());
+			var arryNodes = [];
+			for(var i=0;i<nodes.length;i++){
+				if(nodes[i].isCheck!="checked" && $.inArray(nodes[i].pId,arryNodes)<0){
+					priceZtree.expandNode(nodes[i], true, false, true);
+				}else{
+					arryNodes.push(nodes[i].id)
+				}
+			}
+		}
+
+		function addDiyDom(treeId, treeNode){
+			
+			console.log(treeNode)
+			level = treeNode.level
+			var aObj = $("#" + treeNode.tId + "_a");
+			if (level < 1 || treeNode.isCheck!="checked") return;
+			var edirStr = "";
+			if(treeNode.startPrice != null && treeNode.endPrice != null){
+				editStr = "<input style='height: 20px; width: 100px' name='start_price_"+treeNode.id+"' value='"+treeNode.startPrice+"'></input>&nbsp;-&nbsp;<input style='height: 20px; width: 100px' name='end_price_"+treeNode.id+"' value='"+treeNode.endPrice+"'></input>"
+			}else if(treeNode.startPrice == null && treeNode.endPrice == null){
+				editStr = "<input style='height: 20px; width: 100px' name='start_price_"+treeNode.id+"'></input>&nbsp;-&nbsp;<input style='height: 20px; width: 100px' name='end_price_"+treeNode.id+"'></input>"
+			}else if(treeNode.startPrice == null && treeNode.endPrice != null){
+				editStr = "<input style='height: 20px; width: 100px' name='start_price_"+treeNode.id+"'></input>&nbsp;-&nbsp;<input style='height: 20px; width: 100px' name='end_price_"+treeNode.id+"' value='"+treeNode.endPrice+"'></input>"
+			}else if(treeNode.startPrice != null && treeNode.endPrice == null){
+				editStr = "<input style='height: 20px; width: 100px' name='start_price_"+treeNode.id+"' value='"+treeNode.startPrice+"'></input>&nbsp;-&nbsp;<input style='height: 20px; width: 100px' name='end_price_"+treeNode.id+"' ></input>"
+			}
+			
+
+			aObj.append(editStr);
+		}
+
+		function addTreeData(key, data){
+			id = data.id
+			isfind = false
+
+			if(key == 'zuoYe'){
+				for(let i=0, ilen=priceZYTreeData.length; i<ilen; i++){
+					if(priceZYTreeData[i].id == id){
+						priceZYTreeData[i] = data
+						isfind = true
+						break
+					}
+				}
+
+				if(!isfind){
+					priceZYTreeData.push(data)
+				}
+
+				updateZYPriceUI()
+			}else if(key == 'shenPi'){
+				//避免重复添加
+				for(let i=0, ilen=priceSPTreeData.length; i<ilen; i++){
+					if(priceSPTreeData[i].id == id){
+						priceSPTreeData[i] = data
+						isfind = true
+						break
+					}
+				}
+
+				if(!isfind){
+					priceSPTreeData.push(data)
+				}
+				updateSPPriceUI()
+			}
+		}
+
+		function addPrice(checkedMenuItem, changedNodes){
+
+			console.log("查找到树：", checkedMenuItem, changedNodes)
+
+			treeNode = {
+				id: checkedMenuItem.id,
+				name: checkedMenuItem.name,
+				underLevel: checkedMenuItem.underLevel,
+				_menu: checkedMenuItem,
+				_treeData: changedNodes,
+				children: list2Node(changedNodes)
+			}
+
+			addTreeData(checkedMenuItem.key, treeNode)
+		}
+
+		function list2Node(list){
+			if (list && list.length > 0) {
+				var treeDataCache = {};
+				var treeData = [];
+
+				for (var i = 0; i < list.length; i++) {
+					var item = list[i];
+					var key = item["id"];
+					var pkey = item["pId"];
+
+					var currentItem = {
+						id: item.id,
+						name: item.name,
+						isCheck : item.isCheck,
+						startPrice: item.startPrice,
+						endPrice: item.endPrice,
+						pId: item.pId,
+						_data_: item,
+						children: []
+					};
+
+					if (treeDataCache[key]) {
+						currentItem.children = treeDataCache[key].children
+					}
+					treeDataCache[key] = currentItem;
+
+					if (pkey && pkey !== null) {
+						var cacheParentItem = null;
+
+						if (treeDataCache[pkey]) {
+							cacheParentItem = treeDataCache[pkey]
+						} else {
+							cacheParentItem = {
+								id: pkey,
+								name: null,
+								_data_: null,
+								isCheck : null,
+								startPrice: null,
+								endPrice: null,
+								pId: null,
+								children: []
+							};
+							treeDataCache[pkey] = cacheParentItem
+						}
+
+						cacheParentItem.children.push(currentItem)
+					} else {
+						treeData.push(currentItem)
+					}
+				}
+
+				return treeData
+			}
+			return null
+		}
+
+	    function queryUser() {
+		   $.ajax({
+			  url: "/system/role/menuList",
+			  success: function(data){
+				if(data && data.code === 0){
+					data.data["biz"].map(menu => {
+						userRoleList["zuoYe"].push({
+							id: menu.menuId,
+							name: menu.menuName,
+							key: "zuoYe",
+							checked: 0
+						})
+					})
+
+					data.data["sp"].map(menu => {
+						if(menuSelectedMap[menu.menuId]!=null || typeof(menuSelectedMap[menu.menuId])!="undefined"){
+							$("input[name="+menu.menuId+"]").val(menuSelectedMap[menu.menuId].underLevel);
+							userRoleList["shenPi"].push({
+								id: menu.menuId,
+								name: menu.menuName,
+								key: "shenPi",
+								checked: 1,
+								underLevel:menuSelectedMap[menu.menuId].underLevel
+							})
+						}else{
+							userRoleList["shenPi"].push({
+								id: menu.menuId,
+								name: menu.menuName,
+								key: "shenPi",
+								checked: 0,
+								underLevel:null
+							})
+						}
+						
+					})
+					updateUI()
+					selectedAgencyPrice()
+				}
+			  }
+		   })
+		}
+
+	    function selectedMenu(){
+	    	var url = "/system/role/agencyLevelList/"+userId+"/"+roleId;
+		    $.ajax({
+				  url: url,
+				  async:false,
+				  success: function(data){
+					  if(data && data.code === 0){
+						  priceSelectedList = data.data["sysList"];
+						  menuSelectedList = data.data["roleMenuList"];
+						  menuSelectedList.map(item => menuSelectedMap[item.menuId] = item);
+					  }
+				  }
+			   })
+	    }
+		
+	    function selectedAgencyPrice(){
+	    	priceSelectedList.map(item => {
+	    		menuPriceList[item.menuId] = item
+				menuPriceListTab[item.menuId] = item
+	    	})
+	    	//机构管理回显
+	    	if(menuSelectedList!=null && menuSelectedList.length>0){
+				  updateOrgUI("shenPi");
+			 }
+	    	priceSelectedList.map(item => {
+	    		userRoleList["shenPi"].map(userItem =>{
+	    			if(item.menuId == userItem.id){
+	    				userItem.orgIds = item.idList
+	    				//机构权限-左边菜单处补充名字
+	    				$("#txt_org_" + userItem.key + "_" + userItem.id).val(item.nameList)
+	    				$("#txt_org_" + userItem.key + "_" + userItem.id).attr("title",item.nameList)
+	    				addPrice(userItem,item.ztreeList);
+	    			}
+	    		})
+	    	});
+	    }
+	    
+		function showLogs(id,type){
+			var options = {
+				id: id,
+		        url: "/monitor/operlog/viewList/"+userId+"/"+type,
+		        modalName: "操作历史",
+		        showSearch: false,
+		        showRefresh: false,
+				showColumns: false,
+				showToggle: false,
+		        columns: [{
+		            field: '',
+		            title: '序号',
+		            formatter: function (value, row, index) {
+                        return index + 1;
+	                }
+		        },
+		        {
+		            field: 'submitOpinion',
+		            title: '操作类型'
+		        },
+		        {
+		            field: 'submitName',
+		            title: '提交人'
+		        },
+		        {
+		            field: 'submitTime',
+		            title: '提交时间'
+		        },
+		        {
+		            field: 'opinionDesc',
+		            title: '操作说明'
+		        }]
+		    };
+		    $.table.init(options);
+		    $("div.fixed-table-toolbar").hide();
+		}
+
+	</script>
+</body>
+</html>

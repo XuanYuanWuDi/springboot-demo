@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredHouseholdRegistInfoMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredHouseholdRegistInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="med_basic_info_id" jdbcType="BIGINT" property="medBasicInfoId" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="is_field_survey" jdbcType="TINYINT" property="isFieldSurvey" />
+    <result column="reside_nature" jdbcType="TINYINT" property="resideNature" />
+    <result column="is_resident" jdbcType="TINYINT" property="isResident" />
+    <result column="reside_province" jdbcType="BIGINT" property="resideProvince" />
+    <result column="reside_city" jdbcType="BIGINT" property="resideCity" />
+    <result column="reside_district" jdbcType="BIGINT" property="resideDistrict" />
+    <result column="reside_town" jdbcType="BIGINT" property="resideTown" />
+    <result column="reside_address" jdbcType="VARCHAR" property="resideAddress" />
+    <result column="per_residence_province" jdbcType="BIGINT" property="perResidenceProvince" />
+    <result column="per_residence_city" jdbcType="BIGINT" property="perResidenceCity" />
+    <result column="per_residence_district" jdbcType="BIGINT" property="perResidenceDistrict" />
+    <result column="per_residence_town" jdbcType="BIGINT" property="perResidenceTown" />
+    <result column="per_residence_address" jdbcType="VARCHAR" property="perResidenceAddress" />
+    <result column="per_residence_time" jdbcType="TIMESTAMP" property="perResidenceTime" />
+    <result column="whether_passed" jdbcType="INTEGER" property="whetherPassed" />
+    <result column="compensat_standard" jdbcType="DECIMAL" property="compensatStandard" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, claim_notification_no, survey_wou_id, survey_id, med_basic_info_id, 
+    company_id, compant_code, is_field_survey, reside_nature, is_resident, reside_province, 
+    reside_city, reside_district, reside_town, reside_address, per_residence_province, 
+    per_residence_city, per_residence_district, per_residence_town, per_residence_address, 
+    per_residence_time, whether_passed, compensat_standard, serial_num, create_time, 
+    update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_household_regist_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_household_regist_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_household_regist_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfoExample">
+    delete from injured_household_regist_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfo">
+    insert into injured_household_regist_info (id, regist_id, claim_notification_no, 
+      survey_wou_id, survey_id, med_basic_info_id, 
+      company_id, compant_code, is_field_survey, 
+      reside_nature, is_resident, reside_province, 
+      reside_city, reside_district, reside_town, 
+      reside_address, per_residence_province, per_residence_city, 
+      per_residence_district, per_residence_town, per_residence_address, 
+      per_residence_time, whether_passed, compensat_standard, 
+      serial_num, create_time, update_time, 
+      is_deleted, remark)
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, 
+      #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, #{medBasicInfoId,jdbcType=BIGINT}, 
+      #{companyId,jdbcType=BIGINT}, #{compantCode,jdbcType=VARCHAR}, #{isFieldSurvey,jdbcType=TINYINT}, 
+      #{resideNature,jdbcType=TINYINT}, #{isResident,jdbcType=TINYINT}, #{resideProvince,jdbcType=BIGINT}, 
+      #{resideCity,jdbcType=BIGINT}, #{resideDistrict,jdbcType=BIGINT}, #{resideTown,jdbcType=BIGINT}, 
+      #{resideAddress,jdbcType=VARCHAR}, #{perResidenceProvince,jdbcType=BIGINT}, #{perResidenceCity,jdbcType=BIGINT}, 
+      #{perResidenceDistrict,jdbcType=BIGINT}, #{perResidenceTown,jdbcType=BIGINT}, #{perResidenceAddress,jdbcType=VARCHAR}, 
+      #{perResidenceTime,jdbcType=TIMESTAMP}, #{whetherPassed,jdbcType=INTEGER}, #{compensatStandard,jdbcType=DECIMAL}, 
+      #{serialNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfo">
+    insert into injured_household_regist_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey,
+      </if>
+      <if test="resideNature != null">
+        reside_nature,
+      </if>
+      <if test="isResident != null">
+        is_resident,
+      </if>
+      <if test="resideProvince != null">
+        reside_province,
+      </if>
+      <if test="resideCity != null">
+        reside_city,
+      </if>
+      <if test="resideDistrict != null">
+        reside_district,
+      </if>
+      <if test="resideTown != null">
+        reside_town,
+      </if>
+      <if test="resideAddress != null">
+        reside_address,
+      </if>
+      <if test="perResidenceProvince != null">
+        per_residence_province,
+      </if>
+      <if test="perResidenceCity != null">
+        per_residence_city,
+      </if>
+      <if test="perResidenceDistrict != null">
+        per_residence_district,
+      </if>
+      <if test="perResidenceTown != null">
+        per_residence_town,
+      </if>
+      <if test="perResidenceAddress != null">
+        per_residence_address,
+      </if>
+      <if test="perResidenceTime != null">
+        per_residence_time,
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed,
+      </if>
+      <if test="compensatStandard != null">
+        compensat_standard,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isFieldSurvey != null">
+        #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="resideNature != null">
+        #{resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="isResident != null">
+        #{isResident,jdbcType=TINYINT},
+      </if>
+      <if test="resideProvince != null">
+        #{resideProvince,jdbcType=BIGINT},
+      </if>
+      <if test="resideCity != null">
+        #{resideCity,jdbcType=BIGINT},
+      </if>
+      <if test="resideDistrict != null">
+        #{resideDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="resideTown != null">
+        #{resideTown,jdbcType=BIGINT},
+      </if>
+      <if test="resideAddress != null">
+        #{resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="perResidenceProvince != null">
+        #{perResidenceProvince,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceCity != null">
+        #{perResidenceCity,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceDistrict != null">
+        #{perResidenceDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceTown != null">
+        #{perResidenceTown,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceAddress != null">
+        #{perResidenceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="perResidenceTime != null">
+        #{perResidenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whetherPassed != null">
+        #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="compensatStandard != null">
+        #{compensatStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfoExample" resultType="java.lang.Long">
+    select count(*) from injured_household_regist_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_household_regist_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.medBasicInfoId != null">
+        med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFieldSurvey != null">
+        is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="record.resideNature != null">
+        reside_nature = #{record.resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="record.isResident != null">
+        is_resident = #{record.isResident,jdbcType=TINYINT},
+      </if>
+      <if test="record.resideProvince != null">
+        reside_province = #{record.resideProvince,jdbcType=BIGINT},
+      </if>
+      <if test="record.resideCity != null">
+        reside_city = #{record.resideCity,jdbcType=BIGINT},
+      </if>
+      <if test="record.resideDistrict != null">
+        reside_district = #{record.resideDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="record.resideTown != null">
+        reside_town = #{record.resideTown,jdbcType=BIGINT},
+      </if>
+      <if test="record.resideAddress != null">
+        reside_address = #{record.resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perResidenceProvince != null">
+        per_residence_province = #{record.perResidenceProvince,jdbcType=BIGINT},
+      </if>
+      <if test="record.perResidenceCity != null">
+        per_residence_city = #{record.perResidenceCity,jdbcType=BIGINT},
+      </if>
+      <if test="record.perResidenceDistrict != null">
+        per_residence_district = #{record.perResidenceDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="record.perResidenceTown != null">
+        per_residence_town = #{record.perResidenceTown,jdbcType=BIGINT},
+      </if>
+      <if test="record.perResidenceAddress != null">
+        per_residence_address = #{record.perResidenceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.perResidenceTime != null">
+        per_residence_time = #{record.perResidenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.whetherPassed != null">
+        whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="record.compensatStandard != null">
+        compensat_standard = #{record.compensatStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_household_regist_info
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      reside_nature = #{record.resideNature,jdbcType=TINYINT},
+      is_resident = #{record.isResident,jdbcType=TINYINT},
+      reside_province = #{record.resideProvince,jdbcType=BIGINT},
+      reside_city = #{record.resideCity,jdbcType=BIGINT},
+      reside_district = #{record.resideDistrict,jdbcType=BIGINT},
+      reside_town = #{record.resideTown,jdbcType=BIGINT},
+      reside_address = #{record.resideAddress,jdbcType=VARCHAR},
+      per_residence_province = #{record.perResidenceProvince,jdbcType=BIGINT},
+      per_residence_city = #{record.perResidenceCity,jdbcType=BIGINT},
+      per_residence_district = #{record.perResidenceDistrict,jdbcType=BIGINT},
+      per_residence_town = #{record.perResidenceTown,jdbcType=BIGINT},
+      per_residence_address = #{record.perResidenceAddress,jdbcType=VARCHAR},
+      per_residence_time = #{record.perResidenceTime,jdbcType=TIMESTAMP},
+      whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      compensat_standard = #{record.compensatStandard,jdbcType=DECIMAL},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfo">
+    update injured_household_regist_info
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="resideNature != null">
+        reside_nature = #{resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="isResident != null">
+        is_resident = #{isResident,jdbcType=TINYINT},
+      </if>
+      <if test="resideProvince != null">
+        reside_province = #{resideProvince,jdbcType=BIGINT},
+      </if>
+      <if test="resideCity != null">
+        reside_city = #{resideCity,jdbcType=BIGINT},
+      </if>
+      <if test="resideDistrict != null">
+        reside_district = #{resideDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="resideTown != null">
+        reside_town = #{resideTown,jdbcType=BIGINT},
+      </if>
+      <if test="resideAddress != null">
+        reside_address = #{resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="perResidenceProvince != null">
+        per_residence_province = #{perResidenceProvince,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceCity != null">
+        per_residence_city = #{perResidenceCity,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceDistrict != null">
+        per_residence_district = #{perResidenceDistrict,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceTown != null">
+        per_residence_town = #{perResidenceTown,jdbcType=BIGINT},
+      </if>
+      <if test="perResidenceAddress != null">
+        per_residence_address = #{perResidenceAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="perResidenceTime != null">
+        per_residence_time = #{perResidenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="compensatStandard != null">
+        compensat_standard = #{compensatStandard,jdbcType=DECIMAL},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredHouseholdRegistInfo">
+    update injured_household_regist_info
+    set regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      reside_nature = #{resideNature,jdbcType=TINYINT},
+      is_resident = #{isResident,jdbcType=TINYINT},
+      reside_province = #{resideProvince,jdbcType=BIGINT},
+      reside_city = #{resideCity,jdbcType=BIGINT},
+      reside_district = #{resideDistrict,jdbcType=BIGINT},
+      reside_town = #{resideTown,jdbcType=BIGINT},
+      reside_address = #{resideAddress,jdbcType=VARCHAR},
+      per_residence_province = #{perResidenceProvince,jdbcType=BIGINT},
+      per_residence_city = #{perResidenceCity,jdbcType=BIGINT},
+      per_residence_district = #{perResidenceDistrict,jdbcType=BIGINT},
+      per_residence_town = #{perResidenceTown,jdbcType=BIGINT},
+      per_residence_address = #{perResidenceAddress,jdbcType=VARCHAR},
+      per_residence_time = #{perResidenceTime,jdbcType=TIMESTAMP},
+      whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      compensat_standard = #{compensatStandard,jdbcType=DECIMAL},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

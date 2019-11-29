@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('详情页面')" />
+	<th:block th:include="include :: ztree-css" />
+	<th:block th:include="include :: footer" />
+	<style>
+		.title{
+			position: relative;
+			background: gray;
+			color: white;
+			padding: 10px 0;
+			font-size: 16px;
+		}
+
+		.title a{
+			color: white;
+		}
+
+		.title > div > * {
+			margin: 0 20px;
+		}
+
+		.panel{
+			margin: 10px 0;
+		}
+
+		.panel .panel-body{
+			padding: 10px 20px;
+		}
+
+		.panel-body .col2 .form-group{
+			width: 50%;
+			display: inline-block;
+		}
+
+		.col3 .form-group{
+			width: 33%;
+			display: inline-block;
+		}
+
+		.panel-body .col4 .form-group{
+			width: 25%;
+			display: inline-block;
+		}
+
+		.ce-table tr td,
+		.ce-table tr th{
+			padding: 8px 10px;
+		}
+
+		.ce-show{
+			display: inline-block;
+		}
+
+		.ce-hide{
+			display: none;
+		}
+
+		.form-group {
+			margin-bottom: 5px;
+		}
+		@media (min-width: 768px){
+			.form-group{
+				font-size: 8px;
+			}
+		}
+	</style>
+	<script type="text/javascript">
+
+		var prefix = ctx + "compensat";
+
+		var fastId = '[[${detail.fastCompensatInfo.id}]]'
+		var reviewOpinionId = '[[${detail.reviewOpinion == null ? "": detail.reviewOpinion.id}]]'
+
+		console.log(reviewOpinionId)
+
+		function showInfo(k){
+			["shenpi-xinxi", "anjian-xinxi", "baodan-xinxi"].map(key => {
+				if(key == k){
+				$("#" + key).show()
+			}else{
+				$("#" + key).hide()
+			}
+		})
+		}
+
+		function showInfoFull(k){
+			if(k == "anjian-xinxi"){
+				//$.operate.openTab();
+				$.modal.openTab("案件信息",prefix + "/caseDetail/"+fastId);
+			}else if(k == "baodan-xinxi"){
+				//$.operate.openTab("保单信息",prefix + "/insuranceDetail/"+fastId);
+				$.modal.openTab("保单信息",prefix + "/insuranceDetail/"+fastId);
+			}
+		}
+
+
+		function setLossTotal(){
+			var lostTableTr = $("#loss-table tbody tr")
+
+			total = 0
+
+			for(var i=0, ilen=lostTableTr.length - 1; i< ilen; i++){
+				tds = $(lostTableTr[i]).find("td")
+
+				text = $(tds[3]).html() || 0
+				total = numAdd(total,text);
+			}
+
+			$("#loss_adjustAmount_total").html(total)
+		}
+
+		setLossTotal()
+
+		function setLossData2(){
+			var lostTableTr = $("#loss-table tbody tr")
+
+			total = 0
+
+			for(var i=0, ilen=lostTableTr.length - 1; i< ilen; i++){
+				tds = $(lostTableTr[i]).find("td")
+
+				text = $(tds[3]).html() || 0
+				total = numAdd(total,text);
+
+				$(tds[4]).find("input").val(text)
+			}
+
+			$("#loss_adjustAmount_total_1").html(total)
+		}
+
+
+		function setLossData(){
+			total = 0
+			$.each($('input[name="damaAmount"]'),function (i,item) {
+				total = numAdd(total,$(item).val());
+			})
+
+			$("#loss_adjustAmount_total_1").html(total)
+		}
+
+		function getLossTableData(){
+			var lostTableTr = $("#loss-table tbody tr [data-key]")
+
+			values = []
+
+			for(var i=0, ilen=lostTableTr.length; i< ilen; i++){
+				inputItem = $(lostTableTr[i])
+
+				id = inputItem.attr("data-key")
+				value = inputItem.val()
+
+				if(!value){
+					return false;
+				}
+
+				values.push({
+					id: id,
+					damageAmount:value || 0,
+				})
+			}
+
+			return values
+		}
+		var reviewerName = '[[${user.userName}]]';
+		var reviewerNo = '[[${user.userNo}]]';
+		function getFormData(type){
+			yijian = $("#shenpi-yijian").val()
+			shouming = $("#shenpi-shuoming").val()
+			lossFirstType = $("#shenpi-ds-lx").val();
+			lossSecondType = $("#shenpi-ds-xc").val();
+
+			values = getLossTableData()
+
+			if(type ==2){
+				if(!yijian){
+					$.modal.msgError('请输入审批意见！')
+					return false
+				}
+
+				if(!shouming){
+					$.modal.msgError('请输入意见说明！')
+					return false
+				}
+
+
+				if(!values){
+					$.modal.msgError('请输入审核金额！')
+					return false
+				}
+			}
+
+			if(!values && type == 1){
+				values = [];
+			}
+
+			var money = $("#loss_adjustAmount_total").text();
+			var money2 = $("#loss_adjustAmount_total_1").text();
+
+			if(type ==2) {
+				if (Number(money2) > Number(money)) {
+					$.modal.msgError('审核金额不可大于调解金额！')
+					return false
+				}
+			}
+
+			return {
+				fastCompensatInfo: {
+					id: fastId,
+					lossFirstType:lossFirstType,
+					lossSecondType:lossSecondType
+				},
+				reviewOpinion: {
+					id: reviewOpinionId,
+					fastInfoId: fastId,
+					auditOpinion: shouming,
+					isQualificatSurvey:yijian,
+					reviewerName:reviewerName,
+					reviewerNo:reviewerNo
+				},
+				injuredFixedLossList: values
+			}
+		}
+
+		function submitForm(){
+			//提交数据
+			data = getFormData(2)
+			if(data){
+				$.modal.loading("请稍候....");
+				$.ajax({
+					url: "/compensat/submit",
+					type: "post",
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function(data){
+                       if(data.code == '0000'){
+						   $.modal.alertSuccess("操作成功");
+					       $.modal.closeLoading();
+						   setTimeout(function(){
+						   	//$.modal.closeTab();
+						   	$.modal.closeTabReload();
+						   	}, 3 * 1000 );
+					   }else{
+						   $.modal.alertError(data.msg);
+						   $.modal.closeLoading();
+					   }
+					},
+					error: function(){
+						$.modal.alertError("操作失败");
+						$.modal.closeLoading();
+					}
+				})
+			}
+		}
+
+		function editForm(){
+			//提交数据
+			data = getFormData(1)
+			if(data){
+				$.modal.loading("请稍候....");
+				$.ajax({
+					url: "/compensat/edit",
+					type: "post",
+					data: JSON.stringify(data),
+					contentType: "application/json",
+					success: function(data){
+						if(data.code == '0000'){
+							$.modal.alertSuccess("操作成功");
+							$.modal.closeLoading();
+						}else{
+							$.modal.alertError(data.msg);
+							$.modal.closeLoading();
+						}
+					},
+					error: function(){
+						$.modal.alertError("操作失败");
+						$.modal.closeLoading();
+					}
+				})
+			}
+		}
+
+		function closeForm(){
+			$.modal.closeTab();
+		}
+
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				edit();
+			}
+		}
+
+		
+		function shangyeClick() {
+			$("#jiaoqiang").removeAttr("class","ce-show");
+			$("#shangye").removeAttr("class","ce-hide");
+			$("#shangye").attr("class","ce-show");
+			$("#jiaoqiang").attr("class","ce-hide");
+		}
+
+		function jiaoqiangClick() {
+			$("#shangye").removeAttr("class","ce-show");
+			$("#jiaoqiang").removeAttr("class","ce-hide");
+			$("#jiaoqiang").attr("class","ce-show");
+			$("#shangye").attr("class","ce-hide");
+		}
+
+		function edit() {
+			var roleId = $("input[name='roleId']").val();
+			var roleName = $("input[name='roleName']").val();
+			var roleKey = $("input[name='roleKey']").val();
+			var dataScope = $("#dataScope").val();
+			var deptIds = $.tree.getCheckedNodes();
+			$.ajax({
+				cache : true,
+				type : "POST",
+				url : ctx + "system/role/authDataScope",
+				data : {
+					"roleId": roleId,
+					"roleName": roleName,
+					"roleKey": roleKey,
+					"dataScope": dataScope,
+					"deptIds": deptIds
+				},
+				async : false,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					$.operate.successCallback(data);
+				}
+			});
+		}
+
+		$("#dataScope").change(function(event){
+			var dataScope = $(event.target).val();
+			dataScopeVisible(dataScope);
+		});
+
+		function dataScopeVisible(dataScope) {
+			if (dataScope == 2) {
+				$("#authDataScope").show();
+			} else {
+				$._tree.checkAllNodes(false);
+				$("#authDataScope").hide();
+			}
+		}
+
+		function shenpiDsLxChange() {
+			if ($("#shenpi-ds-lx").val() == 'A02') {
+				$("#shenpi-ds-xc").html("");
+				$("#shenpi-ds-xc").append("<option value='A0201'>现场</option>");
+				$("#shenpi-ds-xc").append("<option value='A0202'>非现场</option>");
+			}
+
+			if ($("#shenpi-ds-lx").val() == 'A01') {
+				$("#shenpi-ds-xc").html("");
+			}
+		}
+		function imageOpen(){
+			layer.photos({
+				photos: '#image-list',
+				shadeClose: false,
+				full: true,
+				closeBtn: 2,
+				anim: 5
+			});
+		}
+
+		//图片放大缩小
+		$(document).on("mousewheel DOMMouseScroll", ".layui-layer-phimg", function (e) {
+			var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
+					(e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1)); // firefox
+			var imagep = $(".layui-layer-phimg").parent().parent();
+			var image = $(".layui-layer-phimg").parent();
+			var h = image.height();
+			var w = image.width();
+			if (delta > 0) {
+				//if (h < (window.innerHeight)) {
+					h = h * 1.05;
+					w = w * 1.05;
+				//}
+			} else if (delta < 0) {
+				if (h > 100) {
+					h = h * 0.95;
+					w = w * 0.95;
+				}
+			}
+			imagep.css("top", (window.innerHeight - h) / 2);
+			imagep.css("left", (window.innerWidth - w) / 2);
+			image.height(h);
+			image.width(w);
+			imagep.height(h);
+			imagep.width(w);
+		});
+
+
+		$(document).on("click", ".layui-layer-phimg", function (e) {
+			/*var current = $("#current").val();
+            current = (current+90)%360;
+            $("#current").val(current);
+            document.getElementById('imglayer').style.transform = 'rotate('+current+'deg)';*/
+			var current = $("#current").val();
+			if (current == 0) {
+				current = 90;
+			}else if (current == 90) {
+				current = 180;
+			}else if(current == 180) {
+				current = 270;
+			}else if (current == 270) {
+				current = 0;
+			}
+			document.getElementById('imglayer').style.transform = 'rotate(' + current + 'deg)';
+			$("#current").val(current);
+		});
+
+	</script>
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content" th:object="${detail}">
+		<div class="row title">
+			<div style="float:left">
+				<span>快赔审核</span>
+				<span>报案号： <span th:text="*{fastCompensatInfo.claimNotificationNo}"></span></span>
+			</div>
+			<div style="float:right">
+				<!--<a href="javascript:void(0)" onclick="showInfo('shenpi-xinxi')">审批信息</a>-->
+				<a href="javascript:void(0)" onclick="showInfoFull('anjian-xinxi')">案件信息</a>
+				<a href="javascript:void(0)" onclick="showInfoFull('baodan-xinxi')">保单信息</a>
+			</div>
+		</div>
+
+		<div id="shenpi-xinxi">
+			<form class="form-horizontal" id="form-role-edit">
+				<div class="row">
+					<div class="col-sm-8" style="padding-left: 0">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								基本信息
+							</div>
+							<div class="panel-body">
+								<div class="form-horizontal col2" id="baseInfo">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者姓名：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text"  th:value="*{fastCompensatInfo.humanName}" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者性别：</label>
+										<div class="col-sm-6">
+											<input type="radio" name="sex" disabled="disabled" value="1" th:field="*{fastCompensatInfo.humanSex}">&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" name="sex" disabled="disabled" value="2" th:field="*{fastCompensatInfo.humanSex}">&nbsp;女
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者年龄：</label>
+										<div class="col-sm-6">
+											<div class="input-group m-b">
+												<input class="form-control" type="text" th:value="*{fastCompensatInfo.humanAge}" disabled="disabled">
+												<span class="input-group-addon">岁</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者电话：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="*{fastCompensatInfo.contacNumber}" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">证件类型：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("identifyType",detail.getFastCompensatInfo().getIdCardType())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">证件号码：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="*{fastCompensatInfo.idCard}" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者属性：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("humanInjury",detail.getFastCompensatInfo().getHumanType())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">事故类型：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("accidentType",detail.getFastCompensatInfo().getCeAccidentType())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">人伤类型：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("humanType",detail.getFastCompensatInfo().getHumanInjury())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">户籍性质：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text"  disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("resideNature",detail.getFastCompensatInfo().getResideNature())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">索赔地区：</label>
+										<div style="white-space: nowrap;" class="col-sm-4" >
+											<input style="display: inline;width:80%;float:left" class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getCityByCityCode(detail.getFastCompensatInfo().getClaimProvince()).getCname()}'>
+											<input style="display: inline;width:80%" class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getCityByCityCode(detail.getFastCompensatInfo().getClaimCity()).getCname()}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">银行卡号：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" disabled="disabled" th:value="*{fastCompensatInfo.receiptAccount}">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">主车行驶情况：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text"  disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("mainDrivingSituat",detail.getFastCompensatInfo().getMainDrivingStatus())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">伤者交通方式：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("wouTransportat",detail.getFastCompensatInfo().getWouTransportat())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">人伤首勘地：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("surveyFirstAddress",detail.getFastCompensatInfo().getSurveyFirstAddress())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">就诊类型：</label>
+										<div class="col-sm-6" >
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("sendDoctorType",detail.getFastCompensatInfo().getSendDoctorType())}'>
+										</div>
+									</div>
+
+									<HR th:if="${detail.fastCompensatInfo.sendDoctorType == 2 || detail.injuredTreatDiagnosisInfo.size() > 0}" style="FILTER:alpha(opacity=100,finishopacity=0,style=3);height:1px; background-color:#000;" width="auto">
+
+									<div class="form-group" th:if="*{fastCompensatInfo.sendDoctorType} == 2">
+										<label class="col-sm-4 control-label">初诊时间：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="${#dates.format(detail.getFastCompensatInfo().getVisitTime(),'yyyy-MM-dd')}"
+											   disabled="disabled"/>
+										</div>
+									</div>
+									<div class="form-group" th:if="*{fastCompensatInfo.sendDoctorType} == 2">
+										<label class="col-sm-4 control-label">已发生费用：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" disabled="disabled" th:value="*{#numbers.formatDecimal(fastCompensatInfo.medicalExpensesFee,1,2)}">
+										</div>
+									</div>
+									<div class="form-group" th:if="*{fastCompensatInfo.sendDoctorType} == 2">
+										<label class="col-sm-4 control-label">医院名称：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="*{fastCompensatInfo.hospitalName}" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group" th:if="*{fastCompensatInfo.sendDoctorType} == 2">
+										<label class="col-sm-4 control-label">科室：</label>
+										<div class="col-sm-4" style="white-space: nowrap;">
+											<input style="display: inline;width:80%;float:left" class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("department",detail.getFastCompensatInfo().getHospitalDepartmentFirst())}'>
+											<input style="display: inline;width:80%;" class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("department",detail.getFastCompensatInfo().getHospitalDepartmentSecond())}'>
+										</div>
+									</div>
+									<div class="form-group" style="width: 100%" th:each="info,status:*{injuredTreatDiagnosisInfo}">
+										<label class="col-sm-4 control-label" style="width: 16.5%" th:if="${status.index == 0}">伤情描述：</label>
+										<label class="col-sm-4 control-label" style="width: 16.5%" th:if="${status.index != 0}">          </label>
+											<div class="col-sm-3" style="white-space: nowrap;font-size:0px">
+												<input style="display: inline;" type="radio"  disabled="disabled" th:checked="${info.around == 0}"><font size="1">&nbsp;无&nbsp;&nbsp;&nbsp;&nbsp;</font>
+												<input style="display: inline;" type="radio"  disabled="disabled" th:checked="${info.around == 1}"><font size="1">&nbsp;左&nbsp;&nbsp;&nbsp;&nbsp;</font>
+												<input style="display: inline;" type="radio"  disabled="disabled" th:checked="${info.around == 2}"><font size="1">&nbsp;右&nbsp;&nbsp;&nbsp;</font>
+												<input style="display: inline;width: 50%" class="form-control" type="text" disabled="disabled"
+													   th:value='${@ce_dict.getDictNameByTypeAndCode("damageSite",__${info.damageSite}__)}'>
+												<input style="display: inline;width: 80%" class="form-control" type="text" disabled="disabled"
+													   th:value='${@ce_dict.getDictNameByTypeAndCode("damageSite",__${info.damageSiteSecond}__)}'>
+												<input style="display: inline;width: 134%" class="form-control" type="text" disabled="disabled"
+													   th:value='${@ce_dict.getDictNameByTypeAndCode("damageSite",__${info.damageType}__)}'>
+											</div>
+									</div>
+
+									<HR style="FILTER:alpha(opacity=100,finishopacity=0,style=3);height:1px; background-color:#000;" width="auto">
+
+
+									<div class="form-group">
+										<label class="col-sm-4 control-label">收入情况：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("incomeStatus",detail.getFastCompensatInfo().getIncomeStatus())}'>
+										</div>
+									</div>
+									<div class="form-group" th:if="${detail.fastCompensatInfo.incomeStatus != null && detail.fastCompensatInfo.incomeStatus != 3}">
+										<label class="col-sm-4 control-label">从事行业：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" disabled="disabled"
+												   th:value='${@ce_dict.getDictNameByTypeAndCode("industry",detail.getFastCompensatInfo().getEngagedIndustry())}'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">建议调解金额：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="*{#numbers.formatDecimal(fastCompensatInfo.recommendAmount,1,2)}" disabled="disabled">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-4 control-label">例均赔付金额：</label>
+										<div class="col-sm-6">
+											<input class="form-control" type="text" th:value="*{#numbers.formatDecimal(fastCompensatInfo.averagePayAmount,1,2)}" disabled="disabled">
+										</div>
+									</div>
+
+									<HR style="FILTER:alpha(opacity=100,finishopacity=0,style=3);height:1px; background-color:#000;" width="auto">
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span>损失信息</span>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-sm-6" style="padding: 10px">
+										定损类型：
+										<select class="form-control" id="shenpi-ds-lx" style="display: inline-block; width: 120px"
+												th:disabled="@{(${htmlName != 'detail'} ? 'true':'false')}" onchange="shenpiDsLxChange()">
+											<option value="A02" th:field="*{fastCompensatInfo.lossFirstType}">调解</option>
+											<option value="A01" th:field="*{fastCompensatInfo.lossFirstType}">常规</option>
+										</select>
+										<select class="form-control" id="shenpi-ds-xc" style="display: inline-block; width: 120px"
+												th:disabled="@{(${htmlName != 'detail'} ? 'true':'false')}">
+											<option value=""      th:if="*{fastCompensatInfo.lossFirstType == 'A01'}" th:field="*{fastCompensatInfo.lossSecondType}"></option>
+											<option value="A0201" th:if="*{fastCompensatInfo.lossFirstType == 'A02'}" th:field="*{fastCompensatInfo.lossSecondType}">现场</option>
+											<option value="A0202" th:if="*{fastCompensatInfo.lossFirstType == 'A02'}" th:field="*{fastCompensatInfo.lossSecondType}">非现场</option>
+										</select>
+									</div>
+									<div class="col-sm-6" style="text-align: right">
+										<button type="button" class="btn btn-w-m" onclick="setLossData2()" th:style="'display:' + @{(${htmlName != 'detail'} ? 'none':'inline-block')} + ';background-color: #1c84c6;border-color: #1c84c6;color: #FFFFFF;'">同定损金额</button>
+									</div>
+								</div>
+								<div class="row">
+									<table class="ce-table" style="width: 90%; margin: auto" data-mobile-responsive="true" id="loss-table">
+										<thead>
+											<tr>
+												<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">序号</th>
+												<th style="border: 1px solid #999999;text-align: center;width: 20%;background-color: #F0F0F0;">损失项目</th>
+												<th style="border: 1px solid #999999;text-align: center;width: 30%;background-color: #F0F0F0;">损失说明</th>
+												<th style="border: 1px solid #999999;text-align: center;width: 20%;background-color: #F0F0F0;">定损金额</th>
+												<th style="border: 1px solid #999999;text-align: center;width: 20%;background-color: #F0F0F0;">审核金额</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="loss, loopStatus : *{injuredFixedLossList}">
+												<td style="border: 1px solid #999999;text-align: center;" th:text="${loopStatus.count}"></td>
+												<td style="border: 1px solid #999999;text-align: center;" th:text='${@ce_dict.getDictNameByTypeAndCode("injuryLossItem",loss.getInjuryLossItemType())}'></td>
+												<td style="border: 1px solid #999999;text-align: center;" th:text="${loss.calculatFormulaInfo}"></td>
+												<td style="border: 1px solid #999999;text-align: center;" th:text="${#numbers.formatDecimal(loss.adjustAmount,1,2)}"></td>
+												<td style="border: 1px solid #999999;text-align: center;">
+													<input style="text-align: center;" th:data-key="${loss.id}" type="text" name="damaAmount" onchange="setLossData()"
+														   th:readonly="@{(${htmlName != 'detail'} ? 'true':'false')}"
+														   th:value="${#numbers.formatDecimal(loss.damageAmount,1,2)}"/>
+												</td>
+											</tr>
+											<tr style="border: 1px solid #999999;text-align: center;">
+												<td></td>
+												<td>金额合计</td>
+												<td></td>
+												<td style="border: 1px solid #999999;text-align: center;" id="loss_adjustAmount_total"   th:text="*{#numbers.formatDecimal(fastCompensatInfo.fixedLossAmount,1,2)}"></td>
+												<td style="border: 1px solid #999999;text-align: center;" id="loss_adjustAmount_total_1" th:text="*{#numbers.formatDecimal(fastCompensatInfo.damageAmount,1,2)}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default" th:style="'display:' + @{(${htmlName == 'detail'} ? 'block' : 'none')} + ''">
+							<div class="panel-heading">
+								<span>审核信息</span>
+							</div>
+							<div class="panel-body">
+								<form class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span style="color: red">*&nbsp;</span>审核意见：</label>
+										<div class="col-sm-6">
+											<select style="width:30%" class="form-control" name="yijian" id="shenpi-yijian" th:if="*{reviewOpinion!=null}"
+													th:disabled="@{(${htmlName != 'detail'} ? 'true':'false')}">
+												<option value="">--请选择--</option>
+												<option value="1" th:field="*{reviewOpinion.isQualificatSurvey}">同意</option>
+												<option value="0" th:field="*{reviewOpinion.isQualificatSurvey}">不同意</option>
+												<!--<option value="1" >通过</option>
+												<option value="0" >不通过</option>-->
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span style="color: red">*&nbsp;</span>意见说明：</label>
+										<div class="col-sm-6" th:if="*{reviewOpinion!=null}">
+											<textarea style="width:145%;resize: none" maxlength="64" class="form-control" name="shuoming" type="text" id="shenpi-shuoming"
+													  th:readonly="@{(${htmlName != 'detail'} ? 'true':'false')}" th:text="*{reviewOpinion.auditOpinion}"></textarea>
+												   <!--th:value="*{reviewOpinion.auditOpinion}"-->
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span>任务日志</span>
+							</div>
+							<div class="row">
+								<table class="ce-table" style="width: 90%; margin: auto" data-mobile-responsive="true" id="log-table">
+									<thead>
+									<tr>
+										<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">序号</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">提交任务</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">提交人</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 20%;background-color: #F0F0F0;">提交时间</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">提交意见</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 10%;background-color: #F0F0F0;">提交金额</th>
+										<th style="border: 1px solid #999999;text-align: center;width: 30%;background-color: #F0F0F0;">意见说明</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr th:each="log,logStat: ${detail.logs}">
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${logStat.count}"></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text='${@ce_dict.getDictNameByTypeAndCode("logType",log.getSubmitTask())}'></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${log.submitName}"></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${#dates.format(log.getSubmitTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${log.opinionDesc}"></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${#numbers.formatDecimal(log.submitAmount,1,2)}"></td>
+										<td style="border: 1px solid #999999;text-align: center;" th:text="${log.submitOpinion}"></td>
+									</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-4" style="padding-right: 0">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<span>查看影像</span>
+						</div>
+						<div class="panel-body" style="height:1300px;overflow-y:scroll;overflow-x:hidden" id="image-list">
+							<div class="image-list" th:each="img,imgStat: *{imgs}">
+								<h1><label class="label label-danger"
+									   th:text='${@ce_dict.getDictNameByTypeAndCode("injuredImgType",img.getImgType())}'>
+								</label>
+								</h1>
+								<img th:attr="layer-src=${img.uploadName}" th:src="${img.imgUrl}" height="400" width="400" onclick="imageOpen()"
+								     th:alt='${@ce_dict.getDictNameByTypeAndCode("injuredImgType",img.getImgType())}'/>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="col-sm-8">
+					<div style="text-align: center">
+						<button type="button" class="btn btn-w-m btn-primary" onclick="submitForm()"
+								th:style="'display:' + @{(${htmlName == 'detail'} ? 'inline-block' : 'none')} + ''"
+						>提交</button>
+						<button type="button" class="btn btn-w-m btn-success" onclick="editForm()"
+								th:style="'display:' + @{(${htmlName == 'detail'} ? 'inline-block' : 'none')} + ''"
+						>保存</button>
+						<button type="button" class="btn btn-w-m btn-danger"  onclick="closeForm()">关闭</button>
+					</div>
+				</div>
+			</div>
+
+			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+		</div>
+	</div>
+	<th:block th:include="include :: ztree-js" />
+
+</body>
+</html>

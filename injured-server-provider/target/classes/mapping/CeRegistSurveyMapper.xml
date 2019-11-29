@@ -1,0 +1,1210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeRegistSurveyMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeRegistSurvey">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="ce_task_no" jdbcType="VARCHAR" property="ceTaskNo" />
+    <result column="check_start_time" jdbcType="TIMESTAMP" property="checkStartTime" />
+    <result column="check_end_time" jdbcType="TIMESTAMP" property="checkEndTime" />
+    <result column="check_addr" jdbcType="VARCHAR" property="checkAddr" />
+    <result column="appoint_check_addr" jdbcType="VARCHAR" property="appointCheckAddr" />
+    <result column="loss_task" jdbcType="VARCHAR" property="lossTask" />
+    <result column="driver_name" jdbcType="VARCHAR" property="driverName" />
+    <result column="is_appoint_driver" jdbcType="VARCHAR" property="isAppointDriver" />
+    <result column="checker_name" jdbcType="VARCHAR" property="checkerName" />
+    <result column="checker_code" jdbcType="VARCHAR" property="checkerCode" />
+    <result column="checker_phone1" jdbcType="VARCHAR" property="checkerPhone1" />
+    <result column="checker_name2" jdbcType="VARCHAR" property="checkerName2" />
+    <result column="checker_code2" jdbcType="VARCHAR" property="checkerCode2" />
+    <result column="checker_phone2" jdbcType="VARCHAR" property="checkerPhone2" />
+    <result column="contact_person" jdbcType="VARCHAR" property="contactPerson" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="contact_tel" jdbcType="VARCHAR" property="contactTel" />
+    <result column="danger_address" jdbcType="VARCHAR" property="dangerAddress" />
+    <result column="danger_cause" jdbcType="VARCHAR" property="dangerCause" />
+    <result column="danger_desc" jdbcType="VARCHAR" property="dangerDesc" />
+    <result column="case_type" jdbcType="VARCHAR" property="caseType" />
+    <result column="event_type" jdbcType="VARCHAR" property="eventType" />
+    <result column="event_process_mode" jdbcType="VARCHAR" property="eventProcessMode" />
+    <result column="event_accident_liability" jdbcType="VARCHAR" property="eventAccidentLiability" />
+    <result column="event_duty_ratio" jdbcType="DECIMAL" property="eventDutyRatio" />
+    <result column="insured_relation" jdbcType="VARCHAR" property="insuredRelation" />
+    <result column="no_fault_compensate" jdbcType="VARCHAR" property="noFaultCompensate" />
+    <result column="water_level" jdbcType="VARCHAR" property="waterLevel" />
+    <result column="fall_victim_driver" jdbcType="VARCHAR" property="fallVictimDriver" />
+    <result column="fall_victim_insured" jdbcType="VARCHAR" property="fallVictimInsured" />
+    <result column="subrogation_flag" jdbcType="VARCHAR" property="subrogationFlag" />
+    <result column="is_first_scene" jdbcType="TINYINT" property="isFirstScene" />
+    <result column="is_person_injured" jdbcType="BIT" property="isPersonInjured" />
+    <result column="claim_type" jdbcType="VARCHAR" property="claimType" />
+    <result column="sub_certi_type" jdbcType="VARCHAR" property="subCertiType" />
+    <result column="catastrophe_name" jdbcType="VARCHAR" property="catastropheName" />
+    <result column="catastrophe_type" jdbcType="VARCHAR" property="catastropheType" />
+    <result column="catastrophe_code" jdbcType="VARCHAR" property="catastropheCode" />
+    <result column="verifier_name" jdbcType="VARCHAR" property="verifierName" />
+    <result column="verifier_code" jdbcType="VARCHAR" property="verifierCode" />
+    <result column="buckle_ded_reason" jdbcType="VARCHAR" property="buckleDedReason" />
+    <result column="is_mutual_collision_self_compensation" jdbcType="VARCHAR" property="isMutualCollisionSelfCompensation" />
+    <result column="event_address_type" jdbcType="VARCHAR" property="eventAddressType" />
+    <result column="driver_review" jdbcType="VARCHAR" property="driverReview" />
+    <result column="is_car_insurance" jdbcType="VARCHAR" property="isCarInsurance" />
+    <result column="is_car_annual" jdbcType="VARCHAR" property="isCarAnnual" />
+    <result column="loading_condition" jdbcType="VARCHAR" property="loadingCondition" />
+    <result column="check_desc" jdbcType="VARCHAR" property="checkDesc" />
+    <result column="check_type" jdbcType="VARCHAR" property="checkType" />
+    <result column="feedback_result_content" jdbcType="VARCHAR" property="feedbackResultContent" />
+    <result column="feedback_result" jdbcType="VARCHAR" property="feedbackResult" />
+    <result column="audit_name" jdbcType="VARCHAR" property="auditName" />
+    <result column="audit_code" jdbcType="VARCHAR" property="auditCode" />
+    <result column="audit_opinion" jdbcType="VARCHAR" property="auditOpinion" />
+    <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+    <result column="receipt_time" jdbcType="TIMESTAMP" property="receiptTime" />
+    <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="dispatch_time" jdbcType="TIMESTAMP" property="dispatchTime" />
+    <result column="risk_status" jdbcType="VARCHAR" property="riskStatus" />
+    <result column="survey_status" jdbcType="VARCHAR" property="surveyStatus" />
+    <result column="operation_business" jdbcType="VARCHAR" property="operationBusiness" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="ext" jdbcType="VARCHAR" property="ext" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, regist_id, claim_notification_no, ce_task_no, check_start_time, check_end_time, 
+    check_addr, appoint_check_addr, loss_task, driver_name, is_appoint_driver, checker_name, 
+    checker_code, checker_phone1, checker_name2, checker_code2, checker_phone2, contact_person, 
+    contact_phone, contact_tel, danger_address, danger_cause, danger_desc, case_type, 
+    event_type, event_process_mode, event_accident_liability, event_duty_ratio, insured_relation, 
+    no_fault_compensate, water_level, fall_victim_driver, fall_victim_insured, subrogation_flag, 
+    is_first_scene, is_person_injured, claim_type, sub_certi_type, catastrophe_name, 
+    catastrophe_type, catastrophe_code, verifier_name, verifier_code, buckle_ded_reason, 
+    is_mutual_collision_self_compensation, event_address_type, driver_review, is_car_insurance, 
+    is_car_annual, loading_condition, check_desc, check_type, feedback_result_content, 
+    feedback_result, audit_name, audit_code, audit_opinion, audit_time, receipt_time, 
+    submit_time, dispatch_time, risk_status, survey_status, operation_business, is_delete, 
+    ext, update_time, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_regist_survey
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_regist_survey
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_regist_survey
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyExample">
+    delete from ce_regist_survey
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeRegistSurvey" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_regist_survey (id, regist_id, claim_notification_no, 
+      ce_task_no, check_start_time, check_end_time, 
+      check_addr, appoint_check_addr, loss_task, 
+      driver_name, is_appoint_driver, checker_name, 
+      checker_code, checker_phone1, checker_name2, 
+      checker_code2, checker_phone2, contact_person, 
+      contact_phone, contact_tel, danger_address, 
+      danger_cause, danger_desc, case_type, 
+      event_type, event_process_mode, event_accident_liability, 
+      event_duty_ratio, insured_relation, no_fault_compensate, 
+      water_level, fall_victim_driver, fall_victim_insured, 
+      subrogation_flag, is_first_scene, is_person_injured, 
+      claim_type, sub_certi_type, catastrophe_name, 
+      catastrophe_type, catastrophe_code, verifier_name, 
+      verifier_code, buckle_ded_reason, is_mutual_collision_self_compensation, 
+      event_address_type, driver_review, is_car_insurance, 
+      is_car_annual, loading_condition, check_desc, 
+      check_type, feedback_result_content, feedback_result, 
+      audit_name, audit_code, audit_opinion, 
+      audit_time, receipt_time, submit_time, 
+      dispatch_time, risk_status, survey_status, 
+      operation_business, is_delete, ext, 
+      update_time, create_time)
+    values (#{id,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, 
+      #{ceTaskNo,jdbcType=VARCHAR}, #{checkStartTime,jdbcType=TIMESTAMP}, #{checkEndTime,jdbcType=TIMESTAMP}, 
+      #{checkAddr,jdbcType=VARCHAR}, #{appointCheckAddr,jdbcType=VARCHAR}, #{lossTask,jdbcType=VARCHAR}, 
+      #{driverName,jdbcType=VARCHAR}, #{isAppointDriver,jdbcType=VARCHAR}, #{checkerName,jdbcType=VARCHAR}, 
+      #{checkerCode,jdbcType=VARCHAR}, #{checkerPhone1,jdbcType=VARCHAR}, #{checkerName2,jdbcType=VARCHAR}, 
+      #{checkerCode2,jdbcType=VARCHAR}, #{checkerPhone2,jdbcType=VARCHAR}, #{contactPerson,jdbcType=VARCHAR}, 
+      #{contactPhone,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}, #{dangerAddress,jdbcType=VARCHAR}, 
+      #{dangerCause,jdbcType=VARCHAR}, #{dangerDesc,jdbcType=VARCHAR}, #{caseType,jdbcType=VARCHAR}, 
+      #{eventType,jdbcType=VARCHAR}, #{eventProcessMode,jdbcType=VARCHAR}, #{eventAccidentLiability,jdbcType=VARCHAR}, 
+      #{eventDutyRatio,jdbcType=DECIMAL}, #{insuredRelation,jdbcType=VARCHAR}, #{noFaultCompensate,jdbcType=VARCHAR}, 
+      #{waterLevel,jdbcType=VARCHAR}, #{fallVictimDriver,jdbcType=VARCHAR}, #{fallVictimInsured,jdbcType=VARCHAR}, 
+      #{subrogationFlag,jdbcType=VARCHAR}, #{isFirstScene,jdbcType=TINYINT}, #{isPersonInjured,jdbcType=BIT}, 
+      #{claimType,jdbcType=VARCHAR}, #{subCertiType,jdbcType=VARCHAR}, #{catastropheName,jdbcType=VARCHAR}, 
+      #{catastropheType,jdbcType=VARCHAR}, #{catastropheCode,jdbcType=VARCHAR}, #{verifierName,jdbcType=VARCHAR}, 
+      #{verifierCode,jdbcType=VARCHAR}, #{buckleDedReason,jdbcType=VARCHAR}, #{isMutualCollisionSelfCompensation,jdbcType=VARCHAR}, 
+      #{eventAddressType,jdbcType=VARCHAR}, #{driverReview,jdbcType=VARCHAR}, #{isCarInsurance,jdbcType=VARCHAR}, 
+      #{isCarAnnual,jdbcType=VARCHAR}, #{loadingCondition,jdbcType=VARCHAR}, #{checkDesc,jdbcType=VARCHAR}, 
+      #{checkType,jdbcType=VARCHAR}, #{feedbackResultContent,jdbcType=VARCHAR}, #{feedbackResult,jdbcType=VARCHAR}, 
+      #{auditName,jdbcType=VARCHAR}, #{auditCode,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{receiptTime,jdbcType=TIMESTAMP}, #{submitTime,jdbcType=TIMESTAMP}, 
+      #{dispatchTime,jdbcType=TIMESTAMP}, #{riskStatus,jdbcType=VARCHAR}, #{surveyStatus,jdbcType=VARCHAR}, 
+      #{operationBusiness,jdbcType=VARCHAR}, #{isDelete,jdbcType=BIT}, #{ext,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeRegistSurvey" useGeneratedKeys="true" keyProperty="id">
+    insert into ce_regist_survey
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="ceTaskNo != null">
+        ce_task_no,
+      </if>
+      <if test="checkStartTime != null">
+        check_start_time,
+      </if>
+      <if test="checkEndTime != null">
+        check_end_time,
+      </if>
+      <if test="checkAddr != null">
+        check_addr,
+      </if>
+      <if test="appointCheckAddr != null">
+        appoint_check_addr,
+      </if>
+      <if test="lossTask != null">
+        loss_task,
+      </if>
+      <if test="driverName != null">
+        driver_name,
+      </if>
+      <if test="isAppointDriver != null">
+        is_appoint_driver,
+      </if>
+      <if test="checkerName != null">
+        checker_name,
+      </if>
+      <if test="checkerCode != null">
+        checker_code,
+      </if>
+      <if test="checkerPhone1 != null">
+        checker_phone1,
+      </if>
+      <if test="checkerName2 != null">
+        checker_name2,
+      </if>
+      <if test="checkerCode2 != null">
+        checker_code2,
+      </if>
+      <if test="checkerPhone2 != null">
+        checker_phone2,
+      </if>
+      <if test="contactPerson != null">
+        contact_person,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="contactTel != null">
+        contact_tel,
+      </if>
+      <if test="dangerAddress != null">
+        danger_address,
+      </if>
+      <if test="dangerCause != null">
+        danger_cause,
+      </if>
+      <if test="dangerDesc != null">
+        danger_desc,
+      </if>
+      <if test="caseType != null">
+        case_type,
+      </if>
+      <if test="eventType != null">
+        event_type,
+      </if>
+      <if test="eventProcessMode != null">
+        event_process_mode,
+      </if>
+      <if test="eventAccidentLiability != null">
+        event_accident_liability,
+      </if>
+      <if test="eventDutyRatio != null">
+        event_duty_ratio,
+      </if>
+      <if test="insuredRelation != null">
+        insured_relation,
+      </if>
+      <if test="noFaultCompensate != null">
+        no_fault_compensate,
+      </if>
+      <if test="waterLevel != null">
+        water_level,
+      </if>
+      <if test="fallVictimDriver != null">
+        fall_victim_driver,
+      </if>
+      <if test="fallVictimInsured != null">
+        fall_victim_insured,
+      </if>
+      <if test="subrogationFlag != null">
+        subrogation_flag,
+      </if>
+      <if test="isFirstScene != null">
+        is_first_scene,
+      </if>
+      <if test="isPersonInjured != null">
+        is_person_injured,
+      </if>
+      <if test="claimType != null">
+        claim_type,
+      </if>
+      <if test="subCertiType != null">
+        sub_certi_type,
+      </if>
+      <if test="catastropheName != null">
+        catastrophe_name,
+      </if>
+      <if test="catastropheType != null">
+        catastrophe_type,
+      </if>
+      <if test="catastropheCode != null">
+        catastrophe_code,
+      </if>
+      <if test="verifierName != null">
+        verifier_name,
+      </if>
+      <if test="verifierCode != null">
+        verifier_code,
+      </if>
+      <if test="buckleDedReason != null">
+        buckle_ded_reason,
+      </if>
+      <if test="isMutualCollisionSelfCompensation != null">
+        is_mutual_collision_self_compensation,
+      </if>
+      <if test="eventAddressType != null">
+        event_address_type,
+      </if>
+      <if test="driverReview != null">
+        driver_review,
+      </if>
+      <if test="isCarInsurance != null">
+        is_car_insurance,
+      </if>
+      <if test="isCarAnnual != null">
+        is_car_annual,
+      </if>
+      <if test="loadingCondition != null">
+        loading_condition,
+      </if>
+      <if test="checkDesc != null">
+        check_desc,
+      </if>
+      <if test="checkType != null">
+        check_type,
+      </if>
+      <if test="feedbackResultContent != null">
+        feedback_result_content,
+      </if>
+      <if test="feedbackResult != null">
+        feedback_result,
+      </if>
+      <if test="auditName != null">
+        audit_name,
+      </if>
+      <if test="auditCode != null">
+        audit_code,
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion,
+      </if>
+      <if test="auditTime != null">
+        audit_time,
+      </if>
+      <if test="receiptTime != null">
+        receipt_time,
+      </if>
+      <if test="submitTime != null">
+        submit_time,
+      </if>
+      <if test="dispatchTime != null">
+        dispatch_time,
+      </if>
+      <if test="riskStatus != null">
+        risk_status,
+      </if>
+      <if test="surveyStatus != null">
+        survey_status,
+      </if>
+      <if test="operationBusiness != null">
+        operation_business,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="ext != null">
+        ext,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ceTaskNo != null">
+        #{ceTaskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStartTime != null">
+        #{checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkEndTime != null">
+        #{checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkAddr != null">
+        #{checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="appointCheckAddr != null">
+        #{appointCheckAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTask != null">
+        #{lossTask,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAppointDriver != null">
+        #{isAppointDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerName != null">
+        #{checkerName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerCode != null">
+        #{checkerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerPhone1 != null">
+        #{checkerPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerName2 != null">
+        #{checkerName2,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerCode2 != null">
+        #{checkerCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerPhone2 != null">
+        #{checkerPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null">
+        #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null">
+        #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerAddress != null">
+        #{dangerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerCause != null">
+        #{dangerCause,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerDesc != null">
+        #{dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null">
+        #{caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventProcessMode != null">
+        #{eventProcessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eventAccidentLiability != null">
+        #{eventAccidentLiability,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDutyRatio != null">
+        #{eventDutyRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="insuredRelation != null">
+        #{insuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="noFaultCompensate != null">
+        #{noFaultCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="waterLevel != null">
+        #{waterLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fallVictimDriver != null">
+        #{fallVictimDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="fallVictimInsured != null">
+        #{fallVictimInsured,jdbcType=VARCHAR},
+      </if>
+      <if test="subrogationFlag != null">
+        #{subrogationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="isFirstScene != null">
+        #{isFirstScene,jdbcType=TINYINT},
+      </if>
+      <if test="isPersonInjured != null">
+        #{isPersonInjured,jdbcType=BIT},
+      </if>
+      <if test="claimType != null">
+        #{claimType,jdbcType=VARCHAR},
+      </if>
+      <if test="subCertiType != null">
+        #{subCertiType,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheName != null">
+        #{catastropheName,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheType != null">
+        #{catastropheType,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheCode != null">
+        #{catastropheCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifierName != null">
+        #{verifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="verifierCode != null">
+        #{verifierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buckleDedReason != null">
+        #{buckleDedReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isMutualCollisionSelfCompensation != null">
+        #{isMutualCollisionSelfCompensation,jdbcType=VARCHAR},
+      </if>
+      <if test="eventAddressType != null">
+        #{eventAddressType,jdbcType=VARCHAR},
+      </if>
+      <if test="driverReview != null">
+        #{driverReview,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarInsurance != null">
+        #{isCarInsurance,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarAnnual != null">
+        #{isCarAnnual,jdbcType=VARCHAR},
+      </if>
+      <if test="loadingCondition != null">
+        #{loadingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDesc != null">
+        #{checkDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="checkType != null">
+        #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackResultContent != null">
+        #{feedbackResultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackResult != null">
+        #{feedbackResult,jdbcType=VARCHAR},
+      </if>
+      <if test="auditName != null">
+        #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditCode != null">
+        #{auditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null">
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiptTime != null">
+        #{receiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dispatchTime != null">
+        #{dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="riskStatus != null">
+        #{riskStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyStatus != null">
+        #{surveyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operationBusiness != null">
+        #{operationBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeRegistSurveyExample" resultType="java.lang.Long">
+    select count(*) from ce_regist_survey
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_regist_survey
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ceTaskNo != null">
+        ce_task_no = #{record.ceTaskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStartTime != null">
+        check_start_time = #{record.checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkEndTime != null">
+        check_end_time = #{record.checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkAddr != null">
+        check_addr = #{record.checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appointCheckAddr != null">
+        appoint_check_addr = #{record.appointCheckAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lossTask != null">
+        loss_task = #{record.lossTask,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverName != null">
+        driver_name = #{record.driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAppointDriver != null">
+        is_appoint_driver = #{record.isAppointDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerName != null">
+        checker_name = #{record.checkerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerCode != null">
+        checker_code = #{record.checkerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerPhone1 != null">
+        checker_phone1 = #{record.checkerPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerName2 != null">
+        checker_name2 = #{record.checkerName2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerCode2 != null">
+        checker_code2 = #{record.checkerCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkerPhone2 != null">
+        checker_phone2 = #{record.checkerPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPerson != null">
+        contact_person = #{record.contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactPhone != null">
+        contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactTel != null">
+        contact_tel = #{record.contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dangerAddress != null">
+        danger_address = #{record.dangerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dangerCause != null">
+        danger_cause = #{record.dangerCause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dangerDesc != null">
+        danger_desc = #{record.dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseType != null">
+        case_type = #{record.caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventType != null">
+        event_type = #{record.eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventProcessMode != null">
+        event_process_mode = #{record.eventProcessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventAccidentLiability != null">
+        event_accident_liability = #{record.eventAccidentLiability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventDutyRatio != null">
+        event_duty_ratio = #{record.eventDutyRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="record.insuredRelation != null">
+        insured_relation = #{record.insuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noFaultCompensate != null">
+        no_fault_compensate = #{record.noFaultCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waterLevel != null">
+        water_level = #{record.waterLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fallVictimDriver != null">
+        fall_victim_driver = #{record.fallVictimDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fallVictimInsured != null">
+        fall_victim_insured = #{record.fallVictimInsured,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subrogationFlag != null">
+        subrogation_flag = #{record.subrogationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFirstScene != null">
+        is_first_scene = #{record.isFirstScene,jdbcType=TINYINT},
+      </if>
+      <if test="record.isPersonInjured != null">
+        is_person_injured = #{record.isPersonInjured,jdbcType=BIT},
+      </if>
+      <if test="record.claimType != null">
+        claim_type = #{record.claimType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subCertiType != null">
+        sub_certi_type = #{record.subCertiType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catastropheName != null">
+        catastrophe_name = #{record.catastropheName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catastropheType != null">
+        catastrophe_type = #{record.catastropheType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catastropheCode != null">
+        catastrophe_code = #{record.catastropheCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifierName != null">
+        verifier_name = #{record.verifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifierCode != null">
+        verifier_code = #{record.verifierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buckleDedReason != null">
+        buckle_ded_reason = #{record.buckleDedReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMutualCollisionSelfCompensation != null">
+        is_mutual_collision_self_compensation = #{record.isMutualCollisionSelfCompensation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eventAddressType != null">
+        event_address_type = #{record.eventAddressType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.driverReview != null">
+        driver_review = #{record.driverReview,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCarInsurance != null">
+        is_car_insurance = #{record.isCarInsurance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCarAnnual != null">
+        is_car_annual = #{record.isCarAnnual,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loadingCondition != null">
+        loading_condition = #{record.loadingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkDesc != null">
+        check_desc = #{record.checkDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkType != null">
+        check_type = #{record.checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackResultContent != null">
+        feedback_result_content = #{record.feedbackResultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackResult != null">
+        feedback_result = #{record.feedbackResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditName != null">
+        audit_name = #{record.auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditCode != null">
+        audit_code = #{record.auditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditOpinion != null">
+        audit_opinion = #{record.auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null">
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiptTime != null">
+        receipt_time = #{record.receiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.submitTime != null">
+        submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dispatchTime != null">
+        dispatch_time = #{record.dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.riskStatus != null">
+        risk_status = #{record.riskStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.surveyStatus != null">
+        survey_status = #{record.surveyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operationBusiness != null">
+        operation_business = #{record.operationBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.ext != null">
+        ext = #{record.ext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_regist_survey
+    set id = #{record.id,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      ce_task_no = #{record.ceTaskNo,jdbcType=VARCHAR},
+      check_start_time = #{record.checkStartTime,jdbcType=TIMESTAMP},
+      check_end_time = #{record.checkEndTime,jdbcType=TIMESTAMP},
+      check_addr = #{record.checkAddr,jdbcType=VARCHAR},
+      appoint_check_addr = #{record.appointCheckAddr,jdbcType=VARCHAR},
+      loss_task = #{record.lossTask,jdbcType=VARCHAR},
+      driver_name = #{record.driverName,jdbcType=VARCHAR},
+      is_appoint_driver = #{record.isAppointDriver,jdbcType=VARCHAR},
+      checker_name = #{record.checkerName,jdbcType=VARCHAR},
+      checker_code = #{record.checkerCode,jdbcType=VARCHAR},
+      checker_phone1 = #{record.checkerPhone1,jdbcType=VARCHAR},
+      checker_name2 = #{record.checkerName2,jdbcType=VARCHAR},
+      checker_code2 = #{record.checkerCode2,jdbcType=VARCHAR},
+      checker_phone2 = #{record.checkerPhone2,jdbcType=VARCHAR},
+      contact_person = #{record.contactPerson,jdbcType=VARCHAR},
+      contact_phone = #{record.contactPhone,jdbcType=VARCHAR},
+      contact_tel = #{record.contactTel,jdbcType=VARCHAR},
+      danger_address = #{record.dangerAddress,jdbcType=VARCHAR},
+      danger_cause = #{record.dangerCause,jdbcType=VARCHAR},
+      danger_desc = #{record.dangerDesc,jdbcType=VARCHAR},
+      case_type = #{record.caseType,jdbcType=VARCHAR},
+      event_type = #{record.eventType,jdbcType=VARCHAR},
+      event_process_mode = #{record.eventProcessMode,jdbcType=VARCHAR},
+      event_accident_liability = #{record.eventAccidentLiability,jdbcType=VARCHAR},
+      event_duty_ratio = #{record.eventDutyRatio,jdbcType=DECIMAL},
+      insured_relation = #{record.insuredRelation,jdbcType=VARCHAR},
+      no_fault_compensate = #{record.noFaultCompensate,jdbcType=VARCHAR},
+      water_level = #{record.waterLevel,jdbcType=VARCHAR},
+      fall_victim_driver = #{record.fallVictimDriver,jdbcType=VARCHAR},
+      fall_victim_insured = #{record.fallVictimInsured,jdbcType=VARCHAR},
+      subrogation_flag = #{record.subrogationFlag,jdbcType=VARCHAR},
+      is_first_scene = #{record.isFirstScene,jdbcType=TINYINT},
+      is_person_injured = #{record.isPersonInjured,jdbcType=BIT},
+      claim_type = #{record.claimType,jdbcType=VARCHAR},
+      sub_certi_type = #{record.subCertiType,jdbcType=VARCHAR},
+      catastrophe_name = #{record.catastropheName,jdbcType=VARCHAR},
+      catastrophe_type = #{record.catastropheType,jdbcType=VARCHAR},
+      catastrophe_code = #{record.catastropheCode,jdbcType=VARCHAR},
+      verifier_name = #{record.verifierName,jdbcType=VARCHAR},
+      verifier_code = #{record.verifierCode,jdbcType=VARCHAR},
+      buckle_ded_reason = #{record.buckleDedReason,jdbcType=VARCHAR},
+      is_mutual_collision_self_compensation = #{record.isMutualCollisionSelfCompensation,jdbcType=VARCHAR},
+      event_address_type = #{record.eventAddressType,jdbcType=VARCHAR},
+      driver_review = #{record.driverReview,jdbcType=VARCHAR},
+      is_car_insurance = #{record.isCarInsurance,jdbcType=VARCHAR},
+      is_car_annual = #{record.isCarAnnual,jdbcType=VARCHAR},
+      loading_condition = #{record.loadingCondition,jdbcType=VARCHAR},
+      check_desc = #{record.checkDesc,jdbcType=VARCHAR},
+      check_type = #{record.checkType,jdbcType=VARCHAR},
+      feedback_result_content = #{record.feedbackResultContent,jdbcType=VARCHAR},
+      feedback_result = #{record.feedbackResult,jdbcType=VARCHAR},
+      audit_name = #{record.auditName,jdbcType=VARCHAR},
+      audit_code = #{record.auditCode,jdbcType=VARCHAR},
+      audit_opinion = #{record.auditOpinion,jdbcType=VARCHAR},
+      audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      receipt_time = #{record.receiptTime,jdbcType=TIMESTAMP},
+      submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+      dispatch_time = #{record.dispatchTime,jdbcType=TIMESTAMP},
+      risk_status = #{record.riskStatus,jdbcType=VARCHAR},
+      survey_status = #{record.surveyStatus,jdbcType=VARCHAR},
+      operation_business = #{record.operationBusiness,jdbcType=VARCHAR},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      ext = #{record.ext,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeRegistSurvey">
+    update ce_regist_survey
+    <set>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ceTaskNo != null">
+        ce_task_no = #{ceTaskNo,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStartTime != null">
+        check_start_time = #{checkStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkEndTime != null">
+        check_end_time = #{checkEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkAddr != null">
+        check_addr = #{checkAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="appointCheckAddr != null">
+        appoint_check_addr = #{appointCheckAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="lossTask != null">
+        loss_task = #{lossTask,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        driver_name = #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAppointDriver != null">
+        is_appoint_driver = #{isAppointDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerName != null">
+        checker_name = #{checkerName,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerCode != null">
+        checker_code = #{checkerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerPhone1 != null">
+        checker_phone1 = #{checkerPhone1,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerName2 != null">
+        checker_name2 = #{checkerName2,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerCode2 != null">
+        checker_code2 = #{checkerCode2,jdbcType=VARCHAR},
+      </if>
+      <if test="checkerPhone2 != null">
+        checker_phone2 = #{checkerPhone2,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPerson != null">
+        contact_person = #{contactPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactTel != null">
+        contact_tel = #{contactTel,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerAddress != null">
+        danger_address = #{dangerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerCause != null">
+        danger_cause = #{dangerCause,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerDesc != null">
+        danger_desc = #{dangerDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="caseType != null">
+        case_type = #{caseType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventType != null">
+        event_type = #{eventType,jdbcType=VARCHAR},
+      </if>
+      <if test="eventProcessMode != null">
+        event_process_mode = #{eventProcessMode,jdbcType=VARCHAR},
+      </if>
+      <if test="eventAccidentLiability != null">
+        event_accident_liability = #{eventAccidentLiability,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDutyRatio != null">
+        event_duty_ratio = #{eventDutyRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="insuredRelation != null">
+        insured_relation = #{insuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="noFaultCompensate != null">
+        no_fault_compensate = #{noFaultCompensate,jdbcType=VARCHAR},
+      </if>
+      <if test="waterLevel != null">
+        water_level = #{waterLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fallVictimDriver != null">
+        fall_victim_driver = #{fallVictimDriver,jdbcType=VARCHAR},
+      </if>
+      <if test="fallVictimInsured != null">
+        fall_victim_insured = #{fallVictimInsured,jdbcType=VARCHAR},
+      </if>
+      <if test="subrogationFlag != null">
+        subrogation_flag = #{subrogationFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="isFirstScene != null">
+        is_first_scene = #{isFirstScene,jdbcType=TINYINT},
+      </if>
+      <if test="isPersonInjured != null">
+        is_person_injured = #{isPersonInjured,jdbcType=BIT},
+      </if>
+      <if test="claimType != null">
+        claim_type = #{claimType,jdbcType=VARCHAR},
+      </if>
+      <if test="subCertiType != null">
+        sub_certi_type = #{subCertiType,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheName != null">
+        catastrophe_name = #{catastropheName,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheType != null">
+        catastrophe_type = #{catastropheType,jdbcType=VARCHAR},
+      </if>
+      <if test="catastropheCode != null">
+        catastrophe_code = #{catastropheCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifierName != null">
+        verifier_name = #{verifierName,jdbcType=VARCHAR},
+      </if>
+      <if test="verifierCode != null">
+        verifier_code = #{verifierCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buckleDedReason != null">
+        buckle_ded_reason = #{buckleDedReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isMutualCollisionSelfCompensation != null">
+        is_mutual_collision_self_compensation = #{isMutualCollisionSelfCompensation,jdbcType=VARCHAR},
+      </if>
+      <if test="eventAddressType != null">
+        event_address_type = #{eventAddressType,jdbcType=VARCHAR},
+      </if>
+      <if test="driverReview != null">
+        driver_review = #{driverReview,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarInsurance != null">
+        is_car_insurance = #{isCarInsurance,jdbcType=VARCHAR},
+      </if>
+      <if test="isCarAnnual != null">
+        is_car_annual = #{isCarAnnual,jdbcType=VARCHAR},
+      </if>
+      <if test="loadingCondition != null">
+        loading_condition = #{loadingCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="checkDesc != null">
+        check_desc = #{checkDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="checkType != null">
+        check_type = #{checkType,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackResultContent != null">
+        feedback_result_content = #{feedbackResultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackResult != null">
+        feedback_result = #{feedbackResult,jdbcType=VARCHAR},
+      </if>
+      <if test="auditName != null">
+        audit_name = #{auditName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditCode != null">
+        audit_code = #{auditCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null">
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiptTime != null">
+        receipt_time = #{receiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitTime != null">
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dispatchTime != null">
+        dispatch_time = #{dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="riskStatus != null">
+        risk_status = #{riskStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="surveyStatus != null">
+        survey_status = #{surveyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operationBusiness != null">
+        operation_business = #{operationBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="ext != null">
+        ext = #{ext,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeRegistSurvey">
+    update ce_regist_survey
+    set regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      ce_task_no = #{ceTaskNo,jdbcType=VARCHAR},
+      check_start_time = #{checkStartTime,jdbcType=TIMESTAMP},
+      check_end_time = #{checkEndTime,jdbcType=TIMESTAMP},
+      check_addr = #{checkAddr,jdbcType=VARCHAR},
+      appoint_check_addr = #{appointCheckAddr,jdbcType=VARCHAR},
+      loss_task = #{lossTask,jdbcType=VARCHAR},
+      driver_name = #{driverName,jdbcType=VARCHAR},
+      is_appoint_driver = #{isAppointDriver,jdbcType=VARCHAR},
+      checker_name = #{checkerName,jdbcType=VARCHAR},
+      checker_code = #{checkerCode,jdbcType=VARCHAR},
+      checker_phone1 = #{checkerPhone1,jdbcType=VARCHAR},
+      checker_name2 = #{checkerName2,jdbcType=VARCHAR},
+      checker_code2 = #{checkerCode2,jdbcType=VARCHAR},
+      checker_phone2 = #{checkerPhone2,jdbcType=VARCHAR},
+      contact_person = #{contactPerson,jdbcType=VARCHAR},
+      contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      contact_tel = #{contactTel,jdbcType=VARCHAR},
+      danger_address = #{dangerAddress,jdbcType=VARCHAR},
+      danger_cause = #{dangerCause,jdbcType=VARCHAR},
+      danger_desc = #{dangerDesc,jdbcType=VARCHAR},
+      case_type = #{caseType,jdbcType=VARCHAR},
+      event_type = #{eventType,jdbcType=VARCHAR},
+      event_process_mode = #{eventProcessMode,jdbcType=VARCHAR},
+      event_accident_liability = #{eventAccidentLiability,jdbcType=VARCHAR},
+      event_duty_ratio = #{eventDutyRatio,jdbcType=DECIMAL},
+      insured_relation = #{insuredRelation,jdbcType=VARCHAR},
+      no_fault_compensate = #{noFaultCompensate,jdbcType=VARCHAR},
+      water_level = #{waterLevel,jdbcType=VARCHAR},
+      fall_victim_driver = #{fallVictimDriver,jdbcType=VARCHAR},
+      fall_victim_insured = #{fallVictimInsured,jdbcType=VARCHAR},
+      subrogation_flag = #{subrogationFlag,jdbcType=VARCHAR},
+      is_first_scene = #{isFirstScene,jdbcType=TINYINT},
+      is_person_injured = #{isPersonInjured,jdbcType=BIT},
+      claim_type = #{claimType,jdbcType=VARCHAR},
+      sub_certi_type = #{subCertiType,jdbcType=VARCHAR},
+      catastrophe_name = #{catastropheName,jdbcType=VARCHAR},
+      catastrophe_type = #{catastropheType,jdbcType=VARCHAR},
+      catastrophe_code = #{catastropheCode,jdbcType=VARCHAR},
+      verifier_name = #{verifierName,jdbcType=VARCHAR},
+      verifier_code = #{verifierCode,jdbcType=VARCHAR},
+      buckle_ded_reason = #{buckleDedReason,jdbcType=VARCHAR},
+      is_mutual_collision_self_compensation = #{isMutualCollisionSelfCompensation,jdbcType=VARCHAR},
+      event_address_type = #{eventAddressType,jdbcType=VARCHAR},
+      driver_review = #{driverReview,jdbcType=VARCHAR},
+      is_car_insurance = #{isCarInsurance,jdbcType=VARCHAR},
+      is_car_annual = #{isCarAnnual,jdbcType=VARCHAR},
+      loading_condition = #{loadingCondition,jdbcType=VARCHAR},
+      check_desc = #{checkDesc,jdbcType=VARCHAR},
+      check_type = #{checkType,jdbcType=VARCHAR},
+      feedback_result_content = #{feedbackResultContent,jdbcType=VARCHAR},
+      feedback_result = #{feedbackResult,jdbcType=VARCHAR},
+      audit_name = #{auditName,jdbcType=VARCHAR},
+      audit_code = #{auditCode,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      receipt_time = #{receiptTime,jdbcType=TIMESTAMP},
+      submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      dispatch_time = #{dispatchTime,jdbcType=TIMESTAMP},
+      risk_status = #{riskStatus,jdbcType=VARCHAR},
+      survey_status = #{surveyStatus,jdbcType=VARCHAR},
+      operation_business = #{operationBusiness,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=BIT},
+      ext = #{ext,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

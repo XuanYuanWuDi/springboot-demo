@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredDeathInfoMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredDeathInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="med_basic_info_id" jdbcType="BIGINT" property="medBasicInfoId" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="is_field_survey" jdbcType="TINYINT" property="isFieldSurvey" />
+    <result column="death_cause" jdbcType="TINYINT" property="deathCause" />
+    <result column="death_time" jdbcType="TIMESTAMP" property="deathTime" />
+    <result column="death_trauma_participat" jdbcType="DECIMAL" property="deathTraumaParticipat" />
+    <result column="compens_coe" jdbcType="VARCHAR" property="compensCoe" />
+    <result column="death_compensat_period" jdbcType="VARCHAR" property="deathCompensatPeriod" />
+    <result column="annual_employees_salary" jdbcType="DECIMAL" property="annualEmployeesSalary" />
+    <result column="handled_peop_num" jdbcType="INTEGER" property="handledPeopNum" />
+    <result column="handled_days" jdbcType="INTEGER" property="handledDays" />
+    <result column="handled_peop_income" jdbcType="DECIMAL" property="handledPeopIncome" />
+    <result column="whether_passed" jdbcType="INTEGER" property="whetherPassed" />
+    <result column="death_related_disease" jdbcType="VARCHAR" property="deathRelatedDisease" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, survey_wou_id, survey_id, med_basic_info_id, regist_id, claim_notification_no, 
+    compant_code, company_id, is_field_survey, death_cause, death_time, death_trauma_participat, 
+    compens_coe, death_compensat_period, annual_employees_salary, handled_peop_num, handled_days, 
+    handled_peop_income, whether_passed, death_related_disease, serial_num, create_time, 
+    update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredDeathInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_death_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_death_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_death_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredDeathInfoExample">
+    delete from injured_death_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredDeathInfo">
+    insert into injured_death_info (id, survey_wou_id, survey_id, 
+      med_basic_info_id, regist_id, claim_notification_no, 
+      compant_code, company_id, is_field_survey, 
+      death_cause, death_time, death_trauma_participat, 
+      compens_coe, death_compensat_period, annual_employees_salary, 
+      handled_peop_num, handled_days, handled_peop_income, 
+      whether_passed, death_related_disease, serial_num, 
+      create_time, update_time, is_deleted, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, 
+      #{medBasicInfoId,jdbcType=BIGINT}, #{registId,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, 
+      #{compantCode,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, #{isFieldSurvey,jdbcType=TINYINT}, 
+      #{deathCause,jdbcType=TINYINT}, #{deathTime,jdbcType=TIMESTAMP}, #{deathTraumaParticipat,jdbcType=DECIMAL}, 
+      #{compensCoe,jdbcType=VARCHAR}, #{deathCompensatPeriod,jdbcType=VARCHAR}, #{annualEmployeesSalary,jdbcType=DECIMAL}, 
+      #{handledPeopNum,jdbcType=INTEGER}, #{handledDays,jdbcType=INTEGER}, #{handledPeopIncome,jdbcType=DECIMAL}, 
+      #{whetherPassed,jdbcType=INTEGER}, #{deathRelatedDisease,jdbcType=VARCHAR}, #{serialNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredDeathInfo">
+    insert into injured_death_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey,
+      </if>
+      <if test="deathCause != null">
+        death_cause,
+      </if>
+      <if test="deathTime != null">
+        death_time,
+      </if>
+      <if test="deathTraumaParticipat != null">
+        death_trauma_participat,
+      </if>
+      <if test="compensCoe != null">
+        compens_coe,
+      </if>
+      <if test="deathCompensatPeriod != null">
+        death_compensat_period,
+      </if>
+      <if test="annualEmployeesSalary != null">
+        annual_employees_salary,
+      </if>
+      <if test="handledPeopNum != null">
+        handled_peop_num,
+      </if>
+      <if test="handledDays != null">
+        handled_days,
+      </if>
+      <if test="handledPeopIncome != null">
+        handled_peop_income,
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed,
+      </if>
+      <if test="deathRelatedDisease != null">
+        death_related_disease,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="isFieldSurvey != null">
+        #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="deathCause != null">
+        #{deathCause,jdbcType=TINYINT},
+      </if>
+      <if test="deathTime != null">
+        #{deathTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deathTraumaParticipat != null">
+        #{deathTraumaParticipat,jdbcType=DECIMAL},
+      </if>
+      <if test="compensCoe != null">
+        #{compensCoe,jdbcType=VARCHAR},
+      </if>
+      <if test="deathCompensatPeriod != null">
+        #{deathCompensatPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="annualEmployeesSalary != null">
+        #{annualEmployeesSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="handledPeopNum != null">
+        #{handledPeopNum,jdbcType=INTEGER},
+      </if>
+      <if test="handledDays != null">
+        #{handledDays,jdbcType=INTEGER},
+      </if>
+      <if test="handledPeopIncome != null">
+        #{handledPeopIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="whetherPassed != null">
+        #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="deathRelatedDisease != null">
+        #{deathRelatedDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredDeathInfoExample" resultType="java.lang.Long">
+    select count(*) from injured_death_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_death_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.medBasicInfoId != null">
+        med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isFieldSurvey != null">
+        is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="record.deathCause != null">
+        death_cause = #{record.deathCause,jdbcType=TINYINT},
+      </if>
+      <if test="record.deathTime != null">
+        death_time = #{record.deathTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deathTraumaParticipat != null">
+        death_trauma_participat = #{record.deathTraumaParticipat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.compensCoe != null">
+        compens_coe = #{record.compensCoe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deathCompensatPeriod != null">
+        death_compensat_period = #{record.deathCompensatPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.annualEmployeesSalary != null">
+        annual_employees_salary = #{record.annualEmployeesSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handledPeopNum != null">
+        handled_peop_num = #{record.handledPeopNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.handledDays != null">
+        handled_days = #{record.handledDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.handledPeopIncome != null">
+        handled_peop_income = #{record.handledPeopIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="record.whetherPassed != null">
+        whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="record.deathRelatedDisease != null">
+        death_related_disease = #{record.deathRelatedDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_death_info
+    set id = #{record.id,jdbcType=BIGINT},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{record.medBasicInfoId,jdbcType=BIGINT},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      is_field_survey = #{record.isFieldSurvey,jdbcType=TINYINT},
+      death_cause = #{record.deathCause,jdbcType=TINYINT},
+      death_time = #{record.deathTime,jdbcType=TIMESTAMP},
+      death_trauma_participat = #{record.deathTraumaParticipat,jdbcType=DECIMAL},
+      compens_coe = #{record.compensCoe,jdbcType=VARCHAR},
+      death_compensat_period = #{record.deathCompensatPeriod,jdbcType=VARCHAR},
+      annual_employees_salary = #{record.annualEmployeesSalary,jdbcType=DECIMAL},
+      handled_peop_num = #{record.handledPeopNum,jdbcType=INTEGER},
+      handled_days = #{record.handledDays,jdbcType=INTEGER},
+      handled_peop_income = #{record.handledPeopIncome,jdbcType=DECIMAL},
+      whether_passed = #{record.whetherPassed,jdbcType=INTEGER},
+      death_related_disease = #{record.deathRelatedDisease,jdbcType=VARCHAR},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredDeathInfo">
+    update injured_death_info
+    <set>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="medBasicInfoId != null">
+        med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="isFieldSurvey != null">
+        is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      </if>
+      <if test="deathCause != null">
+        death_cause = #{deathCause,jdbcType=TINYINT},
+      </if>
+      <if test="deathTime != null">
+        death_time = #{deathTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deathTraumaParticipat != null">
+        death_trauma_participat = #{deathTraumaParticipat,jdbcType=DECIMAL},
+      </if>
+      <if test="compensCoe != null">
+        compens_coe = #{compensCoe,jdbcType=VARCHAR},
+      </if>
+      <if test="deathCompensatPeriod != null">
+        death_compensat_period = #{deathCompensatPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="annualEmployeesSalary != null">
+        annual_employees_salary = #{annualEmployeesSalary,jdbcType=DECIMAL},
+      </if>
+      <if test="handledPeopNum != null">
+        handled_peop_num = #{handledPeopNum,jdbcType=INTEGER},
+      </if>
+      <if test="handledDays != null">
+        handled_days = #{handledDays,jdbcType=INTEGER},
+      </if>
+      <if test="handledPeopIncome != null">
+        handled_peop_income = #{handledPeopIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      </if>
+      <if test="deathRelatedDisease != null">
+        death_related_disease = #{deathRelatedDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredDeathInfo">
+    update injured_death_info
+    set survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      med_basic_info_id = #{medBasicInfoId,jdbcType=BIGINT},
+      regist_id = #{registId,jdbcType=BIGINT},
+      claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      is_field_survey = #{isFieldSurvey,jdbcType=TINYINT},
+      death_cause = #{deathCause,jdbcType=TINYINT},
+      death_time = #{deathTime,jdbcType=TIMESTAMP},
+      death_trauma_participat = #{deathTraumaParticipat,jdbcType=DECIMAL},
+      compens_coe = #{compensCoe,jdbcType=VARCHAR},
+      death_compensat_period = #{deathCompensatPeriod,jdbcType=VARCHAR},
+      annual_employees_salary = #{annualEmployeesSalary,jdbcType=DECIMAL},
+      handled_peop_num = #{handledPeopNum,jdbcType=INTEGER},
+      handled_days = #{handledDays,jdbcType=INTEGER},
+      handled_peop_income = #{handledPeopIncome,jdbcType=DECIMAL},
+      whether_passed = #{whetherPassed,jdbcType=INTEGER},
+      death_related_disease = #{deathRelatedDisease,jdbcType=VARCHAR},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

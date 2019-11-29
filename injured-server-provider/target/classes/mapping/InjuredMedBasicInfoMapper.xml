@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredMedBasicInfoMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredMedBasicInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="claim_notification_no" jdbcType="VARCHAR" property="claimNotificationNo" />
+    <result column="regist_id" jdbcType="BIGINT" property="registId" />
+    <result column="survey_wou_id" jdbcType="BIGINT" property="surveyWouId" />
+    <result column="survey_id" jdbcType="BIGINT" property="surveyId" />
+    <result column="serial_num" jdbcType="INTEGER" property="serialNum" />
+    <result column="company_id" jdbcType="BIGINT" property="companyId" />
+    <result column="compant_code" jdbcType="VARCHAR" property="compantCode" />
+    <result column="wou_name" jdbcType="VARCHAR" property="wouName" />
+    <result column="wou_sex" jdbcType="TINYINT" property="wouSex" />
+    <result column="wou_age" jdbcType="VARCHAR" property="wouAge" />
+    <result column="wou_type" jdbcType="TINYINT" property="wouType" />
+    <result column="wou_injury" jdbcType="TINYINT" property="wouInjury" />
+    <result column="id_card_type" jdbcType="TINYINT" property="idCardType" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="bank_card_number" jdbcType="VARCHAR" property="bankCardNumber" />
+    <result column="contac_number" jdbcType="VARCHAR" property="contacNumber" />
+    <result column="claim_year" jdbcType="VARCHAR" property="claimYear" />
+    <result column="claim_province" jdbcType="VARCHAR" property="claimProvince" />
+    <result column="claim_city" jdbcType="VARCHAR" property="claimCity" />
+    <result column="is_public_prosecution" jdbcType="TINYINT" property="isPublicProsecution" />
+    <result column="agent_name" jdbcType="VARCHAR" property="agentName" />
+    <result column="agent_phone" jdbcType="VARCHAR" property="agentPhone" />
+    <result column="accident_type" jdbcType="TINYINT" property="accidentType" />
+    <result column="accident_liability" jdbcType="TINYINT" property="accidentLiability" />
+    <result column="liability_ratio" jdbcType="VARCHAR" property="liabilityRatio" />
+    <result column="reside_nature" jdbcType="TINYINT" property="resideNature" />
+    <result column="reside_province" jdbcType="VARCHAR" property="resideProvince" />
+    <result column="reside_city" jdbcType="VARCHAR" property="resideCity" />
+    <result column="reside_district" jdbcType="VARCHAR" property="resideDistrict" />
+    <result column="reside_town" jdbcType="VARCHAR" property="resideTown" />
+    <result column="reside_address" jdbcType="VARCHAR" property="resideAddress" />
+    <result column="whether_passed" jdbcType="TINYINT" property="whetherPassed" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, claim_notification_no, regist_id, survey_wou_id, survey_id, serial_num, company_id, 
+    compant_code, wou_name, wou_sex, wou_age, wou_type, wou_injury, id_card_type, id_card_no, 
+    bank_card_number, contac_number, claim_year, claim_province, claim_city, is_public_prosecution, 
+    agent_name, agent_phone, accident_type, accident_liability, liability_ratio, reside_nature, 
+    reside_province, reside_city, reside_district, reside_town, reside_address, whether_passed, 
+    create_time, update_time, is_deleted, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredMedBasicInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_med_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_med_basic_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_med_basic_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredMedBasicInfoExample">
+    delete from injured_med_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredMedBasicInfo">
+    insert into injured_med_basic_info (id, claim_notification_no, regist_id, 
+      survey_wou_id, survey_id, serial_num, 
+      company_id, compant_code, wou_name, 
+      wou_sex, wou_age, wou_type, 
+      wou_injury, id_card_type, id_card_no, 
+      bank_card_number, contac_number, claim_year, 
+      claim_province, claim_city, is_public_prosecution, 
+      agent_name, agent_phone, accident_type, 
+      accident_liability, liability_ratio, reside_nature, 
+      reside_province, reside_city, reside_district, 
+      reside_town, reside_address, whether_passed, 
+      create_time, update_time, is_deleted, 
+      remark)
+    values (#{id,jdbcType=BIGINT}, #{claimNotificationNo,jdbcType=VARCHAR}, #{registId,jdbcType=BIGINT}, 
+      #{surveyWouId,jdbcType=BIGINT}, #{surveyId,jdbcType=BIGINT}, #{serialNum,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{compantCode,jdbcType=VARCHAR}, #{wouName,jdbcType=VARCHAR}, 
+      #{wouSex,jdbcType=TINYINT}, #{wouAge,jdbcType=VARCHAR}, #{wouType,jdbcType=TINYINT}, 
+      #{wouInjury,jdbcType=TINYINT}, #{idCardType,jdbcType=TINYINT}, #{idCardNo,jdbcType=VARCHAR}, 
+      #{bankCardNumber,jdbcType=VARCHAR}, #{contacNumber,jdbcType=VARCHAR}, #{claimYear,jdbcType=VARCHAR}, 
+      #{claimProvince,jdbcType=VARCHAR}, #{claimCity,jdbcType=VARCHAR}, #{isPublicProsecution,jdbcType=TINYINT}, 
+      #{agentName,jdbcType=VARCHAR}, #{agentPhone,jdbcType=VARCHAR}, #{accidentType,jdbcType=TINYINT}, 
+      #{accidentLiability,jdbcType=TINYINT}, #{liabilityRatio,jdbcType=VARCHAR}, #{resideNature,jdbcType=TINYINT}, 
+      #{resideProvince,jdbcType=VARCHAR}, #{resideCity,jdbcType=VARCHAR}, #{resideDistrict,jdbcType=VARCHAR}, 
+      #{resideTown,jdbcType=VARCHAR}, #{resideAddress,jdbcType=VARCHAR}, #{whetherPassed,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredMedBasicInfo">
+    insert into injured_med_basic_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="claimNotificationNo != null">
+        claim_notification_no,
+      </if>
+      <if test="registId != null">
+        regist_id,
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id,
+      </if>
+      <if test="surveyId != null">
+        survey_id,
+      </if>
+      <if test="serialNum != null">
+        serial_num,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="compantCode != null">
+        compant_code,
+      </if>
+      <if test="wouName != null">
+        wou_name,
+      </if>
+      <if test="wouSex != null">
+        wou_sex,
+      </if>
+      <if test="wouAge != null">
+        wou_age,
+      </if>
+      <if test="wouType != null">
+        wou_type,
+      </if>
+      <if test="wouInjury != null">
+        wou_injury,
+      </if>
+      <if test="idCardType != null">
+        id_card_type,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="bankCardNumber != null">
+        bank_card_number,
+      </if>
+      <if test="contacNumber != null">
+        contac_number,
+      </if>
+      <if test="claimYear != null">
+        claim_year,
+      </if>
+      <if test="claimProvince != null">
+        claim_province,
+      </if>
+      <if test="claimCity != null">
+        claim_city,
+      </if>
+      <if test="isPublicProsecution != null">
+        is_public_prosecution,
+      </if>
+      <if test="agentName != null">
+        agent_name,
+      </if>
+      <if test="agentPhone != null">
+        agent_phone,
+      </if>
+      <if test="accidentType != null">
+        accident_type,
+      </if>
+      <if test="accidentLiability != null">
+        accident_liability,
+      </if>
+      <if test="liabilityRatio != null">
+        liability_ratio,
+      </if>
+      <if test="resideNature != null">
+        reside_nature,
+      </if>
+      <if test="resideProvince != null">
+        reside_province,
+      </if>
+      <if test="resideCity != null">
+        reside_city,
+      </if>
+      <if test="resideDistrict != null">
+        reside_district,
+      </if>
+      <if test="resideTown != null">
+        reside_town,
+      </if>
+      <if test="resideAddress != null">
+        reside_address,
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="claimNotificationNo != null">
+        #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNum != null">
+        #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wouName != null">
+        #{wouName,jdbcType=VARCHAR},
+      </if>
+      <if test="wouSex != null">
+        #{wouSex,jdbcType=TINYINT},
+      </if>
+      <if test="wouAge != null">
+        #{wouAge,jdbcType=VARCHAR},
+      </if>
+      <if test="wouType != null">
+        #{wouType,jdbcType=TINYINT},
+      </if>
+      <if test="wouInjury != null">
+        #{wouInjury,jdbcType=TINYINT},
+      </if>
+      <if test="idCardType != null">
+        #{idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNumber != null">
+        #{bankCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contacNumber != null">
+        #{contacNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="claimYear != null">
+        #{claimYear,jdbcType=VARCHAR},
+      </if>
+      <if test="claimProvince != null">
+        #{claimProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="claimCity != null">
+        #{claimCity,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublicProsecution != null">
+        #{isPublicProsecution,jdbcType=TINYINT},
+      </if>
+      <if test="agentName != null">
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPhone != null">
+        #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentType != null">
+        #{accidentType,jdbcType=TINYINT},
+      </if>
+      <if test="accidentLiability != null">
+        #{accidentLiability,jdbcType=TINYINT},
+      </if>
+      <if test="liabilityRatio != null">
+        #{liabilityRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="resideNature != null">
+        #{resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="resideProvince != null">
+        #{resideProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="resideCity != null">
+        #{resideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="resideDistrict != null">
+        #{resideDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="resideTown != null">
+        #{resideTown,jdbcType=VARCHAR},
+      </if>
+      <if test="resideAddress != null">
+        #{resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherPassed != null">
+        #{whetherPassed,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredMedBasicInfoExample" resultType="java.lang.Long">
+    select count(*) from injured_med_basic_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_med_basic_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.claimNotificationNo != null">
+        claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registId != null">
+        regist_id = #{record.registId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyWouId != null">
+        survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="record.surveyId != null">
+        survey_id = #{record.surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serialNum != null">
+        serial_num = #{record.serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null">
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compantCode != null">
+        compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wouName != null">
+        wou_name = #{record.wouName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wouSex != null">
+        wou_sex = #{record.wouSex,jdbcType=TINYINT},
+      </if>
+      <if test="record.wouAge != null">
+        wou_age = #{record.wouAge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wouType != null">
+        wou_type = #{record.wouType,jdbcType=TINYINT},
+      </if>
+      <if test="record.wouInjury != null">
+        wou_injury = #{record.wouInjury,jdbcType=TINYINT},
+      </if>
+      <if test="record.idCardType != null">
+        id_card_type = #{record.idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="record.idCardNo != null">
+        id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCardNumber != null">
+        bank_card_number = #{record.bankCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacNumber != null">
+        contac_number = #{record.contacNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claimYear != null">
+        claim_year = #{record.claimYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claimProvince != null">
+        claim_province = #{record.claimProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.claimCity != null">
+        claim_city = #{record.claimCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPublicProsecution != null">
+        is_public_prosecution = #{record.isPublicProsecution,jdbcType=TINYINT},
+      </if>
+      <if test="record.agentName != null">
+        agent_name = #{record.agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentPhone != null">
+        agent_phone = #{record.agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accidentType != null">
+        accident_type = #{record.accidentType,jdbcType=TINYINT},
+      </if>
+      <if test="record.accidentLiability != null">
+        accident_liability = #{record.accidentLiability,jdbcType=TINYINT},
+      </if>
+      <if test="record.liabilityRatio != null">
+        liability_ratio = #{record.liabilityRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resideNature != null">
+        reside_nature = #{record.resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="record.resideProvince != null">
+        reside_province = #{record.resideProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resideCity != null">
+        reside_city = #{record.resideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resideDistrict != null">
+        reside_district = #{record.resideDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resideTown != null">
+        reside_town = #{record.resideTown,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resideAddress != null">
+        reside_address = #{record.resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.whetherPassed != null">
+        whether_passed = #{record.whetherPassed,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_med_basic_info
+    set id = #{record.id,jdbcType=BIGINT},
+      claim_notification_no = #{record.claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{record.registId,jdbcType=BIGINT},
+      survey_wou_id = #{record.surveyWouId,jdbcType=BIGINT},
+      survey_id = #{record.surveyId,jdbcType=BIGINT},
+      serial_num = #{record.serialNum,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      compant_code = #{record.compantCode,jdbcType=VARCHAR},
+      wou_name = #{record.wouName,jdbcType=VARCHAR},
+      wou_sex = #{record.wouSex,jdbcType=TINYINT},
+      wou_age = #{record.wouAge,jdbcType=VARCHAR},
+      wou_type = #{record.wouType,jdbcType=TINYINT},
+      wou_injury = #{record.wouInjury,jdbcType=TINYINT},
+      id_card_type = #{record.idCardType,jdbcType=TINYINT},
+      id_card_no = #{record.idCardNo,jdbcType=VARCHAR},
+      bank_card_number = #{record.bankCardNumber,jdbcType=VARCHAR},
+      contac_number = #{record.contacNumber,jdbcType=VARCHAR},
+      claim_year = #{record.claimYear,jdbcType=VARCHAR},
+      claim_province = #{record.claimProvince,jdbcType=VARCHAR},
+      claim_city = #{record.claimCity,jdbcType=VARCHAR},
+      is_public_prosecution = #{record.isPublicProsecution,jdbcType=TINYINT},
+      agent_name = #{record.agentName,jdbcType=VARCHAR},
+      agent_phone = #{record.agentPhone,jdbcType=VARCHAR},
+      accident_type = #{record.accidentType,jdbcType=TINYINT},
+      accident_liability = #{record.accidentLiability,jdbcType=TINYINT},
+      liability_ratio = #{record.liabilityRatio,jdbcType=VARCHAR},
+      reside_nature = #{record.resideNature,jdbcType=TINYINT},
+      reside_province = #{record.resideProvince,jdbcType=VARCHAR},
+      reside_city = #{record.resideCity,jdbcType=VARCHAR},
+      reside_district = #{record.resideDistrict,jdbcType=VARCHAR},
+      reside_town = #{record.resideTown,jdbcType=VARCHAR},
+      reside_address = #{record.resideAddress,jdbcType=VARCHAR},
+      whether_passed = #{record.whetherPassed,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredMedBasicInfo">
+    update injured_med_basic_info
+    <set>
+      <if test="claimNotificationNo != null">
+        claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registId != null">
+        regist_id = #{registId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyWouId != null">
+        survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      </if>
+      <if test="surveyId != null">
+        survey_id = #{surveyId,jdbcType=BIGINT},
+      </if>
+      <if test="serialNum != null">
+        serial_num = #{serialNum,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="compantCode != null">
+        compant_code = #{compantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wouName != null">
+        wou_name = #{wouName,jdbcType=VARCHAR},
+      </if>
+      <if test="wouSex != null">
+        wou_sex = #{wouSex,jdbcType=TINYINT},
+      </if>
+      <if test="wouAge != null">
+        wou_age = #{wouAge,jdbcType=VARCHAR},
+      </if>
+      <if test="wouType != null">
+        wou_type = #{wouType,jdbcType=TINYINT},
+      </if>
+      <if test="wouInjury != null">
+        wou_injury = #{wouInjury,jdbcType=TINYINT},
+      </if>
+      <if test="idCardType != null">
+        id_card_type = #{idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardNumber != null">
+        bank_card_number = #{bankCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contacNumber != null">
+        contac_number = #{contacNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="claimYear != null">
+        claim_year = #{claimYear,jdbcType=VARCHAR},
+      </if>
+      <if test="claimProvince != null">
+        claim_province = #{claimProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="claimCity != null">
+        claim_city = #{claimCity,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublicProsecution != null">
+        is_public_prosecution = #{isPublicProsecution,jdbcType=TINYINT},
+      </if>
+      <if test="agentName != null">
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPhone != null">
+        agent_phone = #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="accidentType != null">
+        accident_type = #{accidentType,jdbcType=TINYINT},
+      </if>
+      <if test="accidentLiability != null">
+        accident_liability = #{accidentLiability,jdbcType=TINYINT},
+      </if>
+      <if test="liabilityRatio != null">
+        liability_ratio = #{liabilityRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="resideNature != null">
+        reside_nature = #{resideNature,jdbcType=TINYINT},
+      </if>
+      <if test="resideProvince != null">
+        reside_province = #{resideProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="resideCity != null">
+        reside_city = #{resideCity,jdbcType=VARCHAR},
+      </if>
+      <if test="resideDistrict != null">
+        reside_district = #{resideDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="resideTown != null">
+        reside_town = #{resideTown,jdbcType=VARCHAR},
+      </if>
+      <if test="resideAddress != null">
+        reside_address = #{resideAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherPassed != null">
+        whether_passed = #{whetherPassed,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredMedBasicInfo">
+    update injured_med_basic_info
+    set claim_notification_no = #{claimNotificationNo,jdbcType=VARCHAR},
+      regist_id = #{registId,jdbcType=BIGINT},
+      survey_wou_id = #{surveyWouId,jdbcType=BIGINT},
+      survey_id = #{surveyId,jdbcType=BIGINT},
+      serial_num = #{serialNum,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=BIGINT},
+      compant_code = #{compantCode,jdbcType=VARCHAR},
+      wou_name = #{wouName,jdbcType=VARCHAR},
+      wou_sex = #{wouSex,jdbcType=TINYINT},
+      wou_age = #{wouAge,jdbcType=VARCHAR},
+      wou_type = #{wouType,jdbcType=TINYINT},
+      wou_injury = #{wouInjury,jdbcType=TINYINT},
+      id_card_type = #{idCardType,jdbcType=TINYINT},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      bank_card_number = #{bankCardNumber,jdbcType=VARCHAR},
+      contac_number = #{contacNumber,jdbcType=VARCHAR},
+      claim_year = #{claimYear,jdbcType=VARCHAR},
+      claim_province = #{claimProvince,jdbcType=VARCHAR},
+      claim_city = #{claimCity,jdbcType=VARCHAR},
+      is_public_prosecution = #{isPublicProsecution,jdbcType=TINYINT},
+      agent_name = #{agentName,jdbcType=VARCHAR},
+      agent_phone = #{agentPhone,jdbcType=VARCHAR},
+      accident_type = #{accidentType,jdbcType=TINYINT},
+      accident_liability = #{accidentLiability,jdbcType=TINYINT},
+      liability_ratio = #{liabilityRatio,jdbcType=VARCHAR},
+      reside_nature = #{resideNature,jdbcType=TINYINT},
+      reside_province = #{resideProvince,jdbcType=VARCHAR},
+      reside_city = #{resideCity,jdbcType=VARCHAR},
+      reside_district = #{resideDistrict,jdbcType=VARCHAR},
+      reside_town = #{resideTown,jdbcType=VARCHAR},
+      reside_address = #{resideAddress,jdbcType=VARCHAR},
+      whether_passed = #{whetherPassed,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

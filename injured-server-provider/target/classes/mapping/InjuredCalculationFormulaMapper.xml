@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.InjuredCalculationFormulaMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.InjuredCalculationFormula">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="calculation_formula_name" jdbcType="VARCHAR" property="calculationFormulaName" />
+    <result column="calculation_formula_comment" jdbcType="VARCHAR" property="calculationFormulaComment" />
+    <result column="calculation_formula" jdbcType="VARCHAR" property="calculationFormula" />
+    <result column="calculation_formula_group_code" jdbcType="VARCHAR" property="calculationFormulaGroupCode" />
+    <result column="calculation_formula_group_type" jdbcType="INTEGER" property="calculationFormulaGroupType" />
+    <result column="calculation_formula_final_node" jdbcType="BIT" property="calculationFormulaFinalNode" />
+    <result column="calculation_formula_group_sort" jdbcType="INTEGER" property="calculationFormulaGroupSort" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, calculation_formula_name, calculation_formula_comment, calculation_formula, calculation_formula_group_code, 
+    calculation_formula_group_type, calculation_formula_final_node, calculation_formula_group_sort, 
+    remark, create_time, update_time, is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.InjuredCalculationFormulaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from injured_calculation_formula
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from injured_calculation_formula
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from injured_calculation_formula
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.InjuredCalculationFormulaExample">
+    delete from injured_calculation_formula
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.InjuredCalculationFormula">
+    insert into injured_calculation_formula (id, calculation_formula_name, calculation_formula_comment, 
+      calculation_formula, calculation_formula_group_code, 
+      calculation_formula_group_type, calculation_formula_final_node, 
+      calculation_formula_group_sort, remark, create_time, 
+      update_time, is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{calculationFormulaName,jdbcType=VARCHAR}, #{calculationFormulaComment,jdbcType=VARCHAR}, 
+      #{calculationFormula,jdbcType=VARCHAR}, #{calculationFormulaGroupCode,jdbcType=VARCHAR}, 
+      #{calculationFormulaGroupType,jdbcType=INTEGER}, #{calculationFormulaFinalNode,jdbcType=BIT}, 
+      #{calculationFormulaGroupSort,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.InjuredCalculationFormula">
+    insert into injured_calculation_formula
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="calculationFormulaName != null">
+        calculation_formula_name,
+      </if>
+      <if test="calculationFormulaComment != null">
+        calculation_formula_comment,
+      </if>
+      <if test="calculationFormula != null">
+        calculation_formula,
+      </if>
+      <if test="calculationFormulaGroupCode != null">
+        calculation_formula_group_code,
+      </if>
+      <if test="calculationFormulaGroupType != null">
+        calculation_formula_group_type,
+      </if>
+      <if test="calculationFormulaFinalNode != null">
+        calculation_formula_final_node,
+      </if>
+      <if test="calculationFormulaGroupSort != null">
+        calculation_formula_group_sort,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="calculationFormulaName != null">
+        #{calculationFormulaName,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaComment != null">
+        #{calculationFormulaComment,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormula != null">
+        #{calculationFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaGroupCode != null">
+        #{calculationFormulaGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaGroupType != null">
+        #{calculationFormulaGroupType,jdbcType=INTEGER},
+      </if>
+      <if test="calculationFormulaFinalNode != null">
+        #{calculationFormulaFinalNode,jdbcType=BIT},
+      </if>
+      <if test="calculationFormulaGroupSort != null">
+        #{calculationFormulaGroupSort,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.InjuredCalculationFormulaExample" resultType="java.lang.Long">
+    select count(*) from injured_calculation_formula
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update injured_calculation_formula
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.calculationFormulaName != null">
+        calculation_formula_name = #{record.calculationFormulaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calculationFormulaComment != null">
+        calculation_formula_comment = #{record.calculationFormulaComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calculationFormula != null">
+        calculation_formula = #{record.calculationFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calculationFormulaGroupCode != null">
+        calculation_formula_group_code = #{record.calculationFormulaGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calculationFormulaGroupType != null">
+        calculation_formula_group_type = #{record.calculationFormulaGroupType,jdbcType=INTEGER},
+      </if>
+      <if test="record.calculationFormulaFinalNode != null">
+        calculation_formula_final_node = #{record.calculationFormulaFinalNode,jdbcType=BIT},
+      </if>
+      <if test="record.calculationFormulaGroupSort != null">
+        calculation_formula_group_sort = #{record.calculationFormulaGroupSort,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update injured_calculation_formula
+    set id = #{record.id,jdbcType=BIGINT},
+      calculation_formula_name = #{record.calculationFormulaName,jdbcType=VARCHAR},
+      calculation_formula_comment = #{record.calculationFormulaComment,jdbcType=VARCHAR},
+      calculation_formula = #{record.calculationFormula,jdbcType=VARCHAR},
+      calculation_formula_group_code = #{record.calculationFormulaGroupCode,jdbcType=VARCHAR},
+      calculation_formula_group_type = #{record.calculationFormulaGroupType,jdbcType=INTEGER},
+      calculation_formula_final_node = #{record.calculationFormulaFinalNode,jdbcType=BIT},
+      calculation_formula_group_sort = #{record.calculationFormulaGroupSort,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.InjuredCalculationFormula">
+    update injured_calculation_formula
+    <set>
+      <if test="calculationFormulaName != null">
+        calculation_formula_name = #{calculationFormulaName,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaComment != null">
+        calculation_formula_comment = #{calculationFormulaComment,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormula != null">
+        calculation_formula = #{calculationFormula,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaGroupCode != null">
+        calculation_formula_group_code = #{calculationFormulaGroupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="calculationFormulaGroupType != null">
+        calculation_formula_group_type = #{calculationFormulaGroupType,jdbcType=INTEGER},
+      </if>
+      <if test="calculationFormulaFinalNode != null">
+        calculation_formula_final_node = #{calculationFormulaFinalNode,jdbcType=BIT},
+      </if>
+      <if test="calculationFormulaGroupSort != null">
+        calculation_formula_group_sort = #{calculationFormulaGroupSort,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.InjuredCalculationFormula">
+    update injured_calculation_formula
+    set calculation_formula_name = #{calculationFormulaName,jdbcType=VARCHAR},
+      calculation_formula_comment = #{calculationFormulaComment,jdbcType=VARCHAR},
+      calculation_formula = #{calculationFormula,jdbcType=VARCHAR},
+      calculation_formula_group_code = #{calculationFormulaGroupCode,jdbcType=VARCHAR},
+      calculation_formula_group_type = #{calculationFormulaGroupType,jdbcType=INTEGER},
+      calculation_formula_final_node = #{calculationFormulaFinalNode,jdbcType=BIT},
+      calculation_formula_group_sort = #{calculationFormulaGroupSort,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

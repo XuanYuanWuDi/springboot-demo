@@ -1,0 +1,38 @@
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为80
+  port: 80
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+ 
+# 日志配置
+logging:
+  level:
+    com.injured: debug
+    org.springframework: warn
+
+# PageHelper分页插件
+pagehelper: 
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+qiniu:
+  access:
+    key: gT0fI6w1rcNUh8nTOSnWEb8mmjvOC0s4hTvRyPgV
+  secre:
+    key: -u7O1y4uIEiuzhNmMiI8MpjwlsdLsTu2_jH7xN42
+  domain:
+    name: http://file.controlexpertcn.com
+  bucket:
+    name: test

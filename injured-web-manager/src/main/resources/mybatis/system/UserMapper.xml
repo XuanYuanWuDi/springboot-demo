@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.project.system.user.mapper.UserMapper">
+
+	<resultMap type="User" id="UserResult">
+		<id     property="userId"       column="user_id"      />
+		<result property="deptId"       column="dept_id"      />
+		<result property="loginName"    column="login_name"   />
+		<result property="userName"     column="user_name"    />
+		<result property="userType"     column="user_type"    />
+		<result property="phonenumber"  column="phonenumber"  />
+		<result property="avatar"       column="avatar"       />
+		<result property="password"     column="password"     />
+		<result property="salt"         column="salt"         />
+		<result property="status"       column="status"       />
+		<result property="delFlag"      column="del_flag"     />
+		<result property="loginIp"      column="login_ip"     />
+		<result property="loginDate"    column="login_date"   />
+		<result property="createBy"     column="create_by"    />
+		<result property="createTime"   column="create_time"  />
+		<result property="updateBy"     column="update_by"    />
+		<result property="updateTime"   column="update_time"  />
+		<result property="remark"       column="remark"       />
+		<result property="powers"       column="powers"       />
+		<result property="isInitialPassword"       column="is_initial_password"       />
+		<result property="userNo"    	column="user_no"   />
+		<result property="companyId"    column="company_id"   />
+		<result property="agencyId"    	column="agency_id"   />
+		<result property="identifyNumber"    column="identify_number"   />
+		<result property="userLock"    column="user_lock"   />
+		<result property="isMoveIn"    column="is_move_in"   />
+		<association property="dept"    column="dept_id" javaType="Dept" resultMap="deptResult" />
+		<collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
+	</resultMap>
+	
+	<resultMap id="deptResult" type="Dept">
+		<id     property="deptId"   column="dept_id"     />
+		<result property="parentId" column="parent_id"   />
+		<result property="deptName" column="dept_name"   />
+		<result property="orderNum" column="order_num"   />
+		<result property="leader"   column="leader"   />
+		<result property="status"   column="dept_status" />
+	</resultMap>
+	
+	<resultMap id="RoleResult" type="Role">
+		<id     property="roleId"       column="role_id"        />
+		<result property="roleName"     column="role_name"      />
+		<result property="roleKey"      column="role_key"       />
+		<result property="roleSort"     column="role_sort"      />
+		<result property="dataScope"     column="data_scope"    />
+		<result property="status"       column="role_status"    />
+	</resultMap>
+	
+	<sql id="selectUserVo">
+        select  u.user_id, u.dept_id, u.login_name, u.user_name, u.phonenumber, u.avatar, u.password, u.salt, u.status, u.del_flag, u.login_ip,
+        		 u.login_date, u.create_time, u.remark,u.company_id,
+       		    r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status,u.powers,u.company_id,u.agency_id,u.user_no,
+       		    u.user_lock,u.is_move_in
+		from sys_user u
+			 left join sys_user_role ur on u.user_id = ur.user_id
+			 left join sys_role r on r.role_id = ur.role_id
+    </sql>
+	
+	<select id="selectUserList" parameterType="com.injured.project.system.user.domain.UserVo" resultMap="UserResult">
+		select u.user_id, u.user_no, u.user_name, u.identify_number,u.phonenumber, u.user_lock,u.is_move_in,
+			u.agency_id,u.status
+		from sys_user u
+		where u.del_flag = '0' and u.company_id = #{companyId}
+		<if test="userNo != null and userNo != ''">
+			AND u.user_no LIKE CONCAT('%',#{userNo},'%')
+		</if>
+		<if test="fuzzy == 1">
+			<if test="userName != null and userName != ''">
+				AND u.user_name like concat('%', #{userName}, '%')
+			</if>
+		</if>
+		<if test="fuzzy != 1">
+			<if test="userName != null and userName != ''">
+				AND u.user_name = #{userName}
+			</if>
+		</if>
+		<if test="identifyNumber != null and identifyNumber != ''">
+			AND u.identify_number LIKE CONCAT('%',#{identifyNumber},'%')
+		</if>
+		<if test="userType != null ">
+			AND u.user_type = #{userType}
+		</if>
+		<if test="agencyId != null">
+			AND u.agency_id = #{agencyId}
+		</if>
+		<if test="agencyList != null">
+			AND u.agency_id in 
+			<foreach collection="agencyList" index="index" item="item" separator="," open="(" close=")">
+	        	#{item}
+	    	</foreach>
+	    </if>
+	</select>
+	
+	<select id="selectAllocatedList" parameterType="User" resultMap="UserResult">
+	    select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.phonenumber, u.status, u.create_time,u.powers,u.company_id,u.user_lock
+	    from sys_user u
+			 left join sys_dept d on u.dept_id = d.dept_id
+			 left join sys_user_role ur on u.user_id = ur.user_id
+			 left join sys_role r on r.role_id = ur.role_id
+	    where u.del_flag = '0' and r.role_id = #{roleId}
+	    <if test="loginName != null and loginName != ''">
+			AND u.login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat('%', #{phonenumber}, '%')
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+	</select>
+	
+	<select id="selectUnallocatedList" parameterType="User" resultMap="UserResult">
+	    select distinct u.user_id, u.dept_id, u.login_name, u.user_name, u.phonenumber, u.status, u.create_time,u.powers,u.company_id
+	    from sys_user u
+			 left join sys_dept d on u.dept_id = d.dept_id
+			 left join sys_user_role ur on u.user_id = ur.user_id
+			 left join sys_role r on r.role_id = ur.role_id
+	    where u.del_flag = '0' and (r.role_id != #{roleId} or r.role_id IS NULL)
+	    and u.user_id not in (select u.user_id from sys_user u inner join sys_user_role ur on u.user_id = ur.user_id and ur.role_id = #{roleId})
+	    <if test="loginName != null and loginName != ''">
+			AND u.login_name like concat('%', #{loginName}, '%')
+		</if>
+		<if test="phonenumber != null and phonenumber != ''">
+			AND u.phonenumber like concat('%', #{phonenumber}, '%')
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+	</select>
+	
+	<select id="selectUserByLoginName" parameterType="String" resultMap="UserResult">
+	    <include refid="selectUserVo"/>
+		where u.login_name = #{userName}
+	</select>
+	
+	<select id="selectUserByPhoneNumber" parameterType="String" resultMap="UserResult">
+		<include refid="selectUserVo"/>
+		where u.phonenumber = #{phonenumber}
+	</select>
+	
+	<select id="checkLoginNameUnique" resultType="int">
+		select count(1) from sys_user where login_name=#{loginName} and company_id=#{companyId}
+	</select>
+	
+	<select id="checkIdUnique" resultType="int">
+		select count(1) from sys_user where identify_number=#{identifyNumber} and company_id=#{companyId}
+	</select>
+	
+	<select id="checkPhoneUnique" parameterType="String" resultMap="UserResult">
+		select user_id, phonenumber from sys_user where phonenumber=#{phonenumber}
+	</select>
+	
+	<select id="selectUserById" parameterType="Long" resultMap="UserResult">
+		<include refid="selectUserVo"/>
+		where u.user_id = #{userId}
+	</select>
+	
+	<delete id="deleteUserById" parameterType="Long">
+ 		delete from sys_user where user_id = #{userId}
+ 	</delete>
+ 	
+ 	<delete id="deleteUserByIds" parameterType="Long">
+ 		update sys_user set del_flag = '2' where user_id in
+ 		<foreach collection="array" item="userId" open="(" separator="," close=")">
+ 			#{userId}
+        </foreach> 
+ 	</delete>
+ 	
+ 	<update id="updateUser" parameterType="User">
+ 		update sys_user
+ 		<set>
+ 			<if test="phonenumber != null and phonenumber != ''">phonenumber = #{phonenumber},</if>
+ 			<if test="password != null and password != ''">password = #{password},</if>
+ 			<if test="salt != null and salt != ''">salt = #{salt},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+ 			<if test="loginIp != null and loginIp != ''">login_ip = #{loginIp},</if>
+ 			<if test="loginDate != null">login_date = #{loginDate},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			<if test="remark != null">remark = #{remark},</if>
+			<if test="powers != null and powers != ''">powers = #{powers},</if>
+			<if test="isInitialPassword != null">is_initial_password = #{isInitialPassword},</if>
+			<if test="userNo != null and userNo != ''">user_no = #{userNo},</if>
+			<if test="agencyId != null">agency_id = #{agencyId},</if>
+			<if test="identifyNumber != null and identifyNumber != ''">identify_number = #{identifyNumber},</if>
+			<if test="userLock != null">user_lock = #{userLock},</if>
+			<if test="isMoveIn != null">is_move_in = #{isMoveIn},</if>
+			<if test="avatar != null">avatar = #{avatar},</if>
+ 			update_time = sysdate()
+ 		</set>
+ 		where user_id = #{userId}
+	</update>
+	
+	<update id="updateIsMoveIn" parameterType="User">
+ 		update sys_user
+ 		<set>
+ 			<if test="updateBy != null">update_by = #{updateBy},</if>
+			<if test="isMoveIn != null">is_move_in = #{isMoveIn},</if>
+ 			update_time = sysdate()
+ 		</set>
+ 		where user_id = #{userId}
+	</update>
+ 	
+ 	<insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+ 		insert into sys_user(
+ 			<if test="userId != null and userId != 0">user_id,</if>
+ 			<if test="loginName != null and loginName != ''">login_name,</if>
+ 			<if test="userName != null and userName != ''">user_name,</if>
+ 			<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+ 			<if test="password != null and password != ''">password,</if>
+ 			<if test="salt != null and salt != ''">salt,</if>
+ 			<if test="status != null and status != ''">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			<if test="remark != null and remark != ''">remark,</if>
+		    <if test="powers != null and powers != ''">powers,</if>
+		    <if test="isInitialPassword != null">is_initial_password,</if>
+		    <if test="userNo != null and userNo != ''">user_no,</if>
+		    <if test="companyId != null">company_id,</if>
+		     <if test="agencyId != null">agency_id,</if>
+		     <if test="identifyNumber != null">identify_number,</if>
+		     <if test="userLock != null">user_lock,</if>
+		     <if test="userType != null">user_type,</if>
+		    <if test="delFlag != null">del_flag,</if>
+		    <if test="isMoveIn != null">is_move_in,</if>
+ 			create_time
+ 		)values(
+ 			<if test="userId != null and userId != ''">#{userId},</if>
+ 			<if test="deptId != null and deptId != ''">#{deptId},</if>
+ 			<if test="loginName != null and loginName != ''">#{loginName},</if>
+ 			<if test="userName != null and userName != ''">#{userName},</if>
+ 			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+ 			<if test="password != null and password != ''">#{password},</if>
+ 			<if test="salt != null and salt != ''">#{salt},</if>
+ 			<if test="status != null and status != ''">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			<if test="remark != null and remark != ''">#{remark},</if>
+		    <if test="powers != null and powers != ''">#{powers},</if>
+		    <if test="isInitialPassword != null">#{isInitialPassword},</if>
+		    <if test="userNo != null and userNo != ''">#{userNo},</if>
+		    <if test="companyId != null">#{companyId},</if>
+		    <if test="agencyId != null">#{agencyId},</if>
+		    <if test="identifyNumber != null and identifyNumber != ''">#{identifyNumber},</if>
+		    <if test="userLock != null">#{userLock},</if>
+		    <if test="userType != null">#{userType},</if>
+			<if test="delFlag != null">#{delFlag},</if>
+			<if test="isMoveIn != null">#{isMoveIn},</if>
+ 			sysdate()
+ 		)
+	</insert>
+	
+	
+	
+	
+	
+	<!--新  -->
+	<!-- 根据id查询user详情 -->
+	<select id="selectUserInfoById" parameterType="Long" resultType="com.injured.project.system.user.domain.User">
+		select user_id as userId, user_name as userName, user_type as userType, phonenumber, remark, user_no as userNo,login_name as loginName,  
+			company_id as companyId, agency_id as agencyId, identify_number as identifyNumber,user_lock as userLock,status
+		from sys_user 
+		where user_id = #{id} and company_id=#{companyId}
+	</select>
+
+
+	<select id="searchUserByNo" resultType="com.injured.project.system.user.domain.User">
+		select
+		user_id as userId, user_name as userName, user_type as userType, phonenumber, remark, user_no as userNo,
+		company_id as companyId, agency_id as agencyId, identify_number as identifyNumber,user_lock as userLock
+		from sys_user
+		where user_no like CONCAT('%',#{userNo} ,'%') and company_id=#{companyId}
+	</select>
+	
+	<!-- 派工获取可用用户 -->
+	<select id="getAvailableUsers" resultType="com.injured.project.system.user.domain.FastReviewedUser" parameterType="com.injured.project.system.user.domain.CompanyAgencyId">
+		SELECT
+			u.user_id AS userId,
+			u.user_name AS userName,
+			d.price_scope AS priceScope
+		FROM
+			sys_user u
+		JOIN sys_user_agnecy_price d ON u.user_id = d.user_id
+		WHERE
+			u.status = 0
+		AND u.is_move_in = 0
+		AND	d.menu_id in
+		<foreach item="item" collection="menuIds" separator="," open="(" close=")" index="">
+			#{item, jdbcType=BIGINT}
+		</foreach>
+		AND d.agency_id = #{agencyId}
+		AND d.under_level = #{underLevel}
+	</select>
+	
+	<!-- 改派获取可用用户 -->
+	<select id="getReformSchoolUsers" resultType="com.injured.project.system.user.domain.ReformSchoolUser">
+		SELECT
+			u.user_id AS userId,
+			u.user_name AS userName,
+			u.user_type AS userType,
+			u.phonenumber AS phonenumber,
+			u.remark AS remark,
+			u.user_no AS userNo,
+			u.company_id AS companyId,
+			u.agency_id AS agencyId,
+			u.identify_number AS identifyNumber,
+			u.user_lock AS userLock,
+			d.price_scope AS priceScope,
+			d.under_level AS underLevel,
+			CASE d.under_level
+			WHEN 1 THEN
+				'初审'
+			WHEN 2 THEN
+				'终审'
+			ELSE
+				'未知'
+			END AS underLevelStr
+		FROM
+			sys_user u
+		JOIN sys_user_agnecy_price d ON u.user_id = d.user_id
+		WHERE
+			u.status = 0
+		AND	d.menu_id = 2004
+		<if test = "ids != null">
+			and d.agency_id IN
+			<foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="selectUserByUserNo" resultMap="UserResult">
+		select u.user_id, u.user_no, u.user_name, u.identify_number,u.phonenumber, u.user_lock,u.is_move_in,
+			u.agency_id
+		from sys_user u
+		where u.company_id = #{companyId} AND u.user_no = #{userNo}
+	</select>
+</mapper> 

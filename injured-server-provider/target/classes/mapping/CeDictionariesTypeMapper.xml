@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.injured.server.provider.mapper.CeDictionariesTypeMapper">
+  <resultMap id="BaseResultMap" type="com.injured.server.api.entity.CeDictionariesType">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="dictionaries_type" jdbcType="VARCHAR" property="dictionariesType" />
+    <result column="type_remarks" jdbcType="VARCHAR" property="typeRemarks" />
+    <result column="dictionaries_code" jdbcType="VARCHAR" property="dictionariesCode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, dictionaries_type, type_remarks, dictionaries_code
+  </sql>
+  <select id="selectByExample" parameterType="com.injured.server.api.entity.CeDictionariesTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ce_dictionaries_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ce_dictionaries_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ce_dictionaries_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.injured.server.api.entity.CeDictionariesTypeExample">
+    delete from ce_dictionaries_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.injured.server.api.entity.CeDictionariesType">
+    insert into ce_dictionaries_type (id, dictionaries_type, type_remarks, 
+      dictionaries_code)
+    values (#{id,jdbcType=BIGINT}, #{dictionariesType,jdbcType=VARCHAR}, #{typeRemarks,jdbcType=VARCHAR}, 
+      #{dictionariesCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.injured.server.api.entity.CeDictionariesType">
+    insert into ce_dictionaries_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dictionariesType != null">
+        dictionaries_type,
+      </if>
+      <if test="typeRemarks != null">
+        type_remarks,
+      </if>
+      <if test="dictionariesCode != null">
+        dictionaries_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dictionariesType != null">
+        #{dictionariesType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeRemarks != null">
+        #{typeRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="dictionariesCode != null">
+        #{dictionariesCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.injured.server.api.entity.CeDictionariesTypeExample" resultType="java.lang.Long">
+    select count(*) from ce_dictionaries_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ce_dictionaries_type
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.dictionariesType != null">
+        dictionaries_type = #{record.dictionariesType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeRemarks != null">
+        type_remarks = #{record.typeRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dictionariesCode != null">
+        dictionaries_code = #{record.dictionariesCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ce_dictionaries_type
+    set id = #{record.id,jdbcType=BIGINT},
+      dictionaries_type = #{record.dictionariesType,jdbcType=VARCHAR},
+      type_remarks = #{record.typeRemarks,jdbcType=VARCHAR},
+      dictionaries_code = #{record.dictionariesCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.injured.server.api.entity.CeDictionariesType">
+    update ce_dictionaries_type
+    <set>
+      <if test="dictionariesType != null">
+        dictionaries_type = #{dictionariesType,jdbcType=VARCHAR},
+      </if>
+      <if test="typeRemarks != null">
+        type_remarks = #{typeRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="dictionariesCode != null">
+        dictionaries_code = #{dictionariesCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.injured.server.api.entity.CeDictionariesType">
+    update ce_dictionaries_type
+    set dictionaries_type = #{dictionariesType,jdbcType=VARCHAR},
+      type_remarks = #{typeRemarks,jdbcType=VARCHAR},
+      dictionaries_code = #{dictionariesCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ce_dictionaries_type
+  </select>
+</mapper>
